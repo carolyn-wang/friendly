@@ -23,27 +23,27 @@ import com.parse.ParseUser;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
+ * Use the {@link HangoutHistoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class HangoutHistoryFragment extends Fragment {
 
-    private static final String TAG = "ProfileFragment";
+    private static final String TAG = "HangoutHistoryFragment";
     private Context mContext;
 
     private Button btnLogout;
     private Button btnHangoutHistory;
     private TextView tvUsername;
 
-    public ProfileFragment() {
+    public HangoutHistoryFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(ParseUser user) {
+    public static HangoutHistoryFragment newInstance(ParseUser user) {
 
         Bundle args = new Bundle();
 
-        ProfileFragment fragment = new ProfileFragment();
+        HangoutHistoryFragment fragment = new HangoutHistoryFragment();
         args.putParcelable("user", user);
         fragment.setArguments(args);
         return fragment;
@@ -53,32 +53,13 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_hangout_history, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
-        btnLogout = view.findViewById(R.id.btnLogout);
-        btnHangoutHistory = view.findViewById(R.id.btnHangoutHistory);
-        tvUsername = view.findViewById(R.id.tvUsername);
 
-        btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick Hangout History button");
-                NavigationUtils.displayFragmentHangoutHistory(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
-            }
-        });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick logout button");
-                ParseUser.logOut();
-                NavigationUtils.goLoginActivity((MainActivity)mContext);
-            }
-        });
     }
 }
