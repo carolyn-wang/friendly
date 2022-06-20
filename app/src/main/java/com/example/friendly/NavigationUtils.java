@@ -7,7 +7,6 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.SignUpActivity;
@@ -37,13 +36,6 @@ public class NavigationUtils {
     public static void goSignupActivity(Activity activity) {
         goActivity(activity, SignUpActivity.class);
     }
-
-    public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager){
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment hangoutHistoryFragment = new HangoutHistoryFragment().newInstance(user);
-        ft.replace(R.id.flContainer, hangoutHistoryFragment);
-        ft.commit();
-    }
     public static void displayFragmentQuickMatch(ParseUser user, FragmentManager fragmentManager){
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment quickMatchFragment = new QuickMatchFragment();
@@ -55,6 +47,13 @@ public class NavigationUtils {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment longMatchFragment = new LongMatchFragment();
         ft.replace(R.id.flContainer, longMatchFragment);
+        ft.commit();
+    }
+
+    public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager){
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment hangoutHistoryFragment = new HangoutHistoryFragment().newInstance(user);
+        ft.replace(R.id.flContainer, hangoutHistoryFragment);
         ft.commit();
     }
 }
