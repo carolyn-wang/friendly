@@ -2,6 +2,7 @@ package com.example.friendly;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -63,11 +64,18 @@ public class SignUpActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(SignUpActivity.this, "Successful Sign Up!", Toast.LENGTH_LONG).show();
+                    goPreferencesActivity();
                 } else {
                     ParseUser.logOut();
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void goPreferencesActivity() {
+        Intent i = new Intent(this, PreferencesActivity.class);
+        startActivity(i);
+        finish();
     }
 }
