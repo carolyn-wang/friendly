@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new MatchFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ProfileFragment();
+                        fragment = new ProfileFragment().newInstance(ParseUser.getCurrentUser());
                         break;
                     default: return true;
                 }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.friendly.LoginActivity;
 import com.example.friendly.MainActivity;
@@ -30,9 +31,20 @@ public class ProfileFragment extends Fragment {
     private Context mContext;
 
     private Button btnLogout;
+    private TextView tvUsername;
 
     public ProfileFragment() {
         // Required empty public constructor
+    }
+
+    public static ProfileFragment newInstance(ParseUser user) {
+
+        Bundle args = new Bundle();
+
+        ProfileFragment fragment = new ProfileFragment();
+        args.putParcelable("user", user);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -47,6 +59,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
         btnLogout = view.findViewById(R.id.btnLogout);
+        tvUsername = view.findViewById(R.id.tvUsername);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
