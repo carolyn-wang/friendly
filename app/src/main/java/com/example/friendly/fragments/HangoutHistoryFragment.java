@@ -15,9 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.friendly.LoginActivity;
-import com.example.friendly.MainActivity;
-import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.parse.ParseUser;
 
