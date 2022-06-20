@@ -1,8 +1,10 @@
-package com.example.friendly;
+package com.example.friendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.friendly.R;
 
 public class PreferencesActivity extends AppCompatActivity {
 

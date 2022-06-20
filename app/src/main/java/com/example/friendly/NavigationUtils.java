@@ -8,36 +8,53 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.friendly.activities.LoginActivity;
+import com.example.friendly.activities.MainActivity;
+import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutHistoryFragment;
+import com.example.friendly.fragments.LongMatchFragment;
+import com.example.friendly.fragments.QuickMatchFragment;
 import com.parse.ParseUser;
 
 public class NavigationUtils {
 
-    public static void goLoginActivity(Activity activity){
+    public static void goActivity(Activity activity, Class targetClass){
         Context context = activity.getBaseContext();
-        Intent i = new Intent(context, LoginActivity.class);
+        Intent i = new Intent(context, targetClass);
         activity.startActivity(i);
         activity.finish();
+    }
+
+    public static void goLoginActivity(Activity activity){
+        goActivity(activity, LoginActivity.class);
+
     }
 
     public static void goMainActivity(Activity activity) {
-        Context context = activity.getBaseContext();
-        Intent i = new Intent(context, MainActivity.class);
-        activity.startActivity(i);
-        activity.finish();
+        goActivity(activity, MainActivity.class);
     }
 
     public static void goSignupActivity(Activity activity) {
-        Context context = activity.getBaseContext();
-        Intent i = new Intent(context, SignUpActivity.class);
-        activity.startActivity(i);
-        activity.finish();
+        goActivity(activity, SignUpActivity.class);
     }
 
     public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager){
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutHistoryFragment = new HangoutHistoryFragment().newInstance(user);
         ft.replace(R.id.flContainer, hangoutHistoryFragment);
+        ft.commit();
+    }
+    public static void displayFragmentQuickMatch(ParseUser user, FragmentManager fragmentManager){
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment quickMatchFragment = new QuickMatchFragment();
+        ft.replace(R.id.flContainer, quickMatchFragment);
+        ft.commit();
+    }
+
+    public static void displayFragmentLongMatch(ParseUser currentUser, FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment longMatchFragment = new LongMatchFragment();
+        ft.replace(R.id.flContainer, longMatchFragment);
         ft.commit();
     }
 }

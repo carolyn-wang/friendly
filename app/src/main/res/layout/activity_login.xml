@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:orientation="horizontal"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <!--    TODO: set iv height as variable-->
 

@@ -1,4 +1,4 @@
-package com.example.friendly;
+package com.example.friendly.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.friendly.R;
 import com.example.friendly.fragments.MatchFragment;
 import com.example.friendly.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

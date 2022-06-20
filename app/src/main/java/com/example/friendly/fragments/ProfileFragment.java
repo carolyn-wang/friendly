@@ -1,7 +1,6 @@
 package com.example.friendly.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.friendly.LoginActivity;
-import com.example.friendly.MainActivity;
+import com.example.friendly.activities.MainActivity;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.parse.ParseUser;
