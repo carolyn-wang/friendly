@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.friendly.fragments.MatchFragment;
+import com.example.friendly.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
@@ -25,25 +26,12 @@ public class MainActivity extends AppCompatActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
     private Fragment fragment;
-    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
-
-        btnLogout = findViewById(R.id.btnLogout);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick logout button");
-                ParseUser.logOut();
-                goLoginActivity();
-            }
-        });
-
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -57,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new MatchFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new MatchFragment();
+                        fragment = new ProfileFragment();
                         break;
                     default: return true;
                 }
@@ -69,12 +57,6 @@ public class MainActivity extends AppCompatActivity {
         });
         // Set default fragment
         bottomNavigationView.setSelectedItemId(R.id.action_home);
-    }
-
-    private void goLoginActivity() {
-        Intent i = new Intent(mContext, LoginActivity.class);
-        startActivity(i);
-//        finish();
     }
 
 }
