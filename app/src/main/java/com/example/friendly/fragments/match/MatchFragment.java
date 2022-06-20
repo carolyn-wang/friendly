@@ -1,4 +1,4 @@
-package com.example.friendly.fragments;
+package com.example.friendly.fragments.match;
 
 import android.content.Context;
 import android.os.Bundle;

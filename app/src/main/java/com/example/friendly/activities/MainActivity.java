@@ -10,7 +10,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.friendly.R;
-import com.example.friendly.fragments.MatchFragment;
+import com.example.friendly.fragments.SearchFragment;
+import com.example.friendly.fragments.match.MatchFragment;
 import com.example.friendly.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
@@ -35,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.action_home:
-                        fragment = new MatchFragment();
+                    case R.id.action_search:
+                        fragment = new SearchFragment();
                         break;
-                    case R.id.action_compose:
+                    case R.id.action_match:
                         fragment = new MatchFragment();
                         break;
                     case R.id.action_profile:
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
         // Set default fragment
-        bottomNavigationView.setSelectedItemId(R.id.action_home);
+        bottomNavigationView.setSelectedItemId(R.id.action_match);
     }
 
 }

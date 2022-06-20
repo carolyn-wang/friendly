@@ -57,15 +57,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="Log Out" />
 
-    <CheckBox
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Notifications" />
 
-    <CheckBox
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/checkBox2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Receive Messages" />
 

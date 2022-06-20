@@ -11,8 +11,8 @@ import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutHistoryFragment;
-import com.example.friendly.fragments.LongMatchFragment;
-import com.example.friendly.fragments.QuickMatchFragment;
+import com.example.friendly.fragments.match.LongMatchFragment;
+import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.parse.ParseUser;
 
 public class NavigationUtils {

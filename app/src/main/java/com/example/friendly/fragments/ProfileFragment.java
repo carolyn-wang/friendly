@@ -34,7 +34,6 @@ public class ProfileFragment extends Fragment {
     private TextView tvUsername;
 
     public ProfileFragment() {
-        // Required empty public constructor
     }
 
     public static ProfileFragment newInstance(ParseUser user) {
