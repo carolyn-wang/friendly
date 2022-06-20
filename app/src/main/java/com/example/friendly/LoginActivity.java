@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if (ParseUser.getCurrentUser() != null){
-            goMainActivity();
+            NavigationUtils.goMainActivity(LoginActivity.this);
         }
 
         etUsername = findViewById(R.id.etUsername);
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }
-                goMainActivity();
+                NavigationUtils.goMainActivity(LoginActivity.this);
                 Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT);
             }
         });
@@ -73,20 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signupUser(){
         Log.i(TAG, "Signing up user ");
-        goSignupActivity();
-    }
-
-    // TODO: redundant from splashActivity
-
-    private void goMainActivity() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-        finish();
-    }
-
-    private void goSignupActivity() {
-        Intent i = new Intent(this, SignUpActivity.class);
-        startActivity(i);
-        finish();
+        NavigationUtils.goSignupActivity(LoginActivity.this);
     }
 }
+//

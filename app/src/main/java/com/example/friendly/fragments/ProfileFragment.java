@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.friendly.LoginActivity;
 import com.example.friendly.MainActivity;
+import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.parse.ParseUser;
 
@@ -66,14 +67,8 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Log.i(TAG, "onClick logout button");
                 ParseUser.logOut();
-                goLoginActivity();
+                NavigationUtils.goLoginActivity((MainActivity)mContext);
             }
         });
-    }
-
-    private void goLoginActivity() {
-        Intent i = new Intent(mContext, LoginActivity.class);
-        startActivity(i);
-        ((MainActivity)mContext).finish();
     }
 }
