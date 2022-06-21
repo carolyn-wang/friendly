@@ -15,7 +15,9 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5661881977671451" />
         <entry key="app/src/main/res/layout/fragment_quick_match.xml" value="0.26992753623188404" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.26992753623188404" />
+        <entry key="app/src/main/res/layout/item_card.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_poll_checklist.xml" value="0.26992753623188404" />
+        <entry key="app/src/main/res/layout/item_poll_row.xml" value="0.15208333333333332" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.31979166666666664" />
       </map>
     </option>

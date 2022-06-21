@@ -2,6 +2,7 @@ package com.example.friendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -65,19 +67,12 @@ public class SignUpActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(SignUpActivity.this, "Successful Sign Up!", Toast.LENGTH_LONG).show();
-                    goPreferencesActivity();
+                    NavigationUtils.goPreferencesActivity(SignUpActivity.this);
                 } else {
                     ParseUser.logOut();
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
-    }
-
-    private void goPreferencesActivity() {
-        Log.i(TAG, "Going to Preferences Activity");
-        Intent i = new Intent(this, PreferencesActivity.class);
-        startActivity(i);
-        finish();
     }
 }
