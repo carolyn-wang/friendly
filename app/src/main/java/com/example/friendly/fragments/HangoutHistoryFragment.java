@@ -9,17 +9,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.friendly.Hangout;
 import com.example.friendly.HangoutsAdapter;
+import com.example.friendly.HangoutsQuery;
 import com.example.friendly.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,17 +74,46 @@ public class HangoutHistoryFragment extends Fragment {
         scrollCounter = 0;
 
         allHangouts = new ArrayList<>();
-        Hangout hangout0 = new Hangout("sam", "carolyn", new Date(12321213));
-        Hangout hangout1 = new Hangout("ola", "carolyn", new Date(12313));
-        Hangout hangout2 = new Hangout("stephanie", "carolyn", new Date(12321213));
-        allHangouts.add(hangout0);
-        allHangouts.add(hangout1);
-        allHangouts.add(hangout2);
-        adapter = new HangoutsAdapter(mContext, allHangouts);
-        rvHangouts.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
+
 
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
+//        allHangouts = HangoutsQuery.queryHangouts(allHangouts, 0);
+        adapter = new HangoutsAdapter(mContext, allHangouts);
+        rvHangouts.setAdapter(adapter);
+
+        queryHangouts(0);
+//        adapter.notifyDataSetChanged();
+
     }
+
+        public void queryHangouts(int offset) {
+            ParseQuery<Hangout> query = ParseQuery.getQuery(Hangout.class);
+            query.include(Hangout.KEY_USER1);
+            query.include(Hangout.KEY_USER2);
+            query.include(Hangout.KEY_DATE);
+            query.setLimit(POSTS_TO_LOAD);
+            query.addDescendingOrder(Hangout.KEY_CREATED_AT);
+            query.setSkip(offset);
+            // start an asynchronous call for posts
+            query.findInBackground(new FindCallback<Hangout>() {
+                @Override
+                public void done(List<Hangout> hangouts, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
+                    }
+                    allHangouts.addAll(hangouts);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            // move function to postQuerier.java to query posts
+            // query class passes info into both adapters
+            // Repository (stores data) -- tells adapter update --> adapter
+//        scrollCounter = scrollCounter + POSTS_TO_LOAD;
+        }
+
+
 }

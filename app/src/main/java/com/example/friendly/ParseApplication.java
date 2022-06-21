@@ -3,6 +3,7 @@ package com.example.friendly;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class ParseApplication extends Application {
 
@@ -11,7 +12,7 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Register your parse models
-//        ParseObject.registerSubclass(Hangout.class);
+        ParseObject.registerSubclass(Hangout.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("IDsIeYawTbR7j0y43iGILuUWJgAM1muaNGzSPWw8")

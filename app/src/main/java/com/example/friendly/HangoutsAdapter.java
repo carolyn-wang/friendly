@@ -64,8 +64,10 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
 
         public void bind(Hangout hangout) {
             // Bind the post data to the view elements
-            hangoutUser1.setText(hangout.getUser1());
-            hangoutUser2.setText(hangout.getUser2());
+            hangoutUser1.setText(hangout.getUser1().getUsername());
+            if(hangout.getUser2() != null){
+                hangoutUser2.setText(hangout.getUser2().getUsername());
+            }
             hangoutDate.setText(hangout.getDate().toString());
         }
     }
