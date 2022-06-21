@@ -19,4 +19,11 @@
 
         android:text="Schedule for Later" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upcoming Hangouts"/>
+
+    <include layout="@layout/fragment_hangout_history"/>
+
 </LinearLayout>
