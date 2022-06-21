@@ -75,6 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void goPreferencesActivity() {
+        Log.i(TAG, "Going to Preferences Activity");
         Intent i = new Intent(this, PreferencesActivity.class);
         startActivity(i);
         finish();

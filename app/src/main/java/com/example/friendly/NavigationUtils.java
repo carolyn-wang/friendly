@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
@@ -36,6 +37,12 @@ public class NavigationUtils {
     public static void goSignupActivity(Activity activity) {
         goActivity(activity, SignUpActivity.class);
     }
+
+    public static void goPreferencesActivity(Activity activity) {
+        goActivity(activity, PreferencesActivity.class);
+
+    }
+
     public static void displayFragmentQuickMatch(ParseUser user, FragmentManager fragmentManager){
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment quickMatchFragment = new QuickMatchFragment();
