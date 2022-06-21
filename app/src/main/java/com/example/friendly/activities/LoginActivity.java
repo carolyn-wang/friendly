@@ -28,6 +28,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // TODO: remove
+        NavigationUtils.goPreferencesActivity(LoginActivity.this);
+
+
         if (ParseUser.getCurrentUser() != null){
             NavigationUtils.goMainActivity(LoginActivity.this);
         }
@@ -66,8 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }
-                NavigationUtils.goPreferencesActivity(LoginActivity.this);
-//                NavigationUtils.goMainActivity(LoginActivity.this);
+                NavigationUtils.goMainActivity(LoginActivity.this);
                 Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT);
             }
         });
