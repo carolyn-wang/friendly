@@ -19,4 +19,14 @@
 
         android:text="Schedule for Later" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upcoming Hangouts" />
+
+    <LinearLayout
+        android:id="@+id/matchHangoutHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

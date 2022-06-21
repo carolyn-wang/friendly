@@ -11,11 +11,22 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.friendly.Hangout;
+import com.example.friendly.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MatchFragment extends Fragment {
     private static final String TAG = "MatchFragment";
@@ -23,6 +34,12 @@ public class MatchFragment extends Fragment {
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
+
+    private RecyclerView rvHangouts;
+    protected HangoutsAdapter adapter;
+    protected List<Hangout> allHangouts;
+
+
     public MatchFragment(){
 
     }
@@ -58,5 +75,13 @@ public class MatchFragment extends Fragment {
                 NavigationUtils.displayFragmentLongMatch(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
             }
         });
+
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        fm.beginTransaction();
+        Fragment fragTwo = new HangoutHistoryFragment();
+        ft.add(R.id.matchHangoutHistory, fragTwo);
+        ft.commit();
     }
 }
