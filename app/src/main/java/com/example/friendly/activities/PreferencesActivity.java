@@ -24,7 +24,6 @@ import java.util.List;
 public class PreferencesActivity extends AppCompatActivity {
 
     private static final String TAG = "PreferencesActivity";
-    protected static final int POSTS_TO_LOAD = 5;
     private Context mContext;
     private RecyclerView rvPreferences;
     private Button nextButton;

@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // TODO: remove
-        NavigationUtils.goPreferencesActivity(LoginActivity.this);
+//        NavigationUtils.goPreferencesActivity(LoginActivity.this);
 
 
         if (ParseUser.getCurrentUser() != null){

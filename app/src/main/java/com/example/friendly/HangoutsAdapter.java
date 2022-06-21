@@ -1,7 +1,6 @@
 package com.example.friendly;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
+public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHolder> {
 
     protected Context context;
-    protected List<Preference> preferences;
-    private static final String TAG = "PreferencesAdapter";
+    protected List<Hangout> hangouts;
+    private static final String TAG = "HangoutsAdapter";
 
-    public PreferencesAdapter(Context context, List<Preference> preferences) {
+    public HangoutsAdapter(Context context, List<Hangout> hangouts) {
         this.context = context;
-        this.preferences = preferences;
+        this.hangouts = hangouts;
     }
 
     /**
@@ -34,53 +33,52 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_poll_card, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_hangout_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Preference preference = preferences.get(position);
-        holder.bind(preference);
+        Hangout hangout = hangouts.get(position);
+        holder.bind(hangout);
     }
 
     @Override
     public int getItemCount() {
-        return preferences.size();
+        return hangouts.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView tvQuestion;
-//            protected RecyclerView rvOptions;
-
+        protected TextView hangoutUser1;
+        protected TextView hangoutUser2;
+        protected TextView hangoutDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Log.i(TAG, "viewholder");
-            tvQuestion = itemView.findViewById(R.id.tvQuestion);
-//            rvOptions = itemView.findViewById(R.id.rvOptions);
+            hangoutUser1 = itemView.findViewById(R.id.hangoutUser1);
+            hangoutUser2 = itemView.findViewById(R.id.hangoutUser2);
+            hangoutDate = itemView.findViewById(R.id.hangoutDate);
 //                currentUser = ParseUser.getCurrentUser();
         }
 
-        public void bind(Preference preference) {
+        public void bind(Hangout hangout) {
             // Bind the post data to the view elements
-            tvQuestion.setText(preference.getQuestion());
-//                PollOptionsAdapter adapter = new PollOptionsAdapter(preference.getOptions());
-//                rvOptions.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
+            hangoutUser1.setText(hangout.getUser1());
+            hangoutUser2.setText(hangout.getUser2());
+            hangoutDate.setText(hangout.getDate().toString());
         }
     }
 
     // Clean all elements of the recycler
     public void clear() {
-        preferences.clear();
+        hangouts.clear();
         notifyDataSetChanged();
     }
 
     // Add a list of items -- change to type used
-    public void addAll(List<Preference> list) {
-        preferences.addAll(list);
+    public void addAll(List<Hangout> list) {
+        hangouts.addAll(list);
         notifyDataSetChanged();
     }
 }
