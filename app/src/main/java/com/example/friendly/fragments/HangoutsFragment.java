@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.friendly.Hangout;
 import com.example.friendly.HangoutsAdapter;
@@ -43,6 +44,7 @@ public class HangoutsFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     protected int scrollCounter;
+    private ProgressBar pb;
 
     public HangoutsFragment() {
         // Required empty public constructor
@@ -68,6 +70,7 @@ public class HangoutsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = view.getContext();
+        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
         rvHangouts = view.findViewById(R.id.rvHangouts);
         scrollCounter = 0;
         allHangouts = new ArrayList<>();
@@ -75,6 +78,7 @@ public class HangoutsFragment extends Fragment {
 //        allHangouts = HangoutsQuery.queryHangouts(allHangouts, 0);
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
+        pb.setVisibility(ProgressBar.VISIBLE);
         queryHangouts(scrollCounter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -131,6 +135,7 @@ public class HangoutsFragment extends Fragment {
                 }
                 allHangouts.addAll(hangouts);
                 adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
 

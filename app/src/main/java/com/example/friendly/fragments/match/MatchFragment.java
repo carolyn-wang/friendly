@@ -73,7 +73,7 @@ public class MatchFragment extends Fragment {
             }
         });
 
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
         fm.beginTransaction();
