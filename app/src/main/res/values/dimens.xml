@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    activity_login.xml-->
+    <dimen name="loginMargin">16dp</dimen>
+    <dimen name="loginLogoHeight">50dp</dimen>
+    <dimen name="loginLogoMargin">40dp</dimen>
+    <dimen name="loginButtonMargin">20dp</dimen>
+
+<!--    activity_main.xml-->
+    <dimen name="mainMargin">24dp</dimen>
+</resources>

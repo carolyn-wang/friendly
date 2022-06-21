@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
+    android:layout_margin="@dimen/loginMargin"
     android:orientation="horizontal"
     tools:context=".activities.LoginActivity">
-
-    <!--    TODO: set iv height as variable-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,43 +14,37 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <!--        TODO: swap out 40dp-->
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="40dp"
+            android:layout_height="@dimen/loginLogoHeight"
+            android:layout_marginBottom="@dimen/loginLogoMargin"
             android:src="@android:drawable/btn_star_big_on" />
 
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:ems="10"
-            android:hint="Username" />
+            android:hint="@string/loginUsernameHint" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:ems="10"
-            android:hint="Password"
+            android:hint="@string/loginPasswordHint"
             android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="40dp"
-            android:padding="10dp"
-            android:text="Log In" />
+            android:layout_marginVertical="@dimen/loginButtonMargin"
+            android:text="@string/loginLoginBtn" />
 
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Account" />
+            android:text="@string/loginSignupBtn" />
     </LinearLayout>
 
 </LinearLayout>

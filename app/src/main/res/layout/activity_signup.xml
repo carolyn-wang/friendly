@@ -11,41 +11,31 @@
         android:id="@+id/etFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="First Name" />
+        android:hint="@string/signupFirstnameHint" />
 
     <EditText
         android:id="@+id/etLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="Last Name" />
+        android:hint="@string/signupLastnameHint" />
 
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="Email" />
+        android:hint="@string/signupEmailHint" />
 
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="Username" />
+        android:hint="@string/signupUsernameHint" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:ems="10"
-        android:hint="Password"
+        android:hint="@string/signupPasswordHint"
         android:inputType="textPassword" />
 
     <Button

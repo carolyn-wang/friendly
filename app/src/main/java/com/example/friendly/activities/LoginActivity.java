@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //TODO: Limit to only 1 login in case of glitch
     private void loginUser(String username, String password){
         Log.i(TAG, "Attempting to login user " + username);
         ParseUser.logInInBackground(username, password, new LogInCallback(){

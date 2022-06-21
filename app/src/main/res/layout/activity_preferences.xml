@@ -10,7 +10,7 @@
         android:id="@+id/rvPreferences"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -19,6 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="Next" />
+        android:text="@string/preferencesNextBtn" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

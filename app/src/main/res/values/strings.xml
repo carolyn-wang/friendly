@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">Friendly</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+<!--    activity_login.xml-->
+    <string name="loginUsernameHint">Username</string>
+    <string name="loginPasswordHint">Password</string>
+    <string name="loginLoginBtn">Log In</string>
+    <string name="loginSignupBtn">Create Account</string>
+<!--    activity_preferences.xml-->
+    <string name="preferencesNextBtn">Next</string>
+<!--    activity_signup.xml-->
+    <string name="signupFirstnameHint">First Name</string>
+    <string name="signupLastnameHint">Last Name</string>
+    <string name="signupEmailHint">Email</string>
+    <string name="signupUsernameHint">Username</string>
+    <string name="signupPasswordHint">Password</string>
 </resources>
