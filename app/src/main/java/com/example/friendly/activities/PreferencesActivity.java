@@ -34,12 +34,11 @@ public class PreferencesActivity extends AppCompatActivity {
 
         mContext = this;
         rvPreferences = findViewById(R.id.rvPreferences);
-        // TODO: put next button at bottom of RV
         nextButton = findViewById(R.id.nextButton);
         scrollCounter = 0;
 
         allPreferences = new ArrayList<>();
-        Preference poll0 = new Preference("Hobbies", new String[]{"hiking", "skiing"});
+        Preference poll0 = new Preference("What are your hobbies?", new String[]{"gaming", "reading", "hiking", "gym", "art", "music" });
         Preference poll1 = new Preference("Hobbies1", new String[]{"art", "dance"});
         Preference poll2 = new Preference("Hobbies2", new String[]{"hiking", "skiing"});
         Preference poll3 = new Preference("Hobbies3", new String[]{"art", "dance"});

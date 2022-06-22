@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.friendly.objects.Preference;
 import com.example.friendly.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
@@ -54,7 +56,15 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView tvQuestion;
+        private TextView tvQuestion;
+        private CheckBox cbOption0;
+        private CheckBox cbOption1;
+        private CheckBox cbOption2;
+        private CheckBox cbOption3;
+        private CheckBox cbOption4;
+        private CheckBox cbOption5;
+        private CheckBox cbOption6;
+        private CheckBox[] optionViews;
 //            protected RecyclerView rvOptions;
 
 
@@ -62,13 +72,34 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             super(itemView);
             Log.i(TAG, "viewholder");
             tvQuestion = itemView.findViewById(R.id.tvQuestion);
+            cbOption0 = itemView.findViewById(R.id.cbOption0);
+            cbOption1 = itemView.findViewById(R.id.cbOption1);
+            cbOption2 = itemView.findViewById(R.id.cbOption2);
+            cbOption3 = itemView.findViewById(R.id.cbOption3);
+            cbOption4 = itemView.findViewById(R.id.cbOption4);
+            cbOption5 = itemView.findViewById(R.id.cbOption5);
+            cbOption6 = itemView.findViewById(R.id.cbOption6);
+            optionViews = new CheckBox[]{cbOption0, cbOption1, cbOption2, cbOption3, cbOption4, cbOption5, cbOption6};
 //            rvOptions = itemView.findViewById(R.id.rvOptions);
 //                currentUser = ParseUser.getCurrentUser();
         }
 
+        /**
+         * Set poll question.
+         *  Set text for checkbox option or set visibility to GONE
+         * @param preference
+         */
         public void bind(Preference preference) {
-            // Bind the post data to the view elements
             tvQuestion.setText(preference.getQuestion());
+            //
+            for (int i=0; i < optionViews.length; i++){
+                if (i < preference.getOptions().length){
+                    optionViews[i].setText(preference.getOption(i));
+                }
+                else{
+                    optionViews[i].setVisibility(View.GONE);
+                }
+            }
 //                PollOptionsAdapter adapter = new PollOptionsAdapter(preference.getOptions());
 //                rvOptions.setAdapter(adapter);
 //                adapter.notifyDataSetChanged();

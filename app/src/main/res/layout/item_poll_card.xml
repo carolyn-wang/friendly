@@ -20,14 +20,41 @@
             android:text="What are your hobbies?" />
 
         <CheckBox
+            android:id="@+id/cbOption0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="dancing" />
 
         <CheckBox
+            android:id="@+id/cbOption1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="singing" />
+            android:text="dancing" />
+
+        <CheckBox
+            android:id="@+id/cbOption2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbOption3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbOption4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbOption5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbOption6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

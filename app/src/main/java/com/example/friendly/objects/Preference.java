@@ -18,4 +18,8 @@ public class Preference {
     public String[] getOptions() {
         return options;
     }
+
+    public String getOption(int index) {
+        return options[index];
+    }
 }
