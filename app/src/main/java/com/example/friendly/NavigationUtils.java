@@ -75,10 +75,7 @@ public class NavigationUtils {
     public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
-        ft.setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.slide_out
-                ).replace(R.id.flContainer, hangoutDetailFragment)
+        ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
     }
