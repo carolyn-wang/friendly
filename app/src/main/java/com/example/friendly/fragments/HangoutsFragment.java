@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.friendly.Hangout;
+import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
-import com.example.friendly.HangoutsQuery;
+import com.example.friendly.HangoutQuery;
 import com.example.friendly.R;
 import com.parse.ParseUser;
 
@@ -38,12 +38,10 @@ public class HangoutsFragment extends Fragment {
     protected static final int POSTS_TO_LOAD = 5;
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
-    //    protected List<Hangout> allHangouts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
-    protected int scrollCounter;
     private static ProgressBar pb;
-    private HangoutsQuery query;
+    private HangoutQuery query;
 
     public HangoutsFragment() {
         // Required empty public constructor
@@ -72,7 +70,7 @@ public class HangoutsFragment extends Fragment {
         pb = view.findViewById(R.id.pbLoading);
         rvHangouts = view.findViewById(R.id.rvHangouts);
         swipeContainer = view.findViewById(R.id.swipeContainer);
-        query = new HangoutsQuery();
+        query = new HangoutQuery();
         List<Hangout> allHangouts = query.getAllHangouts();
         if (allHangouts.size() == 0){
             showProgressBar();

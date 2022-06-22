@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.example.friendly.adapters.HangoutsAdapter;
+import com.example.friendly.adapters.ProfileAdapter;
 import com.parse.ParseUser;
 
 /**
@@ -30,11 +32,13 @@ public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     private Context mContext;
     private MainActivity mActivity;
+    private ProfileAdapter adapter;
 
     private Button btnLogout;
     private Button btnHangoutHistory;
     private Button btnChangePreferences;
     private TextView tvUsername;
+    private TextView tvName;
 
     public ProfileFragment() {
     }
@@ -65,6 +69,10 @@ public class ProfileFragment extends Fragment {
         btnHangoutHistory = view.findViewById(R.id.btnHangoutHistory);
         btnChangePreferences = view.findViewById(R.id.btnChangePreferences);
         tvUsername = view.findViewById(R.id.tvUsername);
+        tvName = view.findViewById(R.id.tvName);
+
+        tvUsername.setText(ParseUser.getCurrentUser().getUsername());
+        tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
 
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
             @Override

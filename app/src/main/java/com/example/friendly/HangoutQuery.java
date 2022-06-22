@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.fragments.HangoutsFragment;
+import com.example.friendly.objects.Hangout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -11,8 +12,8 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HangoutsQuery {
-    private static final String TAG = "HangoutsQuery";
+public class HangoutQuery {
+    private static final String TAG = "HangoutQuery";
     protected static final int POSTS_TO_LOAD = 5;
     protected int scrollCounter = 0;
     protected List<Hangout> allHangouts = new ArrayList<>();

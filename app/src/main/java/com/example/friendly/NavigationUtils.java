@@ -16,6 +16,7 @@ import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
+import com.example.friendly.objects.Hangout;
 import com.parse.ParseUser;
 
 public class NavigationUtils {

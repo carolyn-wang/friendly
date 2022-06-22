@@ -1,4 +1,4 @@
-package com.example.friendly;
+package com.example.friendly.objects;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;

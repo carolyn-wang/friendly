@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.friendly.NavigationUtils;
-import com.example.friendly.Preference;
+import com.example.friendly.objects.Preference;
 import com.example.friendly.adapters.PreferencesAdapter;
 import com.example.friendly.R;
 
