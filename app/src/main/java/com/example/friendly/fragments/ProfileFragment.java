@@ -23,7 +23,16 @@ import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.adapters.ProfileAdapter;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+
+import javax.xml.transform.Result;
+
+import okhttp3.Headers;
+import okhttp3.Request;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,13 +87,13 @@ public class ProfileFragment extends Fragment {
         tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
 
 
-        GoogleMapsClient c = new GoogleMapsClient();
+        GoogleMapsClient client = new GoogleMapsClient();
         try {
-            c.getNearbyPlaces();
+            Request result = client.getNearbyPlaces();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
             @Override

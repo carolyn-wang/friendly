@@ -7,7 +7,9 @@ import androidx.arch.core.internal.SafeIterableMap;
 import com.parse.Parse;
 import com.parse.ParseGeoPoint;
 
+
 import java.io.IOException;
+import java.util.Dictionary;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -38,9 +40,9 @@ public class GoogleMapsClient {
                 .addQueryParameter("radius", "1500")
                 .addQueryParameter("type", "restaurant")
                 .build();
-
         Request request = new Request.Builder()
                 .url(nearbyUrl)
+                .get()
                 .build();
         return request;
 //        Log.i(TAG, request.toString());
