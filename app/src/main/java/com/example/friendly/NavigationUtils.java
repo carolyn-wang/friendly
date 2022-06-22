@@ -67,15 +67,18 @@ public class NavigationUtils {
         ft.commit();
     }
 
+    /**
+     * Show Hangout Detail fragment with sliding transition
+     * @param hangout
+     * @param fragmentManager
+     */
     public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-//        Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
-        Fragment hangoutDetailFragment = new HangoutDetailFragment();
+        Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
         ft.setCustomAnimations(
                         R.anim.slide_in,
                         R.anim.slide_out
-                )
-                .replace(R.id.flContainer, hangoutDetailFragment)
+                ).replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
     }

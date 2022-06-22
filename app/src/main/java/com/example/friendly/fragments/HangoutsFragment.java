@@ -76,7 +76,6 @@ public class HangoutsFragment extends Fragment {
             showProgressBar();
         }
 
-
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter);

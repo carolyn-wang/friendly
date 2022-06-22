@@ -57,9 +57,9 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private View cdHangout;
-        protected TextView tvHangoutUser1;
-        protected TextView tvHangoutUser2;
-        protected TextView tvHangoutDate;
+        private TextView tvHangoutUser1;
+        private TextView tvHangoutUser2;
+        private TextView tvHangoutDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
