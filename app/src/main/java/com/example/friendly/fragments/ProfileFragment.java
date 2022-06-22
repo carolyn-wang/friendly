@@ -15,12 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.friendly.GoogleMapsClient;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.adapters.ProfileAdapter;
 import com.parse.ParseUser;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +76,15 @@ public class ProfileFragment extends Fragment {
 
         tvUsername.setText(ParseUser.getCurrentUser().getUsername());
         tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
+
+
+        GoogleMapsClient c = new GoogleMapsClient();
+        try {
+            c.getNearbyPlaces();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
             @Override
