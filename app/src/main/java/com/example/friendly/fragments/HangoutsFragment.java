@@ -18,13 +18,10 @@ import android.widget.ProgressBar;
 
 import com.example.friendly.Hangout;
 import com.example.friendly.HangoutsAdapter;
+import com.example.friendly.HangoutsQuery;
 import com.example.friendly.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,11 +37,12 @@ public class HangoutsFragment extends Fragment {
     protected static final int POSTS_TO_LOAD = 5;
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
-    protected List<Hangout> allHangouts;
+//    protected List<Hangout> allHangouts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     protected int scrollCounter;
-    private ProgressBar pb;
+    private static ProgressBar pb;
+    private HangoutsQuery query;
 
     public HangoutsFragment() {
         // Required empty public constructor
@@ -53,7 +51,6 @@ public class HangoutsFragment extends Fragment {
     public static HangoutsFragment newInstance(ParseUser user) {
 
         Bundle args = new Bundle();
-
         HangoutsFragment fragment = new HangoutsFragment();
         args.putParcelable("user", user);
         fragment.setArguments(args);
@@ -69,17 +66,17 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mContext = view.getContext();
-        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
+        query = new HangoutsQuery();
+        pb = view.findViewById(R.id.pbLoading);
         rvHangouts = view.findViewById(R.id.rvHangouts);
-        scrollCounter = 0;
-        allHangouts = new ArrayList<>();
+        List<Hangout> allHangouts = query.getAllHangouts();
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
-//        allHangouts = HangoutsQuery.queryHangouts(allHangouts, 0);
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         pb.setVisibility(ProgressBar.VISIBLE);
-        queryHangouts(scrollCounter);
+        query.queryHangouts(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -90,8 +87,8 @@ public class HangoutsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 adapter.clear();
-                scrollCounter = 0;
-                queryHangouts(scrollCounter);
+                query.setScrollCounter(0);
+                query.queryHangouts(adapter);
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -101,14 +98,13 @@ public class HangoutsFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         rvHangouts.setLayoutManager(linearLayoutManager);
         // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                queryHangouts(scrollCounter);
+                query.queryHangouts(adapter);
             }
         };
         // Adds the scroll listener to RecyclerView
@@ -116,34 +112,8 @@ public class HangoutsFragment extends Fragment {
 
     }
 
-    // TODO: move to separate file
-    public void queryHangouts(int offset) {
-        ParseQuery<Hangout> query = ParseQuery.getQuery(Hangout.class);
-        query.include(Hangout.KEY_USER1);
-        query.include(Hangout.KEY_USER2);
-        query.include(Hangout.KEY_DATE);
-        query.setLimit(POSTS_TO_LOAD);
-        query.addDescendingOrder(Hangout.KEY_CREATED_AT);
-        query.setSkip(offset);
-        // start an asynchronous call for posts
-        query.findInBackground(new FindCallback<Hangout>() {
-            @Override
-            public void done(List<Hangout> hangouts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-                allHangouts.addAll(hangouts);
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
-            }
-        });
-
-        // move function to postQuerier.java to query posts
-        // query class passes info into both adapters
-        // Repository (stores data) -- tells adapter update --> adapter
-        scrollCounter = scrollCounter + POSTS_TO_LOAD;
+    public static void hideProgressBar(){
+        pb.setVisibility(ProgressBar.INVISIBLE);
     }
-
 
 }
