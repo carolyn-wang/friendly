@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="yellow">#FBBC54</color>
+    <color name="light_tan">#F8DCB0</color>
+    <color name="tan">#F2B190</color>
+    <color name="pink">#FC5E70</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
