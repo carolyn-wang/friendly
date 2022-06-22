@@ -7,6 +7,7 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
@@ -19,14 +20,14 @@ import com.parse.ParseUser;
 
 public class NavigationUtils {
 
-    public static void goActivity(Activity activity, Class targetClass){
+    public static void goActivity(Activity activity, Class targetClass) {
         Context context = activity.getBaseContext();
         Intent i = new Intent(context, targetClass);
         activity.startActivity(i);
         activity.finish();
     }
 
-    public static void goLoginActivity(Activity activity){
+    public static void goLoginActivity(Activity activity) {
         goActivity(activity, LoginActivity.class);
 
     }
@@ -44,7 +45,7 @@ public class NavigationUtils {
 
     }
 
-    public static void displayFragmentQuickMatch(ParseUser user, FragmentManager fragmentManager){
+    public static void displayFragmentQuickMatch(ParseUser user, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment quickMatchFragment = new QuickMatchFragment();
         ft.replace(R.id.flContainer, quickMatchFragment);
@@ -58,18 +59,23 @@ public class NavigationUtils {
         ft.commit();
     }
 
-    public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager){
+    public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(user);
         ft.replace(R.id.flContainer, hangoutHistoryFragment);
         ft.commit();
     }
 
-    public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager){
+    public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
 //        Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
         Fragment hangoutDetailFragment = new HangoutDetailFragment();
-        ft.replace(R.id.flContainer, hangoutDetailFragment);
-        ft.commit();
+        ft.setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.slide_out
+                )
+                .replace(R.id.flContainer, hangoutDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

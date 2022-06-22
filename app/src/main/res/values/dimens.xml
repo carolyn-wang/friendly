@@ -7,5 +7,5 @@
     <dimen name="loginButtonMargin">20dp</dimen>
 
 <!--    activity_main.xml-->
-    <dimen name="mainMargin">24dp</dimen>
+    <dimen name="mainPadding">24dp</dimen>
 </resources>
