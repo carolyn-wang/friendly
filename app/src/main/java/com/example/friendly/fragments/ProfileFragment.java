@@ -1,5 +1,6 @@
 package com.example.friendly.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -28,9 +29,11 @@ public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
     private Context mContext;
+    private MainActivity mActivity;
 
     private Button btnLogout;
     private Button btnHangoutHistory;
+    private Button btnChangePreferences;
     private TextView tvUsername;
 
     public ProfileFragment() {
@@ -57,15 +60,17 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
+        mActivity = (MainActivity)mContext;
         btnLogout = view.findViewById(R.id.btnLogout);
         btnHangoutHistory = view.findViewById(R.id.btnHangoutHistory);
+        btnChangePreferences = view.findViewById(R.id.btnChangePreferences);
         tvUsername = view.findViewById(R.id.tvUsername);
 
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick Hangout History button");
-                NavigationUtils.displayFragmentHangoutHistory(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
+                NavigationUtils.displayFragmentHangoutHistory(ParseUser.getCurrentUser(), mActivity.getSupportFragmentManager());
             }
         });
 
@@ -74,7 +79,16 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Log.i(TAG, "onClick logout button");
                 ParseUser.logOut();
-                NavigationUtils.goLoginActivity((MainActivity)mContext);
+                NavigationUtils.goLoginActivity(mActivity);
+            }
+        });
+
+        btnChangePreferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick logout button");
+                ParseUser.logOut();
+                NavigationUtils.goPreferencesActivity(mActivity);
             }
         });
     }

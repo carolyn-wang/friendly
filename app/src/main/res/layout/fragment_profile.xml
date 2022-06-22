@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--TODO: change to constraintLayout & move values out-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -48,6 +49,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hangout History" />
+
+    <Button
+        android:id="@+id/btnChangePreferences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Preferences" />
 
     <Button
         android:id="@+id/btnLogout"
