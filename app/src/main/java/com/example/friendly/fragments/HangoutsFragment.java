@@ -38,7 +38,7 @@ public class HangoutsFragment extends Fragment {
     protected static final int POSTS_TO_LOAD = 5;
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
-//    protected List<Hangout> allHangouts;
+    //    protected List<Hangout> allHangouts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     protected int scrollCounter;
@@ -69,25 +69,42 @@ public class HangoutsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mContext = view.getContext();
-        query = new HangoutsQuery();
         pb = view.findViewById(R.id.pbLoading);
-        pb.setVisibility(ProgressBar.VISIBLE);
-
         rvHangouts = view.findViewById(R.id.rvHangouts);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        query = new HangoutsQuery();
         List<Hangout> allHangouts = query.getAllHangouts();
-        rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
+        if (allHangouts.size() == 0){
+            showProgressBar();
+        }
+
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
-
         query.queryHangouts(adapter);
+        rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        setPullToRefresh();
+        setScrollListener();
+
+    }
+
+    public static void hideProgressBar() {
+        pb.setVisibility(ProgressBar.INVISIBLE);
+    }
+
+    public static void showProgressBar() {
+        pb.setVisibility(ProgressBar.VISIBLE);
+    }
+
+
+    /**
+     * Displays animation when user refreshes feed
+     * Sets refreshing to false once network request has completed successfully
+     */
+    public void setPullToRefresh(){
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            /**
-             * Refreshes feed
-             * Sets refreshing to false once network request has completed successfully
-             */
+
             @Override
             public void onRefresh() {
                 adapter.clear();
@@ -101,7 +118,12 @@ public class HangoutsFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+    }
 
+    /**
+     * Adds a scroll listener to Hangouts RecyclerView
+     */
+    public void setScrollListener(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         rvHangouts.setLayoutManager(linearLayoutManager);
         // Retain an instance so that you can call `resetState()` for fresh searches
@@ -111,13 +133,7 @@ public class HangoutsFragment extends Fragment {
                 query.queryHangouts(adapter);
             }
         };
-        // Adds the scroll listener to RecyclerView
         rvHangouts.addOnScrollListener(scrollListener);
-
-    }
-
-    public static void hideProgressBar(){
-        pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
 }
