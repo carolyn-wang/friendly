@@ -15,12 +15,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.friendly.GoogleMapsClient;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.adapters.ProfileAdapter;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +74,13 @@ public class ProfileFragment extends Fragment {
         btnChangePreferences = view.findViewById(R.id.btnChangePreferences);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
+
+//        GoogleMapsClient c = new GoogleMapsClient();
+//        try {
+//            c.getNearbyPlaces();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         tvUsername.setText(ParseUser.getCurrentUser().getUsername());
         tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
