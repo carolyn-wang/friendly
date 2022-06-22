@@ -1,12 +1,13 @@
-package com.example.friendly;
+package com.example.friendly.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.friendly.R;
 
 public class PollOptionsAdapter extends RecyclerView.Adapter<PollOptionsAdapter.ViewHolder> {
     private String[] options;

@@ -1,8 +1,8 @@
 package com.example.friendly;
 
 import android.util.Log;
-import android.widget.ProgressBar;
 
+import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;

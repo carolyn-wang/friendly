@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.Hangout;
-import com.example.friendly.HangoutsAdapter;
+import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;

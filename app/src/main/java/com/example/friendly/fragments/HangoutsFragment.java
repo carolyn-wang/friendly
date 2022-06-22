@@ -10,14 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.friendly.Hangout;
-import com.example.friendly.HangoutsAdapter;
+import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.HangoutsQuery;
 import com.example.friendly.R;
 import com.parse.ParseUser;
@@ -29,6 +28,8 @@ import java.util.List;
  * Use the {@link HangoutsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+// TODO: child fragment that only queries specific user hangouts
 public class HangoutsFragment extends Fragment {
 
     private static final String TAG = "HangoutsFragment";
@@ -70,12 +71,15 @@ public class HangoutsFragment extends Fragment {
         mContext = view.getContext();
         query = new HangoutsQuery();
         pb = view.findViewById(R.id.pbLoading);
+        pb.setVisibility(ProgressBar.VISIBLE);
+
         rvHangouts = view.findViewById(R.id.rvHangouts);
         List<Hangout> allHangouts = query.getAllHangouts();
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
+
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
-        pb.setVisibility(ProgressBar.VISIBLE);
+
         query.queryHangouts(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);

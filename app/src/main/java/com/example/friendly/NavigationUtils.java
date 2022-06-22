@@ -11,6 +11,7 @@ import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
+import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
@@ -61,6 +62,14 @@ public class NavigationUtils {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(user);
         ft.replace(R.id.flContainer, hangoutHistoryFragment);
+        ft.commit();
+    }
+
+    public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager){
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+//        Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
+        Fragment hangoutDetailFragment = new HangoutDetailFragment();
+        ft.replace(R.id.flContainer, hangoutDetailFragment);
         ft.commit();
     }
 }
