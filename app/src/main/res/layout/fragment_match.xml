@@ -6,27 +6,25 @@
     android:orientation="vertical"
     android:padding="@dimen/fragment_padding"
     tools:context=".fragments.match.MatchFragment">
-
     <Button
         android:id="@+id/btnQuickHangout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quick Match" />
+        android:text="@string/match_btn_quick" />
 
     <Button
         android:id="@+id/btnLongHangout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:text="Schedule for Later" />
+        android:text="@string/match_btn_long" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upcoming Hangouts" />
+        android:text="@string/match_btn_upcoming" />
 
-<!--    TODO: move out LinearLayout, shouldnt be nested-->
-    <LinearLayout
+<!--    TODO: fix double padding-->
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/matchHangoutHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

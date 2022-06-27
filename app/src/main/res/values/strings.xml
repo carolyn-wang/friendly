@@ -17,4 +17,7 @@
     <string name="hangoutUser1">User 1</string>
     <string name="hangoutUser2">User 2</string>
     <string name="hangoutDate">Hangout date</string>
+    <string name="match_btn_quick">Quick Match</string>
+    <string name="match_btn_long">Schedule for Later</string>
+    <string name="match_btn_upcoming">Upcoming Hangouts</string>
 </resources>

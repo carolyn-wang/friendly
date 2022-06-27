@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
@@ -79,8 +78,7 @@ public class MatchFragment extends Fragment {
 
         fm.beginTransaction();
         new HangoutsFragment();
-//        TODO: can remove getCurrUser
-        Fragment fragTwo = HangoutsFragment.newInstance(ParseUser.getCurrentUser(), "future");
+        Fragment fragTwo = HangoutsFragment.newInstance("future");
         ft.add(R.id.matchHangoutHistory, fragTwo);
         ft.commit();
     }

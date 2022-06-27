@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick Hangout History button");
-                NavigationUtils.displayFragmentHangoutHistory(ParseUser.getCurrentUser(), mActivity.getSupportFragmentManager());
+                NavigationUtils.displayFragmentHangoutHistory(mActivity.getSupportFragmentManager());
             }
         });
 

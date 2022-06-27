@@ -33,6 +33,7 @@ import java.util.List;
 public class HangoutsFragment extends Fragment {
 
     private static final String TAG = "HangoutsFragment";
+    private static final String KEY_CONDITION = "condition";
     private Context mContext;
 
     protected static final int POSTS_TO_LOAD = 5;
@@ -48,12 +49,11 @@ public class HangoutsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static HangoutsFragment newInstance(ParseUser user, String queryCondition) {
+    public static HangoutsFragment newInstance(String queryCondition) {
 
         Bundle args = new Bundle();
         HangoutsFragment fragment = new HangoutsFragment();
-        args.putParcelable("user", user);
-        args.putString("condition", queryCondition);
+        args.putString(KEY_CONDITION, queryCondition);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,11 +67,8 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO: use current user
-        ParseUser user = (ParseUser) getArguments().getParcelable("user");
 
-        // TODO: move keys into final String
-        queryCondition = (String) getArguments().getString("condition");
+        queryCondition = (String) getArguments().getString(KEY_CONDITION);
 
         mContext = view.getContext();
         pb = view.findViewById(R.id.pbLoading);

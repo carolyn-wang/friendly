@@ -43,7 +43,7 @@ public class HangoutQuery {
         }
 
         if (queryCondition.equals("user")){
-            // TODO: replace with "user'
+            // TODO: filter by multiple users
             query.whereEqualTo(Hangout.KEY_USER1, ParseUser.getCurrentUser());
         }
         query.setSkip(scrollCounter);
