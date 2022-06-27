@@ -23,6 +23,8 @@ import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MatchFragment extends Fragment {
@@ -78,7 +80,8 @@ public class MatchFragment extends Fragment {
 
         fm.beginTransaction();
         new HangoutsFragment();
-        Fragment fragTwo = HangoutsFragment.newInstance("future");
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
+        Fragment fragTwo = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.matchHangoutHistory, fragTwo);
         ft.commit();
     }
