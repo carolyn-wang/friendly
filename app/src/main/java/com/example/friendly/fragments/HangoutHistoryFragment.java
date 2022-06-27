@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.friendly.objects.Hangout;
@@ -27,6 +30,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 
+// TODO: child fragment that only queries specific user hangouts
 public class HangoutHistoryFragment extends HangoutsFragment {
 
     private static final String TAG = "HangoutHistoryFragment";
@@ -34,19 +38,27 @@ public class HangoutHistoryFragment extends HangoutsFragment {
 
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
-    private SwipeRefreshLayout swipeContainer;
-    private EndlessRecyclerViewScrollListener scrollListener;
-    private static ProgressBar pb;
     private HangoutQuery query;
+
+
+    public HangoutHistoryFragment() {
+    }
+
+    public static HangoutHistoryFragment newInstance(ParseUser user) {
+
+        Bundle args = new Bundle();
+        HangoutHistoryFragment fragment = new HangoutHistoryFragment();
+        args.putParcelable("user", user);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mContext = view.getContext();
-        pb = view.findViewById(R.id.pbLoading);
         rvHangouts = view.findViewById(R.id.rvHangouts);
-        swipeContainer = view.findViewById(R.id.swipeContainer);
         query = new HangoutQuery();
         List<Hangout> allHangouts = query.getAllHangouts();
         if (allHangouts.size() == 0){
@@ -58,9 +70,10 @@ public class HangoutHistoryFragment extends HangoutsFragment {
         query.queryPastHangouts(adapter, ParseUser.getCurrentUser());
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
+        Log.i(TAG, "working");
+
         setPullToRefresh();
         setScrollListener();
-
     }
 
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 
-// TODO: child fragment that only queries specific user hangouts
 public class HangoutsFragment extends Fragment {
 
     private static final String TAG = "HangoutsFragment";
@@ -80,6 +80,8 @@ public class HangoutsFragment extends Fragment {
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter);
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
+
+        Log.i(TAG, "working");
 
         setPullToRefresh();
         setScrollListener();

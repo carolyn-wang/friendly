@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Upcoming Hangouts" />
 
+<!--    TODO: move out LinearLayout, shouldnt be nested-->
     <LinearLayout
         android:id="@+id/matchHangoutHistory"
         android:layout_width="match_parent"
