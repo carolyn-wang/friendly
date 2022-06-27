@@ -91,9 +91,6 @@ public class HangoutsFragment extends Fragment {
         query.queryHangouts(adapter, queryConditions);
 
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
-
-        Log.i(TAG, "onViewCreated");
-
         setPullToRefresh();
         setScrollListener();
 
