@@ -8,8 +8,10 @@ import com.example.friendly.objects.Hangout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HangoutQuery {
@@ -40,10 +42,94 @@ public class HangoutQuery {
                 HangoutsFragment.hideProgressBar();
             }
         });
+        scrollCounter = scrollCounter + POSTS_TO_LOAD;
+    }
 
-        // move function to postQuerier.java to query posts
-        // query class passes info into both adapters
-        // Repository (stores data) -- tells adapter update --> adapter
+    /*
+    public ParseQuery<Hangout> getDefaultParseQuery() {
+        ParseQuery<Hangout> query = ParseQuery.getQuery(Hangout.class);
+        query.include(Hangout.KEY_USER1);
+        query.include(Hangout.KEY_USER2);
+        query.include(Hangout.KEY_DATE);
+        query.setLimit(POSTS_TO_LOAD);
+        query.addDescendingOrder(Hangout.KEY_DATE);
+        query.setSkip(scrollCounter);
+        return query;
+    }
+     */
+
+    public void callParseQuery(ParseQuery<Hangout> query, HangoutsAdapter adapter){
+        // start an asynchronous call for posts
+        query.findInBackground(new FindCallback<Hangout>() {
+            @Override
+            public void done(List<Hangout> hangouts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                allHangouts.addAll(hangouts);
+                adapter.notifyDataSetChanged();
+                HangoutsFragment.hideProgressBar();
+            }
+        });
+    }
+
+    public void queryHangoutsByUser(HangoutsAdapter adapter, ParseUser user) {
+        ParseQuery<Hangout> query = ParseQuery.getQuery(Hangout.class);
+        query.include(Hangout.KEY_USER1);
+        query.include(Hangout.KEY_USER2);
+        query.include(Hangout.KEY_DATE);
+        query.setLimit(POSTS_TO_LOAD);
+        query.addDescendingOrder(Hangout.KEY_DATE);
+        query.setSkip(scrollCounter);
+
+        /*
+        ParseQuery<Hangout> queryUser1 = new ParseQuery<Hangout>(Hangout.class);
+        queryUser1.whereEqualTo(Hangout.KEY_USER1, user);
+        ParseQuery<Hangout> queryUser2 = new ParseQuery<Hangout>(Hangout.class);
+        queryUser2.whereEqualTo(Hangout.KEY_USER2, user);
+
+        List<ParseQuery<Hangout>> list = new ArrayList<ParseQuery<Hangout>>();
+        list.add(query);
+        list.add(queryUser1);
+        list.add(queryUser2);
+        ParseQuery<Hangout> queryOr = ParseQuery.or(list);
+         */
+
+        //TODO: user can also be User2
+        query.whereEqualTo(Hangout.KEY_USER1, user);
+        callParseQuery(query, adapter);
+        scrollCounter = scrollCounter + POSTS_TO_LOAD;
+
+    }
+
+    public void queryPastHangouts(HangoutsAdapter adapter, ParseUser user) {
+        ParseQuery<Hangout> query = ParseQuery.getQuery(Hangout.class);
+        query.include(Hangout.KEY_USER1);
+        query.include(Hangout.KEY_USER2);
+        query.include(Hangout.KEY_DATE);
+        query.setLimit(POSTS_TO_LOAD);
+        query.addDescendingOrder(Hangout.KEY_DATE);
+        query.setSkip(scrollCounter);
+        //TODO: user can also be User2
+//        query.whereEqualTo(Hangout.KEY_USER1, user);
+        query.whereLessThan(Hangout.KEY_DATE, new Date());
+        callParseQuery(query, adapter);
+        scrollCounter = scrollCounter + POSTS_TO_LOAD;
+    }
+
+    public void queryFutureHangouts(HangoutsAdapter adapter, ParseUser user) {
+        ParseQuery<Hangout> query = ParseQuery.getQuery(Hangout.class);
+        query.include(Hangout.KEY_USER1);
+        query.include(Hangout.KEY_USER2);
+        query.include(Hangout.KEY_DATE);
+        query.setLimit(POSTS_TO_LOAD);
+        query.addAscendingOrder(Hangout.KEY_DATE);
+        query.setSkip(scrollCounter);
+        //TODO: user can also be User2
+//        query.whereEqualTo(Hangout.KEY_USER1, user);
+        query.whereGreaterThanOrEqualTo(Hangout.KEY_DATE, new Date());
+        callParseQuery(query, adapter);
         scrollCounter = scrollCounter + POSTS_TO_LOAD;
     }
 

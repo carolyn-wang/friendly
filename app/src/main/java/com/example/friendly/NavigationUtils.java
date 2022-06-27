@@ -13,6 +13,7 @@ import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
+import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
@@ -62,7 +63,7 @@ public class NavigationUtils {
 
     public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(user);
+        Fragment hangoutHistoryFragment = new HangoutHistoryFragment().newInstance(user);
         ft.replace(R.id.flContainer, hangoutHistoryFragment);
         ft.commit();
     }
