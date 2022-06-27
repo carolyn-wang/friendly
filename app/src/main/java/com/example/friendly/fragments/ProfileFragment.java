@@ -71,7 +71,7 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
 
-        tvUsername.setText(ParseUser.getCurrentUser().getUsername());
+        tvUsername.setText("@" + ParseUser.getCurrentUser().getUsername());
         tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
 
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
