@@ -82,14 +82,13 @@ public class HangoutsFragment extends Fragment {
         swipeContainer = view.findViewById(R.id.swipeContainer);
         query = new HangoutQuery();
         List<Hangout> allHangouts = query.getAllHangouts();
-        if (allHangouts.size() == 0){
+        if (allHangouts.size() == 0) {
             showProgressBar();
         }
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter, queryConditions);
-
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
         Log.i(TAG, "onViewCreated");
@@ -112,7 +111,7 @@ public class HangoutsFragment extends Fragment {
      * Displays animation when user refreshes feed
      * Sets refreshing to false once network request has completed successfully
      */
-    public void setPullToRefresh(){
+    public void setPullToRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -134,7 +133,7 @@ public class HangoutsFragment extends Fragment {
     /**
      * Adds a scroll listener to Hangouts RecyclerView
      */
-    public void setScrollListener(){
+    public void setScrollListener() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         rvHangouts.setLayoutManager(linearLayoutManager);
         // Retain an instance so that you can call `resetState()` for fresh searches
