@@ -20,7 +20,6 @@ import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.HangoutQuery;
 import com.example.friendly.R;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,6 @@ public class HangoutsFragment extends Fragment {
     private static ProgressBar pb;
     private HangoutQuery query;
     private ArrayList<String> queryConditions;
-
 
     public HangoutsFragment() {
         // Required empty public constructor
@@ -91,6 +89,7 @@ public class HangoutsFragment extends Fragment {
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter, queryConditions);
+
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
         setPullToRefresh();
         setScrollListener();
@@ -118,7 +117,6 @@ public class HangoutsFragment extends Fragment {
                 adapter.clear();
                 query.setScrollCounter(0);
                 query.queryHangouts(adapter, queryConditions);
-                Log.i(TAG, "onRefresh");
                 swipeContainer.setRefreshing(false);
             }
         });
