@@ -32,7 +32,6 @@ public class HangoutHistoryFragment extends HangoutsFragment {
     private static final String TAG = "HangoutHistoryFragment";
     private Context mContext;
 
-    protected static final int POSTS_TO_LOAD = 5;
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;

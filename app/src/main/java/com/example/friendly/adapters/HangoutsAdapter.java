@@ -15,6 +15,7 @@ import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHolder> {
@@ -76,7 +77,8 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             if(hangout.getUser2() != null){
                 tvHangoutUser2.setText(hangout.getUser2().getUsername());
             }
-            tvHangoutDate.setText(hangout.getDate().toString());
+            String formattedDate = new SimpleDateFormat("MM/dd/yyyy, hh a").format(hangout.getDate());
+            tvHangoutDate.setText(formattedDate);
 
             // click listener to open DetailFragment for hangout
             cdHangout.setOnClickListener(new View.OnClickListener() {

@@ -78,7 +78,7 @@ public class HangoutsFragment extends Fragment {
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
-        query.queryFutureHangouts(adapter, ParseUser.getCurrentUser());
+        query.queryHangouts(adapter);
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
         setPullToRefresh();

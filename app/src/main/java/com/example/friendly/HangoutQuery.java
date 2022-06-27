@@ -16,7 +16,7 @@ import java.util.List;
 
 public class HangoutQuery {
     private static final String TAG = "HangoutQuery";
-    protected static final int POSTS_TO_LOAD = 5;
+    protected static final int POSTS_TO_LOAD = 10;
     protected int scrollCounter = 0;
     protected List<Hangout> allHangouts = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class HangoutQuery {
         query.include(Hangout.KEY_USER2);
         query.include(Hangout.KEY_DATE);
         query.setLimit(POSTS_TO_LOAD);
-        query.addDescendingOrder(Hangout.KEY_CREATED_AT);
+        query.addDescendingOrder(Hangout.KEY_DATE);
         query.setSkip(scrollCounter);
         // start an asynchronous call for posts
         query.findInBackground(new FindCallback<Hangout>() {
@@ -109,7 +109,7 @@ public class HangoutQuery {
         query.include(Hangout.KEY_USER2);
         query.include(Hangout.KEY_DATE);
         query.setLimit(POSTS_TO_LOAD);
-        query.addDescendingOrder(Hangout.KEY_DATE);
+        query.addAscendingOrder(Hangout.KEY_DATE);
         query.setSkip(scrollCounter);
         //TODO: user can also be User2
 //        query.whereEqualTo(Hangout.KEY_USER1, user);
