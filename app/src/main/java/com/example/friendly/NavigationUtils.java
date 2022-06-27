@@ -63,7 +63,7 @@ public class NavigationUtils {
 
     public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment hangoutHistoryFragment = new HangoutHistoryFragment().newInstance(user);
+        Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(user,  "past");
         ft.replace(R.id.flContainer, hangoutHistoryFragment);
         ft.commit();
     }

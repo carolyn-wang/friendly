@@ -30,6 +30,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 
+@Deprecated
+
 // TODO: child fragment that only queries specific user hangouts
 public class HangoutHistoryFragment extends HangoutsFragment {
 
@@ -41,11 +43,10 @@ public class HangoutHistoryFragment extends HangoutsFragment {
     private HangoutQuery query;
 
 
-    public HangoutHistoryFragment() {
-    }
+//    public HangoutHistoryFragment() {
+//    }
 
     public static HangoutHistoryFragment newInstance(ParseUser user) {
-
         Bundle args = new Bundle();
         HangoutHistoryFragment fragment = new HangoutHistoryFragment();
         args.putParcelable("user", user);
@@ -67,7 +68,7 @@ public class HangoutHistoryFragment extends HangoutsFragment {
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
-        query.queryPastHangouts(adapter, ParseUser.getCurrentUser());
+        query.queryHangouts(adapter, "past");
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
         Log.i(TAG, "working");

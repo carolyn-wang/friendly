@@ -42,16 +42,18 @@ public class HangoutsFragment extends Fragment {
     private EndlessRecyclerViewScrollListener scrollListener;
     private static ProgressBar pb;
     private HangoutQuery query;
+    private String queryCondition;
 
     public HangoutsFragment() {
         // Required empty public constructor
     }
 
-    public static HangoutsFragment newInstance(ParseUser user) {
+    public static HangoutsFragment newInstance(ParseUser user, String queryCondition) {
 
         Bundle args = new Bundle();
         HangoutsFragment fragment = new HangoutsFragment();
         args.putParcelable("user", user);
+        args.putString("condition", queryCondition);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,6 +67,11 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // TODO: use current user
+        ParseUser user = (ParseUser) getArguments().getParcelable("user");
+
+        // TODO: move keys into final String
+        queryCondition = (String) getArguments().getString("condition");
 
         mContext = view.getContext();
         pb = view.findViewById(R.id.pbLoading);
@@ -78,7 +85,7 @@ public class HangoutsFragment extends Fragment {
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
-        query.queryHangouts(adapter);
+        query.queryHangouts(adapter, queryCondition);
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
         Log.i(TAG, "working");
@@ -108,7 +115,8 @@ public class HangoutsFragment extends Fragment {
             public void onRefresh() {
                 adapter.clear();
                 query.setScrollCounter(0);
-                query.queryHangouts(adapter);
+                query.queryHangouts(adapter, queryCondition);
+                Log.i(TAG, "refreshing");
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -129,7 +137,7 @@ public class HangoutsFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                query.queryHangouts(adapter);
+                query.queryHangouts(adapter, queryCondition);
             }
         };
         rvHangouts.addOnScrollListener(scrollListener);
