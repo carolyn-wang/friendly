@@ -20,6 +20,7 @@ import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.HangoutQuery;
 import com.example.friendly.R;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class HangoutsFragment extends Fragment {
     private static ProgressBar pb;
     private HangoutQuery query;
     private ArrayList<String> queryConditions;
+
 
     public HangoutsFragment() {
         // Required empty public constructor
@@ -73,7 +75,10 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // TODO: use current user
+        ParseUser user = (ParseUser) getArguments().getParcelable("user");
 
+        // TODO: move keys into final String
         queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
 
         mContext = view.getContext();
@@ -89,7 +94,6 @@ public class HangoutsFragment extends Fragment {
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter, queryConditions);
-
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
         setPullToRefresh();
         setScrollListener();

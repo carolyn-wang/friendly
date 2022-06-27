@@ -42,7 +42,6 @@ public class HangoutQuery{
             // TODO: add "or" condition where KEY_USER2 equals current user
             query.whereEqualTo(Hangout.KEY_USER1, ParseUser.getCurrentUser());
         }
-
         query.setSkip(scrollCounter);
         // start an asynchronous call for posts
         query.findInBackground(new FindCallback<Hangout>() {
