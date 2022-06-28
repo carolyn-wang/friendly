@@ -3,6 +3,7 @@ package com.example.friendly;
 import android.app.Application;
 
 import com.example.friendly.objects.Hangout;
+import com.example.friendly.objects.Place;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -14,6 +15,7 @@ public class ParseApplication extends Application {
 
         // Register your parse models
         ParseObject.registerSubclass(Hangout.class);
+        ParseObject.registerSubclass(Place.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("IDsIeYawTbR7j0y43iGILuUWJgAM1muaNGzSPWw8")

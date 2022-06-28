@@ -81,7 +81,9 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             }
             String formattedDate = new SimpleDateFormat("MM/dd/yyyy, hh a").format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
-            tvHangoutLocation.setText(hangout.getLocationName());
+            if(hangout.getLocation() != null){
+                tvHangoutLocation.setText(hangout.getLocationName());
+            }
 
             // click listener to open DetailFragment for hangout
             cdHangout.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +94,6 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                         Hangout hangout = hangouts.get(position);
                         Log.i(TAG, hangout.getUser1().getUsername());
                         NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
-//                        NavigationUtils.displayFragmentHangoutDetail(hangout);
                     }
                 }
             });
