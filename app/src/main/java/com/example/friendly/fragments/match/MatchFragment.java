@@ -15,14 +15,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.friendly.GoogleCalendarClient;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.fragments.HangoutsFragment;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
 import com.parse.ParseUser;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 public class MatchFragment extends Fragment {
@@ -53,6 +58,13 @@ public class MatchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mContext = view.getContext();
+
+        GoogleCalendarClient cal = new GoogleCalendarClient();
+        try {
+            cal.createEvent();
+        } catch (IOException | GeneralSecurityException e) {
+            e.printStackTrace();
+        }
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
