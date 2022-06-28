@@ -50,6 +50,11 @@ public class NavigationUtils {
 
     }
 
+
+    public static void goMapsActivity(Activity activity) {
+        goActivity(activity, MapsActivity.class);
+    }
+
     public static void displayFragmentQuickMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment quickMatchFragment = new QuickMatchFragment();
