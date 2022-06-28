@@ -79,7 +79,6 @@ public class MatchFragment extends Fragment {
         FragmentTransaction ft = fm.beginTransaction();
 
         fm.beginTransaction();
-        new HangoutsFragment();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
         Fragment fragTwo = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.matchHangoutHistory, fragTwo);

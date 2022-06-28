@@ -66,6 +66,7 @@ public class NavigationUtils {
 
     public static void displayFragmentHangoutHistory(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        // TODO: put "past", "user", "first name" all in a strings constant file
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("past", "user"));
         Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(conditions);
         ft.replace(R.id.flContainer, hangoutHistoryFragment);

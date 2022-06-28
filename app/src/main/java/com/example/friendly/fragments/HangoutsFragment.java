@@ -88,12 +88,11 @@ public class HangoutsFragment extends Fragment {
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
-//        query.queryHangouts(adapter, queryCondition);
         query.queryHangouts(adapter, queryConditions);
 
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
-        Log.i(TAG, "working");
+        Log.i(TAG, "onViewCreated");
 
         setPullToRefresh();
         setScrollListener();
@@ -121,7 +120,7 @@ public class HangoutsFragment extends Fragment {
                 adapter.clear();
                 query.setScrollCounter(0);
                 query.queryHangouts(adapter, queryConditions);
-                Log.i(TAG, "refreshing");
+                Log.i(TAG, "onRefresh");
                 swipeContainer.setRefreshing(false);
             }
         });
