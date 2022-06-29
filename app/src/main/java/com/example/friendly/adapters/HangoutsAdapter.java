@@ -61,12 +61,14 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
         private TextView tvHangoutUser1;
         private TextView tvHangoutUser2;
         private TextView tvHangoutDate;
+        private TextView tvHangoutLocation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHangoutUser1 = itemView.findViewById(R.id.tvHangoutUser1);
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
+            tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
 //                currentUser = ParseUser.getCurrentUser();
             cdHangout = itemView.findViewById(R.id.cdHangout);
         }
@@ -74,11 +76,12 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
         public void bind(Hangout hangout) {
             // Bind the post data to the view elements
             tvHangoutUser1.setText(hangout.getUser1().getUsername());
-            if(hangout.getUser2() != null){
+            if (hangout.getUser2() != null) {
                 tvHangoutUser2.setText(hangout.getUser2().getUsername());
             }
             String formattedDate = new SimpleDateFormat("MM/dd/yyyy, hh a").format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
+            tvHangoutLocation.setText(hangout.getLocationName());
 
             // click listener to open DetailFragment for hangout
             cdHangout.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +91,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     if (position != RecyclerView.NO_POSITION) {
                         Hangout hangout = hangouts.get(position);
                         Log.i(TAG, hangout.getUser1().getUsername());
-                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity)mContext).getSupportFragmentManager() );
+                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
 //                        NavigationUtils.displayFragmentHangoutDetail(hangout);
                     }
                 }
