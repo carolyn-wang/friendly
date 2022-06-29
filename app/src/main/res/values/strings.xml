@@ -20,4 +20,5 @@
     <string name="match_btn_quick">Quick Match</string>
     <string name="match_btn_long">Schedule for Later</string>
     <string name="match_btn_upcoming">Upcoming Hangouts</string>
+    <string name="quick_match_title">Quick Match</string>
 </resources>
