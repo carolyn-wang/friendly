@@ -14,6 +14,7 @@ import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutsFragment;
+import com.example.friendly.fragments.match.CreateQuickMatchFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.example.friendly.objects.Hangout;
@@ -53,6 +54,13 @@ public class NavigationUtils {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment quickMatchFragment = new QuickMatchFragment();
         ft.replace(R.id.flContainer, quickMatchFragment);
+        ft.commit();
+    }
+
+    public static void displayCreateQuickMatch(ParseUser user, FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment createQuickMatchFragment = new CreateQuickMatchFragment();
+        ft.replace(R.id.flContainer, createQuickMatchFragment);
         ft.commit();
     }
 

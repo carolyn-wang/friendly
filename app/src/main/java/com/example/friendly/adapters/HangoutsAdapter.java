@@ -79,7 +79,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             if (hangout.getUser2() != null) {
                 tvHangoutUser2.setText(hangout.getUser2().getUsername());
             }
-            String formattedDate = new SimpleDateFormat("MM/dd/yyyy, hh a").format(hangout.getDate());
+            String formattedDate = new SimpleDateFormat("MM/dd/yyyy, h a").format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
             if(hangout.getLocation() != null){
                 tvHangoutLocation.setText(hangout.getLocationName());
