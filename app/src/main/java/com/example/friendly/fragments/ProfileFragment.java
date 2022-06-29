@@ -71,14 +71,16 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
 
-        tvUsername.setText(ParseUser.getCurrentUser().getUsername());
-        tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
-
+        if (ParseUser.getCurrentUser() != null){
+            tvUsername.setText(ParseUser.getCurrentUser().getUsername());
+            tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
+        }
+        
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick Hangout History button");
-                NavigationUtils.displayFragmentHangoutHistory(ParseUser.getCurrentUser(), mActivity.getSupportFragmentManager());
+                NavigationUtils.displayFragmentHangoutHistory(mActivity.getSupportFragmentManager());
             }
         });
 

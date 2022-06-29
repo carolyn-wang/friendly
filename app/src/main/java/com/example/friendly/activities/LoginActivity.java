@@ -28,10 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // TODO: remove
-//        NavigationUtils.goPreferencesActivity(LoginActivity.this);
-
-
         if (ParseUser.getCurrentUser() != null){
             NavigationUtils.goMainActivity(LoginActivity.this);
         }

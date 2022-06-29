@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,8 @@ import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.HangoutQuery;
 import com.example.friendly.R;
-import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,10 +30,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 
-// TODO: child fragment that only queries specific user hangouts
 public class HangoutsFragment extends Fragment {
 
     private static final String TAG = "HangoutsFragment";
+    private static final String KEY_CONDITION = "condition";
     private Context mContext;
 
     protected static final int POSTS_TO_LOAD = 5;
@@ -42,18 +43,25 @@ public class HangoutsFragment extends Fragment {
     private EndlessRecyclerViewScrollListener scrollListener;
     private static ProgressBar pb;
     private HangoutQuery query;
+    private ArrayList<String> queryConditions;
 
     public HangoutsFragment() {
         // Required empty public constructor
     }
 
-    public static HangoutsFragment newInstance(ParseUser user) {
+    public static HangoutsFragment newInstance(ArrayList<String> queryConditions) {
 
         Bundle args = new Bundle();
         HangoutsFragment fragment = new HangoutsFragment();
-        args.putParcelable("user", user);
+        args.putStringArrayList(KEY_CONDITION, queryConditions);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static HangoutsFragment newInstance(String queryCondition) {
+        ArrayList<String> conditionsArray = new ArrayList<>();
+        conditionsArray.add(queryCondition);
+        return HangoutsFragment.newInstance(conditionsArray);
     }
 
     @Override
@@ -65,6 +73,8 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
 
         mContext = view.getContext();
         pb = view.findViewById(R.id.pbLoading);
@@ -78,8 +88,11 @@ public class HangoutsFragment extends Fragment {
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
-        query.queryHangouts(adapter);
+        query.queryHangouts(adapter, queryConditions);
+
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
+
+        Log.i(TAG, "onViewCreated");
 
         setPullToRefresh();
         setScrollListener();
@@ -106,7 +119,8 @@ public class HangoutsFragment extends Fragment {
             public void onRefresh() {
                 adapter.clear();
                 query.setScrollCounter(0);
-                query.queryHangouts(adapter);
+                query.queryHangouts(adapter, queryConditions);
+                Log.i(TAG, "onRefresh");
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -127,7 +141,7 @@ public class HangoutsFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                query.queryHangouts(adapter);
+                query.queryHangouts(adapter, queryConditions);
             }
         };
         rvHangouts.addOnScrollListener(scrollListener);

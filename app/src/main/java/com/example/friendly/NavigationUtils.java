@@ -19,6 +19,10 @@ import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.example.friendly.objects.Hangout;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class NavigationUtils {
 
     public static void goActivity(Activity activity, Class targetClass) {
@@ -60,9 +64,11 @@ public class NavigationUtils {
         ft.commit();
     }
 
-    public static void displayFragmentHangoutHistory(ParseUser user, FragmentManager fragmentManager) {
+    public static void displayFragmentHangoutHistory(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(user);
+        // TODO: put "past", "user", "first name" all in a strings constant file
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("past", "user"));
+        Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(conditions);
         ft.replace(R.id.flContainer, hangoutHistoryFragment);
         ft.commit();
     }
