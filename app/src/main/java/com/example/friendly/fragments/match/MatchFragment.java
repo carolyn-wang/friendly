@@ -15,14 +15,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
-import com.example.friendly.fragments.HangoutsFragment;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MatchFragment extends Fragment {
@@ -77,7 +79,8 @@ public class MatchFragment extends Fragment {
         FragmentTransaction ft = fm.beginTransaction();
 
         fm.beginTransaction();
-        Fragment fragTwo = new HangoutsFragment();
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
+        Fragment fragTwo = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.matchHangoutHistory, fragTwo);
         ft.commit();
     }

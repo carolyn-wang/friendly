@@ -28,10 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // TODO: remove
-//        NavigationUtils.goPreferencesActivity(LoginActivity.this);
-
-
         if (ParseUser.getCurrentUser() != null){
             NavigationUtils.goMainActivity(LoginActivity.this);
         }
@@ -61,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //TODO: Add toast if login fails
     //TODO: Limit to only 1 login in case of glitch
     private void loginUser(String username, String password){
         Log.i(TAG, "Attempting to login user " + username);
@@ -72,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 NavigationUtils.goMainActivity(LoginActivity.this);
-                Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT);
             }
         });
     }
