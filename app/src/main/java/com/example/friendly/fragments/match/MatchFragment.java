@@ -1,5 +1,6 @@
 package com.example.friendly.fragments.match;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,9 +31,11 @@ import java.util.List;
 public class MatchFragment extends Fragment {
     private static final String TAG = "MatchFragment";
     private Context mContext;
+    private Activity mActivity;
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
+    private Button btnMap;
 
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
@@ -55,9 +58,11 @@ public class MatchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mContext = view.getContext();
+        mActivity = getActivity();
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
+        btnMap = view.findViewById(R.id.btnMap);
 
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +76,14 @@ public class MatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavigationUtils.displayFragmentLongMatch(((MainActivity)mContext).getSupportFragmentManager());
+            }
+        });
+
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick LongTerm History button");
+                NavigationUtils.goMapsActivity(mActivity);
             }
         });
 

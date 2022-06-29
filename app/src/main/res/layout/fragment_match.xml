@@ -31,16 +31,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/match_btn_long" />
 
-    <TextView
-        android:id="@+id/matchUpcomingTitle"
+    <Button
+        android:id="@+id/btnMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/btnLongHangout"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/match_map_text" />
+
+    <TextView
+        android:id="@+id/matchUpcomingTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btnMap"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/match_btn_upcoming"
         style="@style/TitleFont.Medium"/>
 
-<!--    TODO: fix double padding-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/matchHangoutHistory"
         android:layout_width="match_parent"

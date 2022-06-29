@@ -34,4 +34,8 @@
     <string name="notifications">Notifications</string>
     <string name="receive_messages">Receive Messages</string>
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
+    <string name="match_quick_text">Quick Match</string>
+    <string name="match_long_text">Schedule for Later</string>
+    <string name="match_map_text">Show Map</string>
+    <string name="match_upcoming_hangouts">Upcoming Hangouts</string>
 </resources>
