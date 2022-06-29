@@ -85,6 +85,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                 tvHangoutLocation.setText(hangout.getLocationName());
             }
 
+            // TODO: move into child classes
             // click listener to open DetailFragment for hangout
             cdHangout.setOnClickListener(new View.OnClickListener() {
                 @Override
