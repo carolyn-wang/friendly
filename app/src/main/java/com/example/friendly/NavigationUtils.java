@@ -15,6 +15,7 @@ import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.match.CreateQuickMatchFragment;
+import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.example.friendly.objects.Hangout;
@@ -88,6 +89,20 @@ public class NavigationUtils {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
+                .addToBackStack(null)
+                .commit();
+
+        ft.setReorderingAllowed(true) // setAllowOptimization before 26.1.0
+//                .addSharedElement(imageView, imageView.getTransitionName())
+                .replace(R.id.flContainer, hangoutDetailFragment, hangout.getObjectId())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void displayFragmentMap(ParseUser currentUser, FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment mapFragment = new MapFragment();
+        ft.replace(R.id.flContainer, mapFragment)
                 .addToBackStack(null)
                 .commit();
     }

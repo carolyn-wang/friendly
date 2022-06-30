@@ -83,7 +83,8 @@ public class MatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick LongTerm History button");
-                NavigationUtils.goMapsActivity(mActivity);
+//                NavigationUtils.goMapsActivity(mActivity);
+                NavigationUtils.displayFragmentMap(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
             }
         });
 
