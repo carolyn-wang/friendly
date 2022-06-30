@@ -95,25 +95,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-        saveCurrentUserLocation();
+//        saveCurrentUserLocation();
 
         ParseGeoPoint currLocation = getCurrentUserLocation();
-        double lat = currLocation.getLatitude();
-        double lng = currLocation.getLongitude();
-        LatLng latLng = new LatLng(lat, lng);
+        LatLng currentLatLng = new LatLng(currLocation.getLatitude(), currLocation.getLongitude());
 
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in current location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Marker in current location"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         showCurrentUserInMap(googleMap);
         showClosestUser(googleMap);
         showPlacesInMap(googleMap);
         showClosestPlace(googleMap);
+
+//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17.5f), 4000, null);
+
     }
 
     /**
@@ -188,8 +184,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ParseGeoPoint currentUserLocation = getCurrentUserLocation();
         LatLng currentUser = new LatLng(currentUserLocation.getLatitude(), currentUserLocation.getLongitude());
         googleMap.addMarker(new MarkerOptions().position(currentUser).title(ParseUser.getCurrentUser().getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUser, 5));
+        moveCamera(googleMap, currentUser, 15.0f);
     }
+
 
     /**
      * Find and display the distance between the current user and the closest user to current user.
@@ -218,7 +215,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     showCurrentUserInMap(mMap);
                     LatLng closestUserLocation = new LatLng(closestUser.getParseGeoPoint("Location").getLatitude(), closestUser.getParseGeoPoint("Location").getLongitude());
                     googleMap.addMarker(new MarkerOptions().position(closestUserLocation).title(closestUser.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(closestUserLocation, 3));
+
                 } else {
                     Log.d("store", "Error: " + e.getMessage());
                 }
@@ -267,7 +264,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Toast.makeText(mContext,"We found the closest place from you! It's " + closestPlace.getString("name") + ". \nYou are " + Math.round (distance * 100.0) / 100.0  + " km from this store.", Toast.LENGTH_SHORT).show();
                     LatLng closestPlaceLocation = new LatLng(closestPlace.getParseGeoPoint("Location").getLatitude(), closestPlace.getParseGeoPoint("Location").getLongitude());
                     googleMap.addMarker(new MarkerOptions().position(closestPlaceLocation).title(closestPlace.getString("name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(closestPlaceLocation, 3));
                 } else {
                     Log.d("store", "Error: " + e.getMessage());
                 }
@@ -276,5 +272,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ParseQuery.clearAllCachedResults();
 
+    }
+
+
+    /**
+     * Zoom camera to location
+     * @param googleMap
+     * @param latLng
+     */
+    private void moveCamera(final GoogleMap googleMap, LatLng latLng, float zoom){
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom), 1, null);
+    }
+
+    /**
+     * Add marker on given point.
+     * @param latLng
+     */
+    private void setMarker(final GoogleMap googleMap, LatLng latLng, String title){
+        googleMap.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 }
