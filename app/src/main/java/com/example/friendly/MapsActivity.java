@@ -1,43 +1,30 @@
 package com.example.friendly;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import android.app.Activity;
-import android.os.Bundle;
-
-import com.google.android.gms.common.GoogleApiAvailability;
+import com.example.friendly.databinding.ActivityGoogleMapsBinding;
+import com.example.friendly.objects.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.friendly.databinding.ActivityGoogleMapsBinding;
-
-// Android Dependencies
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
-//import android.support.annotation.NonNull;
-//import android.support.v4.app.ActivityCompat;
-//import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.widget.Toast;
-// Google Maps Dependencies
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-// Parse Dependencies
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -45,17 +32,15 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-// Java dependencies
+
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    // TODO: fix get current user location
-    // TODO: fix refreshing
-
     private static final String TAG = "MapsActivity";
     private static final String KEY_USER_LOCATION = "Location";
-    private static final String KEY_USER_NAME = "name";
+    private static final String KEY_USER_NAME = "firstName";
+    private static final String KEY_PLACE_NAME = "name";
     private static final String KEY_PLACE_LOCATION = "Location";
     private static final float INITIAL_ZOOM = 14.0f;
 
@@ -78,7 +63,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityGoogleMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -95,8 +79,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-//        getSaveCurrentUserDeviceLocation();
-
         showCurrentUserInMap(googleMap);
         showClosestUser(googleMap);
         showPlacesInMap(googleMap);
@@ -117,37 +99,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /**
-     * Updates user location on Back4App Dashboard
-     */
-
-    private void saveUserLocation(ParseGeoPoint location) {
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            currentUser.put(KEY_USER_LOCATION, location);
-            currentUser.saveInBackground();
-            Log.i(TAG, "saved User Location to database");
-        } else {
-            Toast.makeText(mContext, "Can't save user's current location", Toast.LENGTH_SHORT).show();
-            NavigationUtils.goLoginActivity(mActivity);
-
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case REQUEST_LOCATION:
-                getCurrentLocation();
-                break;
-        }
-    }
-
 
     /**
-     * Retreives current user location from Back4App Database.
+     * Retrieves current user location from Back4App Database.
      * Return to Login Activity if not possible to find user.
      */
     private ParseGeoPoint getCurrentUserParseLocation() {
@@ -158,7 +112,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return currentUser.getParseGeoPoint(KEY_USER_LOCATION);
     }
-
 
     /**
      * Returns the current device location and saves to Back4App database.
@@ -175,13 +128,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.i(TAG, "onSuccess" + location);
                         ParseGeoPoint geoLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
                         saveUserLocation(geoLocation);
-                        Toast.makeText(mContext, "Retrieved user's current location" + location.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Retrieved user's current location: " + location.toString(), Toast.LENGTH_SHORT).show();
                     }
                     Log.i(TAG, "Location is null :(");
                 }
             });
         }
         return getCurrentUserParseLocation();
+    }
+
+
+    /**
+     * Saves updated user location to Back4App Dashboard.
+     * If user is null, sends back to login screen.
+     */
+
+    private void saveUserLocation(ParseGeoPoint location) {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            currentUser.put(KEY_USER_LOCATION, location);
+            currentUser.saveInBackground();
+            Log.i(TAG, "saved user location to database");
+        } else {
+            Toast.makeText(mContext, "Can't save user's current location", Toast.LENGTH_SHORT).show();
+            NavigationUtils.goLoginActivity(mActivity);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_LOCATION:
+                getCurrentLocation();
+                break;
+        }
     }
 
     /**
@@ -194,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ParseGeoPoint currentUserLocation = getCurrentLocation();
         LatLng currentUser = new LatLng(currentUserLocation.getLatitude(), currentUserLocation.getLongitude());
-        googleMap.addMarker(new MarkerOptions().position(currentUser).title(ParseUser.getCurrentUser().getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        setMarker(googleMap, currentUser, ParseUser.getCurrentUser().getString(KEY_USER_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         moveCamera(googleMap, currentUser, INITIAL_ZOOM);
     }
 
@@ -226,7 +207,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Toast.makeText(mContext, "We found the closest user from you! It's " + closestUser.getUsername() + ". \n You are " + Math.round(distance * 100.0) / 100.0 + " km from this user.", Toast.LENGTH_SHORT).show();
                     showCurrentUserInMap(googleMap);
                     LatLng closestUserLocation = new LatLng(closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-                    googleMap.addMarker(new MarkerOptions().position(closestUserLocation).title(closestUser.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    setMarker(googleMap, closestUserLocation, closestUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                     moveCamera(googleMap, closestUserLocation, INITIAL_ZOOM);
                 } else {
                     Log.d("store", "Error: " + e.getMessage());
@@ -248,7 +229,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.i(TAG, stores.get(i).getObjectId());
                         LatLng storeLocation = new LatLng(stores.get(i).getParseGeoPoint(KEY_PLACE_LOCATION).getLatitude(), stores.get(i).getParseGeoPoint(KEY_PLACE_LOCATION).getLongitude());
                         Toast.makeText(mContext, storeLocation.toString(), Toast.LENGTH_SHORT).show();
-                        setMarker(googleMap,storeLocation, stores.get(i).getString(KEY_USER_NAME),BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE) );
+                        setMarker(googleMap,storeLocation, stores.get(i).getString(KEY_PLACE_NAME),BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE) );
                     }
                 } else {
                     Log.i(TAG, "Error: " + e.getMessage());
@@ -276,9 +257,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     ParseObject closestPlace = nearStores.get(0);
                     showCurrentUserInMap(googleMap);
                     double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getParseGeoPoint(KEY_USER_LOCATION));
-                    Toast.makeText(mContext, "We found the closest place from you! It's " + closestPlace.getString(KEY_USER_NAME) + ". \nYou are " + Math.round(distance * 100.0) / 100.0 + " km from this store.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "We found the closest place from you! It's " + closestPlace.getString(KEY_PLACE_NAME) + ". \nYou are " + Math.round(distance * 100.0) / 100.0 + " km from this store.", Toast.LENGTH_SHORT).show();
                     LatLng closestPlaceLocation = new LatLng(closestPlace.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestPlace.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-                    googleMap.addMarker(new MarkerOptions().position(closestPlaceLocation).title(closestPlace.getString(KEY_USER_NAME)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    setMarker(googleMap, closestPlaceLocation, closestPlace.getString(KEY_PLACE_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
