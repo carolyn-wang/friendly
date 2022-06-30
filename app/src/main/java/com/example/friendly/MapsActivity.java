@@ -53,6 +53,10 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    // TODO: fix get current user location
+    // TODO: fix zoom function
+    // TODO: fix refreshing
+
     private GoogleMap mMap;
     private ActivityGoogleMapsBinding binding;
     private Context mContext;
@@ -125,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     ActivityCompat.requestPermissions(MapsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
                 } else {
                     Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
+                    // TODO: Line above doesn't save location properly
                     if (location != null) {
                         ParseGeoPoint currentUserLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
                         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -161,9 +165,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * Saving and returning the current user location.
      * Return to Login Activity if not possible to find user.
      */
-    //save used to be outside of get Curr User location
     private ParseGeoPoint getCurrentUserLocation() {
-        saveCurrentUserLocation();
+        saveCurrentUserLocation();     //save used to be outside of get Curr User location
         ParseUser currentUser = ParseUser.getCurrentUser();
 
         if (currentUser == null) {
@@ -188,6 +191,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUser, 5));
     }
 
+    /**
+     * Find and display the distance between the current user and the closest user to current user.
+     * Create marker to show closest user.
+     * Zoom the map to the currentUserLocation
+     * @param googleMap
+     */
+
     private void showClosestUser(final GoogleMap googleMap) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNear("Location", getCurrentUserLocation());
@@ -197,23 +207,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void done(List<ParseUser> nearUsers, ParseException e) {
                 if (e == null) {
-                    // avoiding null pointer
                     ParseUser closestUser = ParseUser.getCurrentUser();
-                    // set the closestUser to the one that isn't the current user
                     for (int i = 0; i < nearUsers.size(); i++) {
                         if (!nearUsers.get(i).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                             closestUser = nearUsers.get(i);
                         }
                     }
-                    // finding and displaying the distance between the current user and the closest user to him, using method implemented in Step 4
                     double distance = getCurrentUserLocation().distanceInKilometersTo(closestUser.getParseGeoPoint("Location"));
-                    // alertDisplayer("We found the closest user from you!", "It's " + closestUser.getUsername() + ". \n You are " + Math.round (distance * 100.0) / 100.0  + " km from this user.");
-                    // showing current user in map, using the method implemented in Step 5
+                    Toast.makeText(mContext, "We found the closest user from you! It's " + closestUser.getUsername() + ". \n You are " + Math.round (distance * 100.0) / 100.0  + " km from this user.", Toast.LENGTH_SHORT).show();
                     showCurrentUserInMap(mMap);
-                    // creating a marker in the map showing the closest user to the current user location
                     LatLng closestUserLocation = new LatLng(closestUser.getParseGeoPoint("Location").getLatitude(), closestUser.getParseGeoPoint("Location").getLongitude());
                     googleMap.addMarker(new MarkerOptions().position(closestUserLocation).title(closestUser.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                    // zoom the map to the currentUserLocation
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(closestUserLocation, 3));
                 } else {
                     Log.d("store", "Error: " + e.getMessage());
@@ -222,23 +226,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         ParseQuery.clearAllCachedResults();
     }
-
-
-//    // todo: move to utils
-//    private void alertDisplayer(String title,String message){
-//        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext)
-//                .setTitle(title)
-//                .setMessage(message)
-//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                });
-//        android.app.AlertDialog ok = builder.create();
-//        ok.show();
-//    }
-
 
     private void showPlacesInMap(final GoogleMap googleMap) {
 
@@ -250,10 +237,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (e == null) {
                     for (int i = 0; i < stores.size(); i++) {
                         LatLng storeLocation = new LatLng(stores.get(i).getParseGeoPoint("Location").getLatitude(), stores.get(i).getParseGeoPoint("Location").getLongitude());
-                        googleMap.addMarker(new MarkerOptions().position(storeLocation).title(stores.get(i).getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                        googleMap.addMarker(new MarkerOptions().position(storeLocation).title(stores.get(i).getString("name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                     }
                 } else {
-                    // handle the error
                     Log.d("Place", "Error: " + e.getMessage());
                 }
             }
@@ -262,25 +248,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    /**
+     * Finding and creating a marker in the map showing the closest store to the current user
+     * Zoom the map to the closestPlaceLocation
+     * @param googleMap
+     */
     private void showClosestPlace(final GoogleMap googleMap) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Place");
         query.whereNear("Location", getCurrentUserLocation());
-        // setting the limit of near stores to 1, you'll have in the nearStores list only one object: the closest store from the current user
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> nearStores, ParseException e) {
                 if (e == null) {
                     ParseObject closestPlace = nearStores.get(0);
-                    // showing current user location, using the method implemented in Step 5
                     showCurrentUserInMap(mMap);
-                    // finding and displaying the distance between the current user and the closest store to him, using method implemented in Step 4
                     double distance = getCurrentUserLocation().distanceInKilometersTo(closestPlace.getParseGeoPoint("Location"));
-                    // alertDisplayer("We found the closest place from you!", "It's " + closestPlace.getString("Name") + ". \nYou are " + Math.round (distance * 100.0) / 100.0  + " km from this store.");
-                    // creating a marker in the map showing the closest store to the current user
+                    Toast.makeText(mContext,"We found the closest place from you! It's " + closestPlace.getString("name") + ". \nYou are " + Math.round (distance * 100.0) / 100.0  + " km from this store.", Toast.LENGTH_SHORT).show();
                     LatLng closestPlaceLocation = new LatLng(closestPlace.getParseGeoPoint("Location").getLatitude(), closestPlace.getParseGeoPoint("Location").getLongitude());
-                    googleMap.addMarker(new MarkerOptions().position(closestPlaceLocation).title(closestPlace.getString("Name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                    // zoom the map to the closestPlaceLocation
+                    googleMap.addMarker(new MarkerOptions().position(closestPlaceLocation).title(closestPlace.getString("name")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(closestPlaceLocation, 3));
                 } else {
                     Log.d("store", "Error: " + e.getMessage());
