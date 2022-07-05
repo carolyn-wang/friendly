@@ -89,7 +89,6 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                         Hangout hangout = hangouts.get(position);
                         Log.i(TAG, hangout.getUser1().getUsername());
                         NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity)mContext).getSupportFragmentManager() );
-//                        NavigationUtils.displayFragmentHangoutDetail(hangout);
                     }
                 }
             });
