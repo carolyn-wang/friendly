@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (ParseUser.getCurrentUser() != null){
+        if (ParseUser.getCurrentUser() != null) {
             NavigationUtils.goMainActivity(LoginActivity.this);
         }
 
@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnSignup = findViewById(R.id.btnSignup);
 
-        btnLogin.setOnClickListener(new View.OnClickListener(){
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick login button");
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnSignup.setOnClickListener(new View.OnClickListener(){
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick sign up button");
@@ -59,12 +59,12 @@ public class LoginActivity extends AppCompatActivity {
 
     //TODO: Add toast if login fails
     //TODO: Limit to only 1 login in case of glitch
-    private void loginUser(String username, String password){
+    private void loginUser(String username, String password) {
         Log.i(TAG, "Attempting to login user " + username);
-        ParseUser.logInInBackground(username, password, new LogInCallback(){
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if (e != null){
+                if (e != null) {
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void signupUser(){
+    private void signupUser() {
         Log.i(TAG, "Signing up user ");
         NavigationUtils.goSignupActivity(LoginActivity.this);
     }
