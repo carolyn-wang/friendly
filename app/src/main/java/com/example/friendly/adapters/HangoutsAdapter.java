@@ -93,6 +93,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                 }
             });
         }
+
     }
 
     // Clean all elements of the recycler
