@@ -40,8 +40,6 @@ public class MatchFragment extends Fragment {
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
     protected List<Hangout> allHangouts;
-
-
     public MatchFragment(){
 
     }
@@ -83,11 +81,9 @@ public class MatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick LongTerm History button");
-//                NavigationUtils.goMapsActivity(mActivity);
                 NavigationUtils.displayFragmentMap(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
             }
         });
-
         FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 

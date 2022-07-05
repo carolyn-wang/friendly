@@ -18,11 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.friendly.MapsActivity;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.databinding.ActivityGoogleMapsBinding;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,7 +32,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,7 +48,8 @@ import java.util.List;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback{
 
-    MapView mapView;
+    private MapView mapView;
+
     private static final String TAG = "MapsActivity";
     private static final String KEY_USER_LOCATION = "Location";
     private static final String KEY_USER_NAME = "firstName";
@@ -63,14 +65,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private FusedLocationProviderClient fusedLocationClient;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_map, container, false);
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        // Gets the MapView from the XML layout and creates it
-        mapView = (MapView) v.findViewById(R.id.mapView);
+        mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
         mapView.getMapAsync(this);
-        return v;
+        return view;
     }
 
     @Override
@@ -78,14 +79,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         super.onCreate(savedInstanceState);
         mContext = getContext();
         mActivity = getActivity();
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-//        googleMap.setMyLocationEnabled(true);
 
         showCurrentUserInMap(googleMap);
         showClosestUser(googleMap);
@@ -98,7 +97,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
 
     /**
-     * Gets user's current location.
+     * Function that saves user's current location to database then returns it.
      * If location null, then retrieves user's most recent location from database.
      */
     public ParseGeoPoint getCurrentLocation() {
@@ -111,7 +110,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-
     /**
      * Retrieves current user location from Back4App Database.
      * Return to Login Activity if not possible to find user.
@@ -119,7 +117,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public ParseGeoPoint getCurrentUserParseLocation() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
-            Toast.makeText(mContext, "Can't get user's current parse location", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Can't access user's current location from database", Toast.LENGTH_SHORT).show();
             NavigationUtils.goLoginActivity(mActivity);
         }
         return currentUser.getParseGeoPoint(KEY_USER_LOCATION);
@@ -140,9 +138,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                         Log.i(TAG, "onSuccess" + location);
                         ParseGeoPoint geoLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
                         saveUserLocation(geoLocation);
-                        Toast.makeText(mContext, "Retrieved user's current location: " + location.toString(), Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Retrieved user's current location: " + location.toString());
                     }
-                    Log.i(TAG, "Location is null :(");
+                    Log.i(TAG, "Location is null");
                 }
             });
         }
@@ -160,20 +158,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         if (currentUser != null) {
             currentUser.put(KEY_USER_LOCATION, location);
             currentUser.saveInBackground();
-            Log.i(TAG, "saved user location to database");
+            Log.i(TAG, "Saved user location to database");
         } else {
             Toast.makeText(mContext, "Can't save user's current location", Toast.LENGTH_SHORT).show();
             NavigationUtils.goLoginActivity(mActivity);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST_LOCATION:
-                getCurrentLocation();
-                break;
         }
     }
 
@@ -222,7 +210,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     setMarker(googleMap, closestUserLocation, closestUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                     moveCamera(googleMap, closestUserLocation, INITIAL_ZOOM);
                 } else {
-                    Log.d("store", "Error: " + e.getMessage());
+                    Log.d(TAG, "Error: " + e.getMessage());
                 }
             }
         });
@@ -282,7 +270,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     }
 
-
     /**
      * Zoom camera to location
      *
@@ -300,8 +287,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private void setMarker(final GoogleMap googleMap, LatLng latLng, String title, BitmapDescriptor icon) {
         googleMap.addMarker(new MarkerOptions().position(latLng).title(title).icon(icon));
     }
-
-
 
     @Override
     public void onResume() {

@@ -19,12 +19,15 @@ import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.example.friendly.objects.Hangout;
+import com.google.android.gms.maps.MapView;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NavigationUtils {
+
+    static MapFragment mapFragment;
 
     public static void goActivity(Activity activity, Class targetClass) {
         Context context = activity.getBaseContext();
@@ -101,9 +104,13 @@ public class NavigationUtils {
 
     public static void displayFragmentMap(ParseUser currentUser, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment mapFragment = new MapFragment();
+        mapFragment = new MapFragment();
         ft.replace(R.id.flContainer, mapFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static void pauseMapView(){
+        mapFragment.onPause();
     }
 }
