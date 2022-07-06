@@ -12,6 +12,17 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-        <!-- Customize your theme here. -->
     </style>
+    <style name="TitleFont">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+    <style name="TitleFont.Big">
+        <item name="android:textSize">@dimen/fontSizeBig</item>
+    </style>
+    <style name="TitleFont.Medium">
+        <item name="android:textSize">@dimen/fontSizeMedium</item>
+    </style>
+
+    <dimen name="fontSizeBig">30dp</dimen>
+    <dimen name="fontSizeMedium">22dp</dimen>
 </resources>
