@@ -57,13 +57,6 @@ public class NavigationUtils {
         ft.commit();
     }
 
-    public static void displayCreateQuickMatch(FragmentManager fragmentManager) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment createQuickMatchFragment = new CreateQuickMatchFragment();
-        ft.replace(R.id.flContainer, createQuickMatchFragment);
-        ft.commit();
-    }
-
     public static void displayFragmentLongMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment longMatchFragment = new LongMatchFragment();

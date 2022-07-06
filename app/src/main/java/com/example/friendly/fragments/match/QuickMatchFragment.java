@@ -56,8 +56,8 @@ public class QuickMatchFragment extends Fragment {
         btnCreateQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick LongTerm History button");
-                NavigationUtils.displayCreateQuickMatch(fm);
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.flContainer, new CreateQuickMatchFragment()).commit();
             }
         });
     }
