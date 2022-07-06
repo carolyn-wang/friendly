@@ -7,6 +7,4 @@
     <dimen name="loginButtonMargin">20dp</dimen>
 
     <dimen name="fragment_padding">24dp</dimen>
-    <dimen name="transition_duration">375</dimen>
-    <dimen name="transition_delay">25</dimen>
 </resources>
