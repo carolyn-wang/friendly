@@ -73,12 +73,10 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser1 = itemView.findViewById(R.id.tvHangoutUser1);
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
-            tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
-            cdHangout = itemView.findViewById(R.id.cdHangout);
+            cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
         }
 
         public void bind(Hangout hangout) {
-            // Bind the post data to the view elements
             tvHangoutUser1.setText(hangout.getUser1().getUsername());
             if (hangout.getUser2() != null) {
                 tvHangoutUser2.setText(hangout.getUser2().getUsername());
@@ -88,7 +86,6 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             if(hangout.getLocation() != null){
                 tvHangoutLocation.setText(hangout.getLocationName());
             }
-
             // TODO: move into child classes
             // click listener to open DetailFragment for hangout
             cdHangout.setOnClickListener(new View.OnClickListener() {
@@ -102,15 +99,22 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     }
                 }
             });
-            cdHangout.setCardBackgroundColor(getRandomColor());
+            cdHangout.setCardBackgroundColor(getCardColor(hangout));
         }
 
     }
 
+    // TODO: move to utils
 
-    public int getRandomColor(){
+    /**
+     * Get card color based off hangout's createdAt value
+     * @param hangout
+     * @return
+     */
+    public int getCardColor(Hangout hangout){
+        long i = hangout.getCreatedAt().getTime();
         String[] colorArray = mContext.getResources().getStringArray(R.array.colors);
-        String randomStr = String.valueOf(colorArray[new Random().nextInt(colorArray.length)]);
+        String randomStr = String.valueOf(colorArray[ Math.floorMod(i, colorArray.length)]);
         return Color.parseColor(randomStr);
     }
     // Clean all elements of the recycler
