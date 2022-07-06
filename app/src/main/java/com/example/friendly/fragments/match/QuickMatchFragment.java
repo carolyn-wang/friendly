@@ -57,7 +57,7 @@ public class QuickMatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick LongTerm History button");
-                NavigationUtils.displayCreateQuickMatch(ParseUser.getCurrentUser(), fm);
+                NavigationUtils.displayCreateQuickMatch(fm);
             }
         });
     }

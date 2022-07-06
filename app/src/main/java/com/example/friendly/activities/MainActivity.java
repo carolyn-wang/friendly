@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Context mContext;
-    private Activity mActivity;
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = getBaseContext();
-        mActivity = this;
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {

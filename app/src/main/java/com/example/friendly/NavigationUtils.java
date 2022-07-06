@@ -50,21 +50,21 @@ public class NavigationUtils {
 
     }
 
-    public static void displayFragmentQuickMatch(ParseUser user, FragmentManager fragmentManager) {
+    public static void displayFragmentQuickMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment quickMatchFragment = new QuickMatchFragment();
         ft.replace(R.id.flContainer, quickMatchFragment);
         ft.commit();
     }
 
-    public static void displayCreateQuickMatch(ParseUser user, FragmentManager fragmentManager) {
+    public static void displayCreateQuickMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment createQuickMatchFragment = new CreateQuickMatchFragment();
         ft.replace(R.id.flContainer, createQuickMatchFragment);
         ft.commit();
     }
 
-    public static void displayFragmentLongMatch(ParseUser currentUser, FragmentManager fragmentManager) {
+    public static void displayFragmentLongMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment longMatchFragment = new LongMatchFragment();
         ft.replace(R.id.flContainer, longMatchFragment);
