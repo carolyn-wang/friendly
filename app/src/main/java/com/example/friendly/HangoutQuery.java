@@ -26,6 +26,7 @@ public class HangoutQuery{
         query.include(Hangout.KEY_USER1);
         query.include(Hangout.KEY_USER2);
         query.include(Hangout.KEY_DATE);
+
         query.setLimit(POSTS_TO_LOAD);
         // display past hangouts
         if (queryConditions.contains("past")){

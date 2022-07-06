@@ -2,21 +2,21 @@ package com.example.friendly.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.transition.ChangeBounds;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.friendly.R;
-import com.example.friendly.activities.MainActivity;
-import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.objects.Hangout;
-import com.parse.ParseUser;
+import com.google.android.material.transition.MaterialContainerTransform;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,5 +71,8 @@ public class HangoutDetailFragment extends Fragment {
         tvHangoutUser1.setText(hangout.getUser1().getUsername());
         tvHangoutUser2.setText(hangout.getUser2().getUsername());
         tvHangoutDate.setText(hangout.getDate().toString());
+        
+        setEnterTransition(TransitionInflater.from(getContext())
+                .inflateTransition(R.transition.grid_expand_transition));
     }
 }
