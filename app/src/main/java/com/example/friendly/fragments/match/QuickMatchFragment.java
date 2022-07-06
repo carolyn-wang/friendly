@@ -62,11 +62,4 @@ public class QuickMatchFragment extends Fragment {
         });
     }
 
-    /***
-     * Composes tweet and refreshes timeline to show new tweet
-     * @param v View passed in by onClick call in xml file
-     */
-    public void createQuickHangout(View v) {
-    }
-
 }
