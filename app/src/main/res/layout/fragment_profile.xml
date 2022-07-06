@@ -6,8 +6,8 @@
     android:padding="@dimen/fragment_padding">
 
     <TextView
-        style="@style/TitleFont.Big"
         android:id="@+id/profile_title"
+        style="@style/TitleFont.Big"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/profile_title"
@@ -18,9 +18,10 @@
         android:id="@+id/tvUsernameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans"
         android:text="Username: "
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/profile_title" />
 
     <TextView
         android:id="@+id/tvUsername"

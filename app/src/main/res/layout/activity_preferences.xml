@@ -6,8 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".activities.PreferencesActivity">
 
+    <TextView
+        style="@style/TitleFont.Big"
+        android:id="@+id/preference_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/preference_title"
+        android:layout_gravity="top" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPreferences"
+        android:paddingTop="@dimen/fontSizeBig"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"

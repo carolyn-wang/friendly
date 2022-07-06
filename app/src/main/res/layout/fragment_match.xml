@@ -29,19 +29,13 @@
         android:text="@string/match_btn_long" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvUpcomingHangouts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/btnLongHangout"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/match_btn_upcoming" />
-=======
-        style="@style/TitleFont.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/match_upcoming" />
->>>>>>> 7362f2b (added text styling and constraint layout)
+        android:text="@string/match_btn_upcoming"
+        style="@style/TitleFont.Medium"/>
 
 <!--    TODO: fix double padding-->
     <androidx.fragment.app.FragmentContainerView

@@ -1,6 +1,8 @@
 package com.example.friendly.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.objects.Hangout;
@@ -17,6 +20,7 @@ import com.example.friendly.activities.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
 
 public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHolder> {
 
@@ -57,7 +61,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private View cdHangout;
+        private CardView cdHangout;
         private TextView tvHangoutUser1;
         private TextView tvHangoutUser2;
         private TextView tvHangoutDate;
@@ -97,10 +101,18 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     }
                 }
             });
+
+            cdHangout.setCardBackgroundColor(Color.BLUE);
         }
 
     }
 
+
+    public int getRandomColorCode(){
+        Random random = new Random();
+        return Color.argb(255, random.nextInt(256), random.nextInt(256),     random.nextInt(256));
+
+    }
     // Clean all elements of the recycler
     public void clear() {
         hangouts.clear();
