@@ -71,9 +71,7 @@ public class HangoutDetailFragment extends Fragment {
         tvHangoutUser1.setText(hangout.getUser1().getUsername());
         tvHangoutUser2.setText(hangout.getUser2().getUsername());
         tvHangoutDate.setText(hangout.getDate().toString());
-
-//        setEnterTransition(TransitionInflater.from(getContext())
-//                .inflateTransition(R.transition.grid_expand_transition));
+        
         setEnterTransition(TransitionInflater.from(getContext())
                 .inflateTransition(R.transition.grid_expand_transition));
     }
