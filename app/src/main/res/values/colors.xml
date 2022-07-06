@@ -5,6 +5,13 @@
     <color name="tan">#F2B190</color>
     <color name="pink">#FC5E70</color>
 
+    <string-array name="colors">
+        <item>#FBBC54</item>
+        <item>#F8DCB0</item>
+        <item>#F2B190</item>
+        <item>#FC5E70</item>
+    </string-array>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

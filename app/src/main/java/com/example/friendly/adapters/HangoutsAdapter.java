@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.objects.Hangout;
@@ -29,7 +30,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
     private static final String TAG = "HangoutsAdapter";
 
     public HangoutsAdapter(Context context, List<Hangout> hangouts) {
-        this.mContext = context; // MainActiviity
+        this.mContext = context; // MainActivity
         this.hangouts = hangouts;
     }
 
@@ -101,17 +102,16 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     }
                 }
             });
-
-            cdHangout.setCardBackgroundColor(Color.BLUE);
+            cdHangout.setCardBackgroundColor(getRandomColor());
         }
 
     }
 
 
-    public int getRandomColorCode(){
-        Random random = new Random();
-        return Color.argb(255, random.nextInt(256), random.nextInt(256),     random.nextInt(256));
-
+    public int getRandomColor(){
+        String[] colorArray = mContext.getResources().getStringArray(R.array.colors);
+        String randomStr = String.valueOf(colorArray[new Random().nextInt(colorArray.length)]);
+        return Color.parseColor(randomStr);
     }
     // Clean all elements of the recycler
     public void clear() {

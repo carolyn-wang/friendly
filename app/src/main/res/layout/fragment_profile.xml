@@ -18,7 +18,6 @@
         android:id="@+id/tvUsernameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
         android:text="Username: "
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_title" />
@@ -27,6 +26,7 @@
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_sans"
         android:text="username shows here"
         app:layout_constraintLeft_toRightOf="@id/tvUsernameLabel"
         app:layout_constraintTop_toBottomOf="@+id/profile_title" />
@@ -75,9 +75,9 @@
         android:id="@+id/checkBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Notifications"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogout"
-        android:text="Notifications" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/checkBox2"
