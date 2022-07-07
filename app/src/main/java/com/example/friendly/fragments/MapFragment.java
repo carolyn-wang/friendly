@@ -24,7 +24,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
-import com.example.friendly.databinding.ActivityGoogleMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,7 +56,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private static final String KEY_PLACE_LOCATION = "Location";
     private static final float INITIAL_ZOOM = 14.0f;
 
-    private ActivityGoogleMapsBinding binding;
     private Context mContext;
     private Activity mActivity;
 
@@ -101,7 +99,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
      * If location null, then retrieves user's most recent location from database.
      */
     public ParseGeoPoint getCurrentLocation() {
-        ParseGeoPoint location = getSaveCurrentUserDeviceLocation();
+        ParseGeoPoint location = updateCurrentUserDeviceLocation();
         if (location != null) {
             return location;
         }
@@ -126,7 +124,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Returns the current device location and saves to Back4App database.
      */
-    public ParseGeoPoint getSaveCurrentUserDeviceLocation() {
+    public ParseGeoPoint updateCurrentUserDeviceLocation() {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(mActivity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         } else {
@@ -138,7 +136,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                         Log.i(TAG, "onSuccess" + location);
                         ParseGeoPoint geoLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
                         saveUserLocation(geoLocation);
-                        Log.i(TAG, "Retrieved user's current location: " + location.toString());
                     }
                     Log.i(TAG, "Location is null");
                 }

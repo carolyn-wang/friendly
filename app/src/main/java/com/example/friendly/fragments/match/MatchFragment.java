@@ -31,7 +31,6 @@ import java.util.List;
 public class MatchFragment extends Fragment {
     private static final String TAG = "MatchFragment";
     private Context mContext;
-    private Activity mActivity;
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
@@ -56,7 +55,6 @@ public class MatchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mContext = view.getContext();
-        mActivity = getActivity();
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
