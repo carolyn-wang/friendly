@@ -97,14 +97,6 @@ public class NavigationUtils {
                 .commit();
     }
 
-    public static void displayFragmentMap(ParseUser currentUser, FragmentManager fragmentManager) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        mapFragment = new MapFragment();
-        ft.replace(R.id.flContainer, mapFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
     public static void pauseMapView(){
         mapFragment.onPause();
     }

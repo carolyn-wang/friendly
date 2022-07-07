@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.fragments.HangoutsFragment;
+import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
@@ -77,7 +78,12 @@ public class MatchFragment extends Fragment {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.displayFragmentMap(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
+
+                FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.flContainer, new MapFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         FragmentManager fm = getChildFragmentManager();

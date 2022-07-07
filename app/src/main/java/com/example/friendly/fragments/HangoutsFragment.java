@@ -120,6 +120,7 @@ public class HangoutsFragment extends Fragment {
                 adapter.clear();
                 query.setScrollCounter(0);
                 query.queryHangouts(adapter, queryConditions);
+
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -141,6 +142,7 @@ public class HangoutsFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 query.queryHangouts(adapter, queryConditions);
+
             }
         };
         rvHangouts.addOnScrollListener(scrollListener);
