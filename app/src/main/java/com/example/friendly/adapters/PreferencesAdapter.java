@@ -40,23 +40,28 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
-            case 0: view = LayoutInflater.from(context).inflate(R.layout.item_poll_card_radio, parent, false);
-                break;
-            case 2: view = LayoutInflater.from(context).inflate(R.layout.item_poll_card_checkbox, parent, false);
+            case 0:
+                view = LayoutInflater.from(context).inflate(R.layout.item_poll_card_radio, parent, false);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + viewType);
+                view = LayoutInflater.from(context).inflate(R.layout.item_poll_card_checkbox, parent, false);
+                break;
         }
         return new ViewHolder(view);
     }
+
+    /**
+     * Returns card type to be used (either radio or checkbox)
+     *
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
-        // Just as an example, return 0 or 2 depending on position
-        // Note that unlike in ListView adapters, types don't have to be contiguous
-        if (position < 2){
+        if (position < 2) {
             return 0;
-        }else{
-            return 2;
+        } else {
+            return 1;
         }
     }
 
@@ -74,46 +79,41 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvQuestion;
-        private Button cbOption0;
-        private Button cbOption1;
-        private Button cbOption2;
-        private Button cbOption3;
-        private Button cbOption4;
-        private Button cbOption5;
-        private Button cbOption6;
+        private Button btnOption0;
+        private Button btnOption1;
+        private Button btnOption2;
+        private Button btnOption3;
+        private Button btnOption4;
+        private Button btnOption5;
+        private Button btnOption6;
         private Button[] optionViews;
-//            protected RecyclerView rvOptions;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Log.i(TAG, "viewholder");
             tvQuestion = itemView.findViewById(R.id.tvQuestion);
-            cbOption0 = itemView.findViewById(R.id.cbOption0);
-            cbOption1 = itemView.findViewById(R.id.cbOption1);
-            cbOption2 = itemView.findViewById(R.id.cbOption2);
-            cbOption3 = itemView.findViewById(R.id.cbOption3);
-            cbOption4 = itemView.findViewById(R.id.cbOption4);
-            cbOption5 = itemView.findViewById(R.id.cbOption5);
-            cbOption6 = itemView.findViewById(R.id.cbOption6);
-            optionViews = new Button[]{cbOption0, cbOption1, cbOption2, cbOption3, cbOption4, cbOption5, cbOption6};
-//            rvOptions = itemView.findViewById(R.id.rvOptions);
-//                currentUser = ParseUser.getCurrentUser();
+            btnOption0 = itemView.findViewById(R.id.btnOption0);
+            btnOption1 = itemView.findViewById(R.id.btnOption1);
+            btnOption2 = itemView.findViewById(R.id.btnOption2);
+            btnOption3 = itemView.findViewById(R.id.btnOption3);
+            btnOption4 = itemView.findViewById(R.id.btnOption4);
+            btnOption5 = itemView.findViewById(R.id.btnOption5);
+            btnOption6 = itemView.findViewById(R.id.btnOption6);
+            optionViews = new Button[]{btnOption0, btnOption1, btnOption2, btnOption3, btnOption4, btnOption5, btnOption6};
         }
 
         /**
          * Set poll question.
-         *  Set text for Button option or set visibility to GONE
+         * Set text for Button option or set visibility to GONE
+         *
          * @param preference
          */
         public void bind(Preference preference) {
             tvQuestion.setText(preference.getQuestion());
             //
-            for (int i=0; i < optionViews.length; i++){
-                if (i < preference.getOptions().length){
+            for (int i = 0; i < optionViews.length; i++) {
+                if (i < preference.getOptions().length) {
                     optionViews[i].setText(preference.getOption(i));
-                }
-                else{
+                } else {
                     optionViews[i].setVisibility(View.GONE);
                 }
             }
@@ -131,8 +131,6 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         preferences.addAll(list);
         notifyDataSetChanged();
     }
-
-
 
 
 }
