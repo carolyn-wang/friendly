@@ -63,7 +63,6 @@ public class MatchFragment extends Fragment {
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick Hangout History button");
                 NavigationUtils.displayFragmentQuickMatch(((MainActivity)mContext).getSupportFragmentManager());
             }
         });
@@ -78,7 +77,6 @@ public class MatchFragment extends Fragment {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick LongTerm History button");
                 NavigationUtils.displayFragmentMap(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
             }
         });
