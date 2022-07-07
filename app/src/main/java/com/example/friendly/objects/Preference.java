@@ -1,7 +1,5 @@
 package com.example.friendly.objects;
 
-import java.util.List;
-
 @Deprecated
 public class Preference {
     private String question;

@@ -48,8 +48,9 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback{
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    private GoogleMap mGoogleMap;
     private MapView mapView;
 
     private static final String TAG = "MapsActivity";
@@ -64,12 +65,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private static final int REQUEST_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
-    private GoogleMap googleMap;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        mapView = (MapView) view.findViewById(R.id.mapView);
+        mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
         mapView.getMapAsync(this);
@@ -86,18 +86,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-// go to fragment activity and manually call remove ActivityCompact.
-        // ask for permission before you open fragment (click button) activity compact
-        //
-        showCurrentUserInMap(googleMap);
-//        showClosestUser(googleMap);
-        showPlacesInMap(googleMap);
-        showClosestPlace(googleMap);
+        this.mGoogleMap = googleMap;
+        
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        showCurrentUserInMap();
+        showClosestUser();
+        showPlacesInMap();
+        showClosestPlace();
 
-       //in old Api Needs to call MapsInitializer before doing any CameraUpdateFactory call
-        MapsInitializer.initialize(this.getActivity());
+        //in old Api Needs to call MapsInitializer before doing any CameraUpdateFactory call
+        MapsInitializer.initialize(mActivity);
     }
 
 
@@ -111,6 +109,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             public void onSuccess(ParseGeoPoint location) {
                 listener.onSuccess(location);
             }
+
             @Override
             public void onFailure() {
                 listener.onSuccess(getCurrentUserParseLocation());
@@ -131,22 +130,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         return currentUser.getParseGeoPoint(KEY_USER_LOCATION);
     }
 
-    public interface LocationListener {
-        public void onSuccess(ParseGeoPoint location);
-        public void onFailure();
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_LOCATION){
-            showCurrentUserInMap(googleMap);
+        if (requestCode == REQUEST_LOCATION) {
+            showCurrentUserInMap();
         }
     }
 
     /**
-     * async
-     * Returns the current device location and saves to Back4App database.
+     * Asynchronously retrieves current device location, saves to Back4App database, and saves in LocationListener.
      */
     public void updateCurrentUserDeviceLocation(LocationListener listener) {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -162,7 +155,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                         ParseGeoPoint geoLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
                         saveUserLocation(geoLocation);
                         listener.onSuccess(geoLocation);
-                    }else {
+                    } else {
                         Log.i(TAG, "Location is null");
                         listener.onFailure();
                     }
@@ -179,10 +172,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 }
             });
         }
-//        return getCurrentUserParseLocation();
     }
-
-
 
 
     /**
@@ -206,19 +196,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
      * Retrieve user's location and creates a marker in the map showing the current user location.
      * Zoom the map to the currentUserLocation.
      *
-     * @param googleMap
      */
-    public void showCurrentUserInMap(final GoogleMap googleMap) {
+    public void showCurrentUserInMap() {
 
+        // TODO: loading page while retrieving location
         getCurrentLocation(new LocationListener() {
-
             @Override
             public void onSuccess(ParseGeoPoint location) {
                 LatLng currentUser = new LatLng(location.getLatitude(), location.getLongitude());
-                setMarker(googleMap, currentUser, ParseUser.getCurrentUser().getString(KEY_USER_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                moveCamera(googleMap, currentUser, INITIAL_ZOOM);
+                setMarker(currentUser, ParseUser.getCurrentUser().getString(KEY_USER_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                moveCamera(currentUser, INITIAL_ZOOM);
             }
-
             @Override
             public void onFailure() {
 
@@ -227,16 +215,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     }
 
-
     /**
      * Find and display the distance between the current user and the closest user to current user.
      * Create marker to show closest user.
      * Zoom the map to the currentUserLocation
      *
-     * @param googleMap
      */
 
-    public void showClosestUser(final GoogleMap googleMap) {
+    public void showClosestUser() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNear(KEY_USER_LOCATION, getCurrentUserParseLocation());
         // setting the limit of near users to find to 2, you'll have in the nearUsers list only two users: the current user and the closest user from the current
@@ -253,10 +239,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     }
                     double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestUser.getParseGeoPoint(KEY_USER_LOCATION));
                     Toast.makeText(mContext, "We found the closest user from you! It's " + closestUser.getUsername() + ". \n You are " + Math.round(distance * 100.0) / 100.0 + " km from this user.", Toast.LENGTH_SHORT).show();
-                    showCurrentUserInMap(googleMap);
                     LatLng closestUserLocation = new LatLng(closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-                    setMarker(googleMap, closestUserLocation, closestUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    moveCamera(googleMap, closestUserLocation, INITIAL_ZOOM);
+                    setMarker(closestUserLocation, closestUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    moveCamera(closestUserLocation, INITIAL_ZOOM);
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -265,7 +250,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         ParseQuery.clearAllCachedResults();
     }
 
-    public void showPlacesInMap(final GoogleMap googleMap) {
+    public void showPlacesInMap() {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Place");
         query.whereExists(KEY_USER_LOCATION);
@@ -276,7 +261,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     for (int i = 0; i < stores.size(); i++) {
                         Log.i(TAG, stores.get(i).getObjectId());
                         LatLng storeLocation = new LatLng(stores.get(i).getParseGeoPoint(KEY_PLACE_LOCATION).getLatitude(), stores.get(i).getParseGeoPoint(KEY_PLACE_LOCATION).getLongitude());
-                        setMarker(googleMap,storeLocation, stores.get(i).getString(KEY_PLACE_NAME),BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE) );
+                        setMarker(storeLocation, stores.get(i).getString(KEY_PLACE_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                     }
                 } else {
                     Log.i(TAG, "Error: " + e.getMessage());
@@ -291,9 +276,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
      * Finding and creating a marker in the map showing the closest store to the current user
      * Zoom the map to the closestPlaceLocation
      *
-     * @param googleMap
      */
-    public void showClosestPlace(final GoogleMap googleMap) {
+    public void showClosestPlace() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Place");
         query.whereNear(KEY_USER_LOCATION, getCurrentUserParseLocation());
         query.setLimit(1);
@@ -302,11 +286,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             public void done(List<ParseObject> nearStores, ParseException e) {
                 if (e == null) {
                     ParseObject closestPlace = nearStores.get(0);
-                    showCurrentUserInMap(googleMap);
+                    showCurrentUserInMap();
                     double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getParseGeoPoint(KEY_USER_LOCATION));
                     Toast.makeText(mContext, "We found the closest place from you! It's " + closestPlace.getString(KEY_PLACE_NAME) + ". \nYou are " + Math.round(distance * 100.0) / 100.0 + " km from this store.", Toast.LENGTH_SHORT).show();
                     LatLng closestPlaceLocation = new LatLng(closestPlace.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestPlace.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-                    setMarker(googleMap, closestPlaceLocation, closestPlace.getString(KEY_PLACE_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    setMarker(closestPlaceLocation, closestPlace.getString(KEY_PLACE_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -320,19 +304,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Zoom camera to location
      *
-     * @param googleMap
      * @param latLng
      */
-    private void moveCamera(final GoogleMap googleMap, LatLng latLng, float zoom) {
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom), 1, null);
+    private void moveCamera(LatLng latLng, float zoom) {
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom), 1, null);
     }
 
     /**
      * Add marker on given point.
+     *
      * @param latLng
      */
-    private void setMarker(final GoogleMap googleMap, LatLng latLng, String title, BitmapDescriptor icon) {
-        googleMap.addMarker(new MarkerOptions().position(latLng).title(title).icon(icon));
+    private void setMarker(LatLng latLng, String title, BitmapDescriptor icon) {
+        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title).icon(icon));
     }
 
     @Override
@@ -358,6 +342,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    public interface LocationListener {
+        void onSuccess(ParseGeoPoint location);
+        void onFailure();
     }
 
 }
