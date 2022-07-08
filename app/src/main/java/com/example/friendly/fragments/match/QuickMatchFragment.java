@@ -27,7 +27,6 @@ import java.util.Arrays;
 public class QuickMatchFragment extends Fragment {
     private static final String TAG = "QuickMatchFragment";
     private FloatingActionButton btnCreateQuickHangout;
-    private Activity mActivity;
     public QuickMatchFragment(){
 
     }
@@ -41,13 +40,11 @@ public class QuickMatchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mActivity = getActivity();
         btnCreateQuickHangout = view.findViewById(R.id.btnCreateQuickHangout);
 
         FragmentManager fm = getParentFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        fm.beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "quick"));
         Fragment fragTwo = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.quickMatchHangouts, fragTwo);
@@ -56,14 +53,13 @@ public class QuickMatchFragment extends Fragment {
         btnCreateQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick LongTerm History button");
                 NavigationUtils.displayCreateQuickMatch(ParseUser.getCurrentUser(), fm);
             }
         });
     }
 
     /***
-     * Composes tweet and refreshes timeline to show new tweet
+     * Composes hangout and refreshes timeline to show new tweet
      * @param v View passed in by onClick call in xml file
      */
     public void createQuickHangout(View v) {

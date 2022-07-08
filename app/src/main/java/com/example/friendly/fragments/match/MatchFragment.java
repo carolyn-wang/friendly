@@ -34,11 +34,6 @@ public class MatchFragment extends Fragment {
     private Button btnQuickHangout;
     private Button btnLongHangout;
 
-    private RecyclerView rvHangouts;
-    protected HangoutsAdapter adapter;
-    protected List<Hangout> allHangouts;
-
-
     public MatchFragment(){
 
     }
