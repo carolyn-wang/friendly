@@ -63,15 +63,14 @@ public class MatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick Hangout History button");
-                NavigationUtils.displayFragmentQuickMatch(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
+                NavigationUtils.displayFragmentQuickMatch(((MainActivity)mContext).getSupportFragmentManager());
             }
         });
 
         btnLongHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick LongTerm History button");
-                NavigationUtils.displayFragmentLongMatch(ParseUser.getCurrentUser(), ((MainActivity)mContext).getSupportFragmentManager());
+                NavigationUtils.displayFragmentLongMatch(((MainActivity)mContext).getSupportFragmentManager());
             }
         });
 

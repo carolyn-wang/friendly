@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/fragment_padding"
     tools:context=".fragments.match.QuickMatchFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tvQuickMatch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="quick match fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/quick_match_title" />
 
-</FrameLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/quickMatchHangouts"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuickMatch"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+    </androidx.fragment.app.FragmentContainerView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnCreateQuickHangout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:clickable="true"
+        android:layout_marginBottom="@dimen/floating_button_margin_bottom"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@color/white"
+        app:fabSize="normal"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,7 +73,7 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // TODO: move keys into final String
         queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
 
         mContext = view.getContext();
@@ -82,7 +82,7 @@ public class HangoutsFragment extends Fragment {
         swipeContainer = view.findViewById(R.id.swipeContainer);
         query = new HangoutQuery();
         List<Hangout> allHangouts = query.getAllHangouts();
-        if (allHangouts.size() == 0){
+        if (allHangouts.size() == 0) {
             showProgressBar();
         }
 
@@ -91,9 +91,6 @@ public class HangoutsFragment extends Fragment {
         query.queryHangouts(adapter, queryConditions);
 
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
-
-        Log.i(TAG, "onViewCreated");
-
         setPullToRefresh();
         setScrollListener();
 
@@ -112,7 +109,7 @@ public class HangoutsFragment extends Fragment {
      * Displays animation when user refreshes feed
      * Sets refreshing to false once network request has completed successfully
      */
-    public void setPullToRefresh(){
+    public void setPullToRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -120,7 +117,6 @@ public class HangoutsFragment extends Fragment {
                 adapter.clear();
                 query.setScrollCounter(0);
                 query.queryHangouts(adapter, queryConditions);
-                Log.i(TAG, "onRefresh");
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -134,7 +130,7 @@ public class HangoutsFragment extends Fragment {
     /**
      * Adds a scroll listener to Hangouts RecyclerView
      */
-    public void setScrollListener(){
+    public void setScrollListener() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         rvHangouts.setLayoutManager(linearLayoutManager);
         // Retain an instance so that you can call `resetState()` for fresh searches

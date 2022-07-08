@@ -26,7 +26,7 @@ public class HangoutQuery{
         query.include(Hangout.KEY_USER1);
         query.include(Hangout.KEY_USER2);
         query.include(Hangout.KEY_DATE);
-
+        query.include(Hangout.KEY_LOCATION);
         query.setLimit(POSTS_TO_LOAD);
         // display past hangouts
         if (queryConditions.contains("past")){
@@ -40,8 +40,13 @@ public class HangoutQuery{
         }
         // display only current User's hangouts
         if (queryConditions.contains("user")) {
-            // TODO: add "or" condition where KEY_USER2 equals current user
+            // TODO: add "or" condition where KEY_USER2 equals current user; check first that user2 not null
             query.whereEqualTo(Hangout.KEY_USER1, ParseUser.getCurrentUser());
+        }
+
+        // display only hangouts with null User2
+        if (queryConditions.contains("quick")) {
+            query.whereEqualTo(Hangout.KEY_USER2, null);
         }
 
         query.setSkip(scrollCounter);

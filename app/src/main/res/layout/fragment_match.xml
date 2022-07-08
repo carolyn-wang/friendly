@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/fragment_padding"
     tools:context=".fragments.match.MatchFragment">
@@ -10,23 +11,32 @@
         android:id="@+id/btnQuickHangout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/match_btn_quick" />
 
     <Button
         android:id="@+id/btnLongHangout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btnQuickHangout"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/match_btn_long" />
 
     <TextView
+        android:id="@+id/tvUpcomingHangouts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btnLongHangout"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/match_btn_upcoming" />
 
 <!--    TODO: fix double padding-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/matchHangoutHistory"
+        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingHangouts"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
