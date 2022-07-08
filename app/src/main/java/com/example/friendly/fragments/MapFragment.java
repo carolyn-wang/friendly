@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -87,7 +88,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mGoogleMap = googleMap;
-        
+
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
         showCurrentUserInMap();
         showClosestUser();
@@ -195,7 +196,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     /**
      * Retrieve user's location and creates a marker in the map showing the current user location.
      * Zoom the map to the currentUserLocation.
-     *
      */
     public void showCurrentUserInMap() {
 
@@ -207,6 +207,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 setMarker(currentUser, ParseUser.getCurrentUser().getString(KEY_USER_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 moveCamera(currentUser, INITIAL_ZOOM);
             }
+
             @Override
             public void onFailure() {
 
@@ -219,7 +220,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      * Find and display the distance between the current user and the closest user to current user.
      * Create marker to show closest user.
      * Zoom the map to the currentUserLocation
-     *
      */
 
     public void showClosestUser() {
@@ -275,7 +275,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     /**
      * Finding and creating a marker in the map showing the closest store to the current user
      * Zoom the map to the closestPlaceLocation
-     *
      */
     public void showClosestPlace() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Place");
@@ -346,6 +345,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public interface LocationListener {
         void onSuccess(ParseGeoPoint location);
+
         void onFailure();
     }
 

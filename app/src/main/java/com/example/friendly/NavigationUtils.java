@@ -89,12 +89,6 @@ public class NavigationUtils {
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
-
-        ft.setReorderingAllowed(true) // setAllowOptimization before 26.1.0
-//                .addSharedElement(imageView, imageView.getTransitionName())
-                .replace(R.id.flContainer, hangoutDetailFragment, hangout.getObjectId())
-                .addToBackStack(null)
-                .commit();
     }
 
     public static void pauseMapView(){

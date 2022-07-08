@@ -81,8 +81,9 @@ public class MatchFragment extends Fragment {
 
                 FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.flContainer, new MapFragment())
-                        .addToBackStack(null)
+                MapFragment mapFragment = new MapFragment();
+                ft.replace(R.id.flContainer, mapFragment)
+                        .addToBackStack("map")
                         .commit();
             }
         });
