@@ -82,13 +82,7 @@ public class NavigationUtils {
     public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
-//        ft.replace(R.id.flContainer, hangoutDetailFragment)
-//                .addToBackStack(null)
-//                .commit();
-
-        ft.setReorderingAllowed(true) // setAllowOptimization before 26.1.0
-//                .addSharedElement(imageView, imageView.getTransitionName())
-                .replace(R.id.flContainer, hangoutDetailFragment, hangout.getObjectId())
+        ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
     }
