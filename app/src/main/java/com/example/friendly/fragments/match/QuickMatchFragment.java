@@ -46,8 +46,8 @@ public class QuickMatchFragment extends Fragment {
         FragmentTransaction ft = fm.beginTransaction();
 
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "quick"));
-        Fragment fragTwo = HangoutsFragment.newInstance(conditions);
-        ft.add(R.id.quickMatchHangouts, fragTwo);
+        Fragment quickHangoutsFragment = HangoutsFragment.newInstance(conditions);
+        ft.add(R.id.quickMatchHangouts, quickHangoutsFragment);
         ft.commit();
 
         btnCreateQuickHangout.setOnClickListener(new View.OnClickListener() {
