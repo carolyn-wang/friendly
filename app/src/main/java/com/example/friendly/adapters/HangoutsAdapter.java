@@ -73,6 +73,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser1 = itemView.findViewById(R.id.tvHangoutUser1);
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
+            tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
             cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
         }
 
