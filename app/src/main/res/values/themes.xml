@@ -20,6 +20,7 @@
     </style>
 
     <style name="TitleFont">
+        <item name="android:fontFamily">@font/nunito_sans_semibold</item>
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:fontWeight">800</item>
         <item name="android:paddingBottom">@dimen/paddingMedium</item>

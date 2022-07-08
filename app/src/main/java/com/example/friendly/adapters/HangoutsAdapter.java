@@ -104,7 +104,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
 
     }
 
-    // TODO: move to utils
+    // TODO: move to displayUtils
 
     /**
      * Get card color based off hangout's createdAt value
