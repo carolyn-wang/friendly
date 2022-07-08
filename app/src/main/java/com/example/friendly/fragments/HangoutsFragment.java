@@ -89,6 +89,7 @@ public class HangoutsFragment extends Fragment {
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter, queryConditions);
+
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
 
         Log.i(TAG, "onViewCreated");

@@ -13,7 +13,6 @@ import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
-import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
@@ -22,7 +21,6 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class NavigationUtils {
 
