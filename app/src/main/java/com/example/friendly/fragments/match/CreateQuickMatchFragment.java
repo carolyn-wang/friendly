@@ -1,14 +1,27 @@
 package com.example.friendly.fragments.match;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.MultiAutoCompleteTextView;
 
 import com.example.friendly.R;
+import com.example.friendly.fragments.HangoutsFragment;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +38,11 @@ public class CreateQuickMatchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Activity mActivity;
+    private Context mContext;
+    private static final String[] COUNTRIES = new String[]{
+            "Belgium", "France", "Italy", "Germany", "Spain"
+    };
 
     public CreateQuickMatchFragment() {
         // Required empty public constructor
@@ -49,18 +67,23 @@ public class CreateQuickMatchFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_quick_match, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mActivity = getActivity();
+        mContext = getContext();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.select_dialog_item, COUNTRIES);
+        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
+        textView.setAdapter(adapter);
+        textView.setThreshold(1);//will start working from first character
+
     }
 }

@@ -38,4 +38,6 @@
     <string name="match_long_text">Schedule for Later</string>
     <string name="match_map_text">Show Map</string>
     <string name="match_upcoming_hangouts">Upcoming Hangouts</string>
+    <string name="create_quick_match_title">Create Quick Match</string>
+    <string name="create_quick_location">Place</string>
 </resources>
