@@ -2,6 +2,7 @@ package com.example.friendly.fragments.match;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TimePicker;
 
 import com.example.friendly.R;
 import com.example.friendly.fragments.HangoutsFragment;
@@ -46,7 +48,12 @@ public class CreateQuickMatchFragment extends Fragment {
     private Context mContext;
 
     EditText editTextDate;
+    EditText editTextTime;
     Calendar calendar;
+
+    boolean is24HView = true;
+    int lastSelectedHour = 10;
+    int lastSelectedMinute = 20;
 
     //TODO: move to string/values.xml
     private static final String[] PLACES = new String[]{
@@ -88,6 +95,8 @@ public class CreateQuickMatchFragment extends Fragment {
         mContext = getContext();
 
         editTextDate = view.findViewById(R.id.editTextDate);
+        editTextTime = view.findViewById(R.id.editTextTime);
+
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -95,23 +104,40 @@ public class CreateQuickMatchFragment extends Fragment {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
                 updateCalendar();
             }
-
             private void updateCalendar(){
                 String Format = "MM/dd/yy";
                 SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.US);
                 editTextDate.setText(sdf.format(calendar.getTime()));
             }
         };
-
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(mContext, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+
+
+        editTextTime = view.findViewById(R.id.editTextTime);
+        // Time Set Listener.
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                editTextTime.setText(hourOfDay + ":" + minute );
+                lastSelectedHour = hourOfDay;
+                lastSelectedMinute = minute;
+            }
+        };
+        editTextTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TimePickerDialog(mContext, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, timeSetListener, lastSelectedHour, lastSelectedMinute, is24HView).show();            }
+        });
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                 android.R.layout.select_dialog_item, PLACES);
