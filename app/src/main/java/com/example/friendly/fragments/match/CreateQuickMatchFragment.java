@@ -22,7 +22,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.friendly.NavigationUtils;
+import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
+import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
@@ -85,6 +87,9 @@ public class CreateQuickMatchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        PlaceQuery query = new PlaceQuery();
+        query.queryNearbyPlaces(5);
+
         mContext = getContext();
         mActivity = getActivity();
 

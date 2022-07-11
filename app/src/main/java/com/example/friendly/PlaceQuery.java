@@ -25,34 +25,28 @@ public class PlaceQuery {
     private static final String TAG = "PlaceQuery";
     private static final String KEY_USER_LOCATION = "Location";
     protected static final int PLACES_TO_LOAD = 10;
-    protected List<Place> nearbyPlaces = new ArrayList<>();
+    public List<Place> nearbyPlaces = new ArrayList<>();
 
-//    // TODO: maybe change queryConditions into separate booleans
-//    public void queryHangouts(HangoutsAdapter adapter, ArrayList<String> queryConditions) {
-//        ParseQuery<Hangout> query = ParseQuery.getQuery(Hangout.class);
-//        query.include(Hangout.KEY_USER1);
-//        query.include(Hangout.KEY_USER2);
-//        query.include(Hangout.KEY_DATE);
-//        query.include(Hangout.KEY_LOCATION);
-//    }
-
-    public void queryNearbyPlaces(int limit) {
+    public List<Place> queryNearbyPlaces(int limit) {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
         ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_USER_LOCATION);
         query.whereNear(KEY_USER_LOCATION, currentLocation);
         query.setLimit(limit);
 
-        query.findInBackground(new FindCallback<Place>() {
-            @Override
-            public void done(List<Place> places, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting places", e);
-                    return;
-                }
-                nearbyPlaces = places;
-            }
-        });
+        List<Place> queryResults = null;
+        try {
+            queryResults = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         ParseQuery.clearAllCachedResults();
+        return queryResults;
+
+    }
+
+    public List<Place> getNearbyPlaces(){
+        return nearbyPlaces;
     }
 
 
