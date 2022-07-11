@@ -1,6 +1,7 @@
 package com.example.friendly.fragments.match;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -15,13 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.example.friendly.R;
 import com.example.friendly.fragments.HangoutsFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,16 +42,18 @@ public class CreateQuickMatchFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private Activity mActivity;
     private Context mContext;
-    private static final String[] COUNTRIES = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain"
+
+    EditText editTextDate;
+    Calendar calendar;
+
+    //TODO: move to string/values.xml
+    private static final String[] PLACES = new String[]{
+            "Taco Chunkis", "Kati Vegan Thai", "Cinerama", "Tapster"
     };
 
     public CreateQuickMatchFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -79,8 +87,34 @@ public class CreateQuickMatchFragment extends Fragment {
         mActivity = getActivity();
         mContext = getContext();
 
+        editTextDate = view.findViewById(R.id.editTextDate);
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateCalendar();
+            }
+
+            private void updateCalendar(){
+                String Format = "MM/dd/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.US);
+                editTextDate.setText(sdf.format(calendar.getTime()));
+            }
+        };
+
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(mContext, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.select_dialog_item, COUNTRIES);
+                android.R.layout.select_dialog_item, PLACES);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(adapter);
         textView.setThreshold(1);//will start working from first character
