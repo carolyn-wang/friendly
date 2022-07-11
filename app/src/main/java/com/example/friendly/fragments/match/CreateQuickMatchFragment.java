@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,14 @@ import android.widget.TimePicker;
 import com.example.friendly.R;
 import com.example.friendly.fragments.HangoutsFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -38,22 +43,17 @@ import java.util.Locale;
  */
 public class CreateQuickMatchFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private Activity mActivity;
     private Context mContext;
+    private static final String TAG = "CreateQuickMatchFragment";
 
     EditText editTextDate;
     EditText editTextTime;
     Calendar calendar;
 
-    boolean is24HView = true;
-    int lastSelectedHour = 10;
-    int lastSelectedMinute = 20;
+    boolean is24HView = false;
+    int lastSelectedHour = 0;
+    int lastSelectedMinute = 0;
 
     //TODO: move to string/values.xml
     private static final String[] PLACES = new String[]{
@@ -63,20 +63,9 @@ public class CreateQuickMatchFragment extends Fragment {
     public CreateQuickMatchFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CreateQuickMatchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CreateQuickMatchFragment newInstance(String param1, String param2) {
-        CreateQuickMatchFragment fragment = new CreateQuickMatchFragment();
+    public static CreateQuickMatchFragment newInstance() {
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        CreateQuickMatchFragment fragment = new CreateQuickMatchFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -84,7 +73,6 @@ public class CreateQuickMatchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_quick_match, container, false);
     }
 
@@ -104,12 +92,7 @@ public class CreateQuickMatchFragment extends Fragment {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateCalendar();
-            }
-            private void updateCalendar(){
-                String Format = "MM/dd/yy";
-                SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.US);
-                editTextDate.setText(sdf.format(calendar.getTime()));
+                editTextDate.setText(formatDate(calendar));
             }
         };
         editTextDate.setOnClickListener(new View.OnClickListener() {
@@ -119,15 +102,11 @@ public class CreateQuickMatchFragment extends Fragment {
             }
         });
 
-
-
-        editTextTime = view.findViewById(R.id.editTextTime);
-        // Time Set Listener.
+        setCurrentTime();
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                editTextTime.setText(hourOfDay + ":" + minute );
+                editTextTime.setText(formatTime12Hr(hourOfDay, minute));
                 lastSelectedHour = hourOfDay;
                 lastSelectedMinute = minute;
             }
@@ -135,7 +114,8 @@ public class CreateQuickMatchFragment extends Fragment {
         editTextTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(mContext, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, timeSetListener, lastSelectedHour, lastSelectedMinute, is24HView).show();            }
+                new TimePickerDialog(mContext, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, timeSetListener, lastSelectedHour, lastSelectedMinute, is24HView).show();
+            }
         });
 
 
@@ -143,7 +123,26 @@ public class CreateQuickMatchFragment extends Fragment {
                 android.R.layout.select_dialog_item, PLACES);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(adapter);
-        textView.setThreshold(1);//will start working from first character
+        textView.setThreshold(1); //Autocomplete will start working from first character
+
+    }
+
+    private String formatDate(Calendar calendar) {
+        String Format = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.US);
+        return sdf.format(calendar.getTime());
+    }
+
+    // TODO: move to some utils
+    private String formatTime12Hr(int hourOfDay, int minute) {
+        String pattern = "hh:mm a";
+        LocalTime time = LocalTime.parse(hourOfDay + ":" + minute);
+        return time.format(DateTimeFormatter.ofPattern(pattern));
+    }
+
+    private void setCurrentTime() {
+        lastSelectedHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        lastSelectedMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
     }
 }
