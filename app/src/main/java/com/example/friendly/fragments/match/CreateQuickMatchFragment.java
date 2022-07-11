@@ -1,28 +1,42 @@
 package com.example.friendly.fragments.match;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.example.friendly.activities.SignUpActivity;
+import com.example.friendly.objects.Hangout;
+import com.example.friendly.objects.Place;
+import com.example.friendly.objects.User;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -33,10 +47,13 @@ import java.util.Locale;
 public class CreateQuickMatchFragment extends Fragment {
 
     private Context mContext;
+    private Activity mActivity;
     private static final String TAG = "CreateQuickMatchFragment";
 
+    private AutoCompleteTextView autoCompletePlaces;
     private EditText editTextDate;
     private EditText editTextTime;
+    private Button btnCreateHangout;
 
     private static final boolean is24HView = false;
     private int lastSelectedHour = 0;
@@ -69,16 +86,18 @@ public class CreateQuickMatchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
+        mActivity = getActivity();
 
+        autoCompletePlaces = (AutoCompleteTextView) view.findViewById(R.id.autoCompletePlaces);
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextTime = view.findViewById(R.id.editTextTime);
+        btnCreateHangout = view.findViewById(R.id.btnCreateHangout);
 
 //        Places Autocomplete
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.select_dialog_item, PLACES);
-        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
-        textView.setAdapter(adapter);
-        textView.setThreshold(1); //Autocomplete will start working from first character
+        autoCompletePlaces.setAdapter(adapter);
+        autoCompletePlaces.setThreshold(1); //Autocomplete will start working from first character
 
 //        Date Floating Dialog
         Calendar calendar = Calendar.getInstance();
@@ -115,7 +134,33 @@ public class CreateQuickMatchFragment extends Fragment {
             }
         });
 
+        btnCreateHangout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String place = autoCompletePlaces.getText().toString();
+                Date date = calendar.getTime();
+                ParseUser user1 = ParseUser.getCurrentUser();
+                createHangout(date, user1, place);
+            }
+        });
 
+    }
+
+    private void createHangout(Date date, ParseUser user1, String place) {
+        Hangout hangout = new Hangout();
+        hangout.setDate(date);
+        hangout.setUser1(user1);
+        hangout.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Toast.makeText(mContext, "Error creating hangout", Toast.LENGTH_LONG).show();
+                    Log.i(TAG, e.getMessage());
+                }
+                Toast.makeText(mContext, "Created Hangout!!", Toast.LENGTH_SHORT).show();
+                NavigationUtils.goMainActivity(mActivity);
+            }
+        });
     }
 
     private String formatDate(Calendar calendar) {

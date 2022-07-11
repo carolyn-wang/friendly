@@ -42,4 +42,6 @@
     <string name="create_quick_location">Place</string>
     <string name="create_quick_date">Date</string>
     <string name="create_quick_time">Time</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_create_quick">Create Hangout</string>
 </resources>

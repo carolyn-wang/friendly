@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView"
+        android:id="@+id/autoCompletePlaces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/create_quick_location"
@@ -35,7 +35,7 @@
         android:hint="@string/create_quick_date"
         android:inputType="date"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/autoCompletePlaces" />
 
     <EditText
         android:id="@+id/editTextTime"
@@ -48,6 +48,14 @@
         android:hint="@string/create_quick_time"
         android:inputType="time"
         app:layout_constraintLeft_toRightOf="@+id/editTextDate"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/autoCompletePlaces" />
+
+    <Button
+        android:id="@+id/btnCreateHangout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_create_quick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
