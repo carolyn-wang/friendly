@@ -13,4 +13,6 @@
     <dimen name="card_corner_radius">15dp</dimen>
     <dimen name="card_elevation">8dp</dimen>
     <dimen name="hangout_card_padding">10dp</dimen>
+    <dimen name="hangout_history_height">380dp</dimen>
+    <dimen name="hangout_quick_height">500dp</dimen>
 </resources>

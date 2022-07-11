@@ -16,12 +16,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/quick_match_title" />
 
+    <TextView
+        android:id="@+id/tvQuickMatchDescription"
+        style="@style/TitleFont.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/match_description"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuickMatch" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/quickMatchHangouts"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuickMatch"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuickMatchDescription"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="@dimen/hangout_quick_height" >
 
     </androidx.fragment.app.FragmentContainerView>
 

@@ -36,7 +36,6 @@ public class HangoutDetailFragment extends Fragment {
     private TextView tvHangoutDate;
 
     public HangoutDetailFragment() {
-        // Required empty public constructor
     }
 
     public static HangoutDetailFragment newInstance(Hangout hangout) {

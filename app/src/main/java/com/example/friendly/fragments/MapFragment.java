@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+
+import com.example.friendly.HangoutQuery;
+import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
 
 import android.Manifest;
@@ -22,9 +25,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.example.friendly.adapters.HangoutsAdapter;
+import com.example.friendly.objects.Hangout;
+import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,12 +54,14 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mGoogleMap;
     private MapView mapView;
+    private PlaceQuery placeQuery;
 
     private static final String TAG = "MapsActivity";
     private static final String KEY_USER_LOCATION = "Location";
@@ -75,6 +84,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mapView.getMapAsync(this);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -204,7 +218,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onSuccess(ParseGeoPoint location) {
                 LatLng currentUser = new LatLng(location.getLatitude(), location.getLongitude());
-                setMarker(currentUser, ParseUser.getCurrentUser().getString(KEY_USER_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                setMarker(currentUser, ParseUser.getCurrentUser().getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 moveCamera(currentUser, INITIAL_ZOOM);
             }
 
@@ -251,17 +265,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void showPlacesInMap() {
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Place");
+        ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
         query.whereExists(KEY_USER_LOCATION);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        query.findInBackground(new FindCallback<Place>() {
             @Override
-            public void done(List<ParseObject> stores, ParseException e) {
+            public void done(List<Place> places, ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < stores.size(); i++) {
-                        Log.i(TAG, stores.get(i).getObjectId());
-                        LatLng storeLocation = new LatLng(stores.get(i).getParseGeoPoint(KEY_PLACE_LOCATION).getLatitude(), stores.get(i).getParseGeoPoint(KEY_PLACE_LOCATION).getLongitude());
-                        setMarker(storeLocation, stores.get(i).getString(KEY_PLACE_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                    for (int i = 0; i < places.size(); i++) {
+                        LatLng storeLocation = new LatLng(places.get(i).getLocation().getLatitude(), places.get(i).getLocation().getLongitude());
+                        setMarker(storeLocation, places.get(i).getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                     }
                 } else {
                     Log.i(TAG, "Error: " + e.getMessage());
@@ -277,19 +289,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      * Zoom the map to the closestPlaceLocation
      */
     public void showClosestPlace() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Place");
+        ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
         query.whereNear(KEY_USER_LOCATION, getCurrentUserParseLocation());
         query.setLimit(1);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        query.findInBackground(new FindCallback<Place>() {
             @Override
-            public void done(List<ParseObject> nearStores, ParseException e) {
+            public void done(List<Place> nearStores, ParseException e) {
                 if (e == null) {
-                    ParseObject closestPlace = nearStores.get(0);
-                    showCurrentUserInMap();
-                    double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getParseGeoPoint(KEY_USER_LOCATION));
-                    Toast.makeText(mContext, "We found the closest place from you! It's " + closestPlace.getString(KEY_PLACE_NAME) + ". \nYou are " + Math.round(distance * 100.0) / 100.0 + " km from this store.", Toast.LENGTH_SHORT).show();
-                    LatLng closestPlaceLocation = new LatLng(closestPlace.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestPlace.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-                    setMarker(closestPlaceLocation, closestPlace.getString(KEY_PLACE_NAME), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    Place closestPlace = nearStores.get(0);
+                    double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getLocation());
+                    Toast.makeText(mContext, "We found the closest place from you! It's " + closestPlace.getName() + ". \nYou are " + Math.round(distance * 100.0) / 100.0 + " km from this store.", Toast.LENGTH_SHORT).show();
+                    LatLng closestPlaceLocation = new LatLng(closestPlace.getLocation().getLatitude(), closestPlace.getLocation().getLongitude());
+                    setMarker(closestPlaceLocation, closestPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }

@@ -150,6 +150,7 @@ public class CreateQuickMatchFragment extends Fragment {
 
     }
 
+    //TODO: add checks here (cannot create hangout in past)
     private void createHangout(Date date, ParseUser user1, String place) {
         Hangout hangout = new Hangout();
         hangout.setDate(date);
@@ -161,7 +162,7 @@ public class CreateQuickMatchFragment extends Fragment {
                     Toast.makeText(mContext, "Error creating hangout", Toast.LENGTH_LONG).show();
                     Log.i(TAG, e.getMessage());
                 }
-                Toast.makeText(mContext, "Created Hangout!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Hangout Created!", Toast.LENGTH_SHORT).show();
                 NavigationUtils.goMainActivity(mActivity);
             }
         });
