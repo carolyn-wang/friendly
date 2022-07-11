@@ -59,7 +59,6 @@ public class CreateQuickMatchFragment extends Fragment {
     private int lastSelectedHour = 0;
     private int lastSelectedMinute = 0;
     private static final String timePattern = "hh:mm a";
-    private static final String datePattern = "MM/dd/yy";
 
     //TODO: fetch 50 nearest upon opening
     private static final String[] PLACES = new String[]{
@@ -107,7 +106,8 @@ public class CreateQuickMatchFragment extends Fragment {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                editTextDate.setText(formatDate(calendar));
+                String formatedDate = SimpleDateFormat.getDateInstance().format(calendar.getTime());
+                editTextDate.setText(formatedDate);
             }
         };
         editTextDate.setOnClickListener(new View.OnClickListener() {
@@ -161,11 +161,6 @@ public class CreateQuickMatchFragment extends Fragment {
                 NavigationUtils.goMainActivity(mActivity);
             }
         });
-    }
-
-    private String formatDate(Calendar calendar) {
-        SimpleDateFormat sdf = new SimpleDateFormat(datePattern, Locale.US);
-        return sdf.format(calendar.getTime());
     }
 
     private String formatTime12Hr(int hourOfDay, int minute) {

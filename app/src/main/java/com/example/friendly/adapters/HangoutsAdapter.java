@@ -14,11 +14,14 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.friendly.DisplayUtils;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.google.android.material.timepicker.TimeFormat;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Random;
@@ -100,23 +103,9 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     }
                 }
             });
-            cdHangout.setCardBackgroundColor(getCardColor(hangout));
+            cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
         }
 
-    }
-
-    // TODO: move to displayUtils
-
-    /**
-     * Get card color based off hangout's createdAt value
-     * @param hangout - given Hangout item to retrieve card color for
-     * @return Color int for hangout card
-     */
-    public int getCardColor(Hangout hangout){
-        long i = hangout.getCreatedAt().getTime();
-        String[] colorArray = mContext.getResources().getStringArray(R.array.colors);
-        String randomStr = String.valueOf(colorArray[ Math.floorMod(i, colorArray.length)]);
-        return Color.parseColor(randomStr);
     }
     // Clean all elements of the recycler
     public void clear() {
