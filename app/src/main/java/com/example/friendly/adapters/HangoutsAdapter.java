@@ -109,8 +109,8 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
 
     /**
      * Get card color based off hangout's createdAt value
-     * @param hangout
-     * @return
+     * @param hangout - given Hangout item to retrieve card color for
+     * @return Color int for hangout card
      */
     public int getCardColor(Hangout hangout){
         long i = hangout.getCreatedAt().getTime();
