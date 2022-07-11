@@ -1,18 +1,9 @@
 package com.example.friendly.fragments.match;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,20 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TimePicker;
 
-import com.example.friendly.R;
-import com.example.friendly.fragments.HangoutsFragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import java.text.ParseException;
+import com.example.friendly.R;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -43,19 +32,19 @@ import java.util.Locale;
  */
 public class CreateQuickMatchFragment extends Fragment {
 
-    private Activity mActivity;
     private Context mContext;
     private static final String TAG = "CreateQuickMatchFragment";
 
-    EditText editTextDate;
-    EditText editTextTime;
-    Calendar calendar;
+    private EditText editTextDate;
+    private EditText editTextTime;
 
-    boolean is24HView = false;
-    int lastSelectedHour = 0;
-    int lastSelectedMinute = 0;
+    private static final boolean is24HView = false;
+    private int lastSelectedHour = 0;
+    private int lastSelectedMinute = 0;
+    private static final String timePattern = "hh:mm a";
+    private static final String datePattern = "MM/dd/yy";
 
-    //TODO: move to string/values.xml
+    //TODO: fetch 50 nearest upon opening
     private static final String[] PLACES = new String[]{
             "Taco Chunkis", "Kati Vegan Thai", "Cinerama", "Tapster"
     };
@@ -79,12 +68,19 @@ public class CreateQuickMatchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mActivity = getActivity();
         mContext = getContext();
 
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextTime = view.findViewById(R.id.editTextTime);
 
+//        Places Autocomplete
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
+                android.R.layout.select_dialog_item, PLACES);
+        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
+        textView.setAdapter(adapter);
+        textView.setThreshold(1); //Autocomplete will start working from first character
+
+//        Date Floating Dialog
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -102,6 +98,7 @@ public class CreateQuickMatchFragment extends Fragment {
             }
         });
 
+//        Time Spinner
         setCurrentTime();
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -119,30 +116,23 @@ public class CreateQuickMatchFragment extends Fragment {
         });
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.select_dialog_item, PLACES);
-        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
-        textView.setAdapter(adapter);
-        textView.setThreshold(1); //Autocomplete will start working from first character
-
     }
 
     private String formatDate(Calendar calendar) {
-        String Format = "MM/dd/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(datePattern, Locale.US);
         return sdf.format(calendar.getTime());
     }
 
-    // TODO: move to some utils
     private String formatTime12Hr(int hourOfDay, int minute) {
-        String pattern = "hh:mm a";
         LocalTime time = LocalTime.parse(hourOfDay + ":" + minute);
-        return time.format(DateTimeFormatter.ofPattern(pattern));
+        return time.format(DateTimeFormatter.ofPattern(timePattern));
     }
 
+    /**
+     * Sets the spinner hour and minutes to current time
+     */
     private void setCurrentTime() {
         lastSelectedHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         lastSelectedMinute = Calendar.getInstance().get(Calendar.MINUTE);
-
     }
 }
