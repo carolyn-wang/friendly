@@ -50,6 +50,7 @@ public class CreateQuickMatchFragment extends Fragment {
     private Activity mActivity;
     private static final String TAG = "CreateQuickMatchFragment";
 
+    private Calendar calendar;
     private AutoCompleteTextView autoCompletePlaces;
     private EditText editTextDate;
     private EditText editTextTime;
@@ -99,15 +100,15 @@ public class CreateQuickMatchFragment extends Fragment {
         autoCompletePlaces.setThreshold(1); //Autocomplete will start working from first character
 
 //        Date Floating Dialog
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String formatedDate = SimpleDateFormat.getDateInstance().format(calendar.getTime());
-                editTextDate.setText(formatedDate);
+                String formattedDate = SimpleDateFormat.getDateInstance().format(calendar.getTime());
+                editTextDate.setText(formattedDate);
             }
         };
         editTextDate.setOnClickListener(new View.OnClickListener() {
@@ -121,9 +122,12 @@ public class CreateQuickMatchFragment extends Fragment {
         setCurrentTime();
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                editTextTime.setText(formatTime12Hr(hourOfDay, minute));
-                lastSelectedHour = hourOfDay;
+            public void onTimeSet(TimePicker view, int hour, int minute) {
+                calendar.set(Calendar.HOUR, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                String formattedTime = SimpleDateFormat.getTimeInstance().format(calendar.getTime());
+                editTextTime.setText(formattedTime);
+                lastSelectedHour = hour;
                 lastSelectedMinute = minute;
             }
         };
@@ -161,11 +165,6 @@ public class CreateQuickMatchFragment extends Fragment {
                 NavigationUtils.goMainActivity(mActivity);
             }
         });
-    }
-
-    private String formatTime12Hr(int hourOfDay, int minute) {
-        LocalTime time = LocalTime.parse(hourOfDay + ":" + minute);
-        return time.format(DateTimeFormatter.ofPattern(timePattern));
     }
 
     /**
