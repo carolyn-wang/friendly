@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.fragments.SearchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
 import com.example.friendly.fragments.ProfileFragment;

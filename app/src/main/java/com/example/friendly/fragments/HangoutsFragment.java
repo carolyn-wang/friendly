@@ -76,6 +76,9 @@ public class HangoutsFragment extends Fragment {
         // TODO: move keys into final String
         queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
 
+        if (queryConditions != null) {
+            queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
+        }
         mContext = view.getContext();
         pb = view.findViewById(R.id.pbLoading);
         rvHangouts = view.findViewById(R.id.rvHangouts);
@@ -117,6 +120,7 @@ public class HangoutsFragment extends Fragment {
                 adapter.clear();
                 query.setScrollCounter(0);
                 query.queryHangouts(adapter, queryConditions);
+
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -138,6 +142,7 @@ public class HangoutsFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 query.queryHangouts(adapter, queryConditions);
+
             }
         };
         rvHangouts.addOnScrollListener(scrollListener);

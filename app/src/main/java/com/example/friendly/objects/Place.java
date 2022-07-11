@@ -17,5 +17,4 @@ public class Place extends ParseObject {
     public ParseGeoPoint getLocation() {
         return getParseGeoPoint(KEY_LOCATION);
     }
-
 }

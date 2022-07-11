@@ -1,5 +1,6 @@
 package com.example.friendly.fragments.match;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.fragments.HangoutsFragment;
+import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
@@ -33,12 +35,11 @@ public class MatchFragment extends Fragment {
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
+    private Button btnMap;
 
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
     protected List<Hangout> allHangouts;
-
-
     public MatchFragment(){
 
     }
@@ -58,11 +59,11 @@ public class MatchFragment extends Fragment {
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
+        btnMap = view.findViewById(R.id.btnMap);
 
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick Hangout History button");
                 NavigationUtils.displayFragmentQuickMatch(((MainActivity)mContext).getSupportFragmentManager());
             }
         });
@@ -74,6 +75,18 @@ public class MatchFragment extends Fragment {
             }
         });
 
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                MapFragment mapFragment = new MapFragment();
+                ft.replace(R.id.flContainer, mapFragment)
+                        .addToBackStack("map")
+                        .commit();
+            }
+        });
         FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
