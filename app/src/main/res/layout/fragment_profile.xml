@@ -1,80 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--TODO: change to constraintLayout & move values out-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/fragment_padding"
-    android:orientation="vertical">
+    android:padding="@dimen/fragment_padding">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/profile_title"
+        style="@style/TitleFont.Big"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/profile_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvUsernameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username: " />
-
-        <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="username shows here"
-            app:layout_constraintLeft_toRightOf="@id/tvUsernameLabel"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvUsernameLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/username_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_title" />
 
-        <TextView
-            android:id="@+id/tvNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name: " />
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_sans"
+        android:text="@string/username_default"
+        app:layout_constraintLeft_toRightOf="@id/tvUsernameLabel"
+        app:layout_constraintTop_toBottomOf="@+id/profile_title" />
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name shows here" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsernameLabel"
+        android:text="@string/name_title" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_default"
+        app:layout_constraintLeft_toRightOf="@+id/tvNameLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsernameLabel"/>
 
     <Button
         android:id="@+id/btnHangoutHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hangout History" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameLabel"
+        android:text="@string/hangout_history_btn" />
 
     <Button
         android:id="@+id/btnChangePreferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change Preferences" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHangoutHistory"
+        android:text="@string/change_preferences_btn" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnHangoutHistory"
+        android:text="@string/log_out_btn"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Log Out" />
+        app:layout_constraintTop_toBottomOf="@+id/btnChangePreferences" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/checkBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notifications" />
+        android:text="@string/notifications"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/checkBox2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Receive Messages" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+        android:text="@string/receive_messages" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

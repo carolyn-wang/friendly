@@ -1,6 +1,8 @@
 package com.example.friendly.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.objects.Hangout;
@@ -17,6 +21,7 @@ import com.example.friendly.activities.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
 
 public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHolder> {
 
@@ -25,7 +30,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
     private static final String TAG = "HangoutsAdapter";
 
     public HangoutsAdapter(Context context, List<Hangout> hangouts) {
-        this.mContext = context; // MainActiviity
+        this.mContext = context; // MainActivity
         this.hangouts = hangouts;
     }
 
@@ -57,7 +62,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private View cdHangout;
+        private CardView cdHangout;
         private TextView tvHangoutUser1;
         private TextView tvHangoutUser2;
         private TextView tvHangoutDate;
@@ -69,11 +74,10 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
             tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
-            cdHangout = itemView.findViewById(R.id.cdHangout);
+            cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
         }
 
         public void bind(Hangout hangout) {
-            // Bind the post data to the view elements
             tvHangoutUser1.setText(hangout.getUser1().getUsername());
             if (hangout.getUser2() != null) {
                 tvHangoutUser2.setText(hangout.getUser2().getUsername());
@@ -83,7 +87,6 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             if(hangout.getLocation() != null){
                 tvHangoutLocation.setText(hangout.getLocationName());
             }
-
             // TODO: move into child classes
             // click listener to open DetailFragment for hangout
             cdHangout.setOnClickListener(new View.OnClickListener() {
@@ -97,10 +100,24 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     }
                 }
             });
+            cdHangout.setCardBackgroundColor(getCardColor(hangout));
         }
 
     }
 
+    // TODO: move to displayUtils
+
+    /**
+     * Get card color based off hangout's createdAt value
+     * @param hangout - given Hangout item to retrieve card color for
+     * @return Color int for hangout card
+     */
+    public int getCardColor(Hangout hangout){
+        long i = hangout.getCreatedAt().getTime();
+        String[] colorArray = mContext.getResources().getStringArray(R.array.colors);
+        String randomStr = String.valueOf(colorArray[ Math.floorMod(i, colorArray.length)]);
+        return Color.parseColor(randomStr);
+    }
     // Clean all elements of the recycler
     public void clear() {
         hangouts.clear();

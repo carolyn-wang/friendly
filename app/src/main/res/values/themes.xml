@@ -12,6 +12,31 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-        <!-- Customize your theme here. -->
+        <!--        Default font-->
+        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="android:textSize">@dimen/fontSizeSmall</item>
+<!--        Button Styling-->
+        <item name="android:textAllCaps">false</item>
     </style>
+
+    <style name="TitleFont">
+        <item name="android:fontFamily">@font/nunito_sans_semibold</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:fontWeight">800</item>
+        <item name="android:paddingBottom">@dimen/paddingMedium</item>
+    </style>
+
+    <style name="TitleFont.Big">
+        <item name="android:textSize">@dimen/fontSizeBig</item>
+    </style>
+
+    <style name="TitleFont.Medium">
+        <item name="android:textSize">@dimen/fontSizeMedium</item>
+    </style>
+
+    <dimen name="fontSizeSmall">18dp</dimen>
+    <dimen name="fontSizeMedium">20dp</dimen>
+    <dimen name="fontSizeBig">25dp</dimen>
+    <dimen name="paddingMedium">16dp</dimen>
+
 </resources>

@@ -21,4 +21,17 @@
     <string name="match_btn_long">Schedule for Later</string>
     <string name="match_btn_upcoming">Upcoming Hangouts</string>
     <string name="quick_match_title">Quick Match</string>
+
+    <string name="match_title">Home</string>
+    <string name="profile_title">Profile</string>
+    <string name="preference_title">Preferences</string>
+    <string name="username_title">"Username: "</string>
+    <string name="username_default">username shows here</string>
+    <string name="name_title">Name: </string>
+    <string name="name_default">Name shows here</string>
+    <string name="hangout_history_btn">Hangout History</string>
+    <string name="change_preferences_btn">Change Preferences</string>
+    <string name="log_out_btn">Log Out</string>
+    <string name="notifications">Notifications</string>
+    <string name="receive_messages">Receive Messages</string>
 </resources>
