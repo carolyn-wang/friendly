@@ -39,9 +39,9 @@ public class PreferencesActivity extends AppCompatActivity {
         scrollCounter = 0;
 
         allPreferences = Arrays.asList(
-                new Preference(getString(R.string.question0), new String[]{"Year 1", "Year 2", "Year 3", "Year 4", "Year 5+ (Masters/Postgrad)"}),
-                new Preference(getString(R.string.question1), new String[]{"Very Similar", "Somewhat similar", "Neutral (either works)", "Somewhat different", "Very Different"}),
-                new Preference(getString(R.string.question2), new String[]{"gaming", "reading", "hiking", "gym", "art", "music", "anime", "sports", "politics"}));
+                new Preference(getString(R.string.question0), mContext.getResources().getStringArray(R.array.option0)),
+                new Preference(getString(R.string.question1), mContext.getResources().getStringArray(R.array.option1)),
+                new Preference(getString(R.string.question2), mContext.getResources().getStringArray(R.array.option2)));
 
         adapter = new PreferencesAdapter(mContext, allPreferences);
         rvPreferences.setAdapter(adapter);
