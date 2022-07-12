@@ -13,19 +13,12 @@ import com.example.friendly.R;
 import com.example.friendly.fragments.ProfileFragment;
 import com.example.friendly.fragments.SearchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
-<<<<<<< HEAD
-=======
-import com.example.friendly.fragments.ProfileFragment;
-import com.example.friendly.objects.User;
->>>>>>> 8815daa (saving progress; unable to save preference changes to database)
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Context mContext;
-    private static User currentUser;
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
@@ -49,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new MatchFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ProfileFragment().newInstance(ParseUser.getCurrentUser());
+                        fragment = new ProfileFragment();
                         break;
                     default: return true;
                 }
@@ -63,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_match);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
     public static void setCurrentUser(User user){
@@ -72,4 +66,6 @@ public class MainActivity extends AppCompatActivity {
         return currentUser;
     }
 >>>>>>> 8815daa (saving progress; unable to save preference changes to database)
+=======
+>>>>>>> 77f9318 (fixed preferences log out and deleted profile adapter)
 }

@@ -2,8 +2,6 @@ package com.example.friendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
-import com.example.friendly.objects.User;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -55,14 +53,13 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signupUser(String firstName, String lastName, String email, String username, String password) {
-        User user = new User();
+        ParseUser user = new ParseUser();
         // Set the user's username and password, which can be obtained by a forms
         user.put("firstName", firstName);
         user.put("lastName", firstName);
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
-        MainActivity.setCurrentUser(user);
         user.signUpInBackground(new SignUpCallback() {
             // TODO: throw error for edge cases / authenticate login
             @Override
@@ -71,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Successful Sign Up!", Toast.LENGTH_LONG).show();
                     NavigationUtils.goPreferencesActivity(SignUpActivity.this);
                 } else {
-                    User.logOut();
+                    ParseUser.logOut();
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }

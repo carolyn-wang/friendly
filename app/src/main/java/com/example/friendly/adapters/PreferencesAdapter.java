@@ -134,7 +134,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                         // checkedId is the RadioButton selected
                         RadioButton rb=(RadioButton) itemView.findViewById(checkedId);
                         Log.i(TAG, "User selected " + rb.getText());
-                        PreferencesActivity.savePreference(rb.getText());
+                        PreferencesActivity.savePreference(ParseUser.getCurrentUser(), rb.getText());
                     }
                 });
             }

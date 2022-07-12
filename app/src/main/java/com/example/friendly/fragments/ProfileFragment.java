@@ -1,6 +1,5 @@
 package com.example.friendly.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -8,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,6 @@ import android.widget.TextView;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
-import com.example.friendly.adapters.HangoutsAdapter;
-import com.example.friendly.adapters.ProfileAdapter;
 import com.parse.ParseUser;
 
 /**
@@ -30,9 +26,9 @@ import com.parse.ParseUser;
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
+    private static final String KEY_USER_FIRST_NAME = "firstName";
     private Context mContext;
     private MainActivity mActivity;
-    private ProfileAdapter adapter;
 
     private Button btnLogout;
     private Button btnHangoutHistory;
@@ -43,20 +39,9 @@ public class ProfileFragment extends Fragment {
     public ProfileFragment() {
     }
 
-    public static ProfileFragment newInstance(ParseUser user) {
-
-        Bundle args = new Bundle();
-
-        ProfileFragment fragment = new ProfileFragment();
-        args.putParcelable("user", user);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -73,33 +58,30 @@ public class ProfileFragment extends Fragment {
 
         if (ParseUser.getCurrentUser() != null){
             tvUsername.setText(ParseUser.getCurrentUser().getUsername());
-            tvName.setText(ParseUser.getCurrentUser().getString("firstName"));
+            tvName.setText(ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME));
         }
         
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick Hangout History button");
                 NavigationUtils.displayFragmentHangoutHistory(mActivity.getSupportFragmentManager());
-            }
-        });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick logout button");
-                ParseUser.logOut();
-                NavigationUtils.goLoginActivity(mActivity);
             }
         });
 
         btnChangePreferences.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick logout button");
-                ParseUser.logOut();
                 NavigationUtils.goPreferencesActivity(mActivity);
             }
         });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                NavigationUtils.goLoginActivity(mActivity);
+            }
+        });
+
     }
 }
