@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.friendly.MatchingUtils;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.objects.Hangout;
@@ -60,6 +61,8 @@ public class MatchFragment extends Fragment {
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
         btnMap = view.findViewById(R.id.btnMap);
+
+        MatchingUtils.findMatches(ParseUser.getCurrentUser());
 
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override

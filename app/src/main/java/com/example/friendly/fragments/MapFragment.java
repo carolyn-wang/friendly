@@ -143,7 +143,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Toast.makeText(mContext, "Can't access user's current location from database", Toast.LENGTH_SHORT).show();
             NavigationUtils.goLoginActivity(mActivity);
         }
-        return currentUser.getParseGeoPoint(KEY_USER_LOCATION);
+        return currentUser. getParseGeoPoint(KEY_USER_LOCATION);
     }
 
     @Override
