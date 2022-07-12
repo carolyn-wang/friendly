@@ -7,13 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.friendly.activities.MainActivity;
+import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.objects.Preference;
 import com.example.friendly.R;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -51,7 +57,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     }
 
     /**
-     * Returns card type to be used (either radio or checkbox)
+     * Returns card type to be used (either radio (0) or checkbox (1))
      *
      * @param position
      * @return
@@ -87,6 +93,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         private Button btnOption5;
         private Button btnOption6;
         private Button[] optionViews;
+        RadioGroup rgOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,6 +105,8 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             btnOption4 = itemView.findViewById(R.id.btnOption4);
             btnOption5 = itemView.findViewById(R.id.btnOption5);
             btnOption6 = itemView.findViewById(R.id.btnOption6);
+            rgOptions = (RadioGroup) itemView.findViewById(R.id.rgOptions);
+
             optionViews = new Button[]{btnOption0, btnOption1, btnOption2, btnOption3, btnOption4, btnOption5, btnOption6};
         }
 
@@ -116,6 +125,18 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                 } else {
                     optionViews[i].setVisibility(View.GONE);
                 }
+            }
+
+            if (getItemViewType() == 0) {
+                rgOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        // checkedId is the RadioButton selected
+                        RadioButton rb=(RadioButton) itemView.findViewById(checkedId);
+                        Log.i(TAG, "User selected " + rb.getText());
+                        PreferencesActivity.savePreference(rb.getText());
+                    }
+                });
             }
         }
     }

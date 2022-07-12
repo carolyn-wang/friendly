@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.example.friendly.objects.User;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -54,13 +55,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signupUser(String firstName, String lastName, String email, String username, String password) {
-        ParseUser user = new ParseUser();
+        User user = new User();
         // Set the user's username and password, which can be obtained by a forms
         user.put("firstName", firstName);
         user.put("lastName", firstName);
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
+        MainActivity.setCurrentUser(user);
         user.signUpInBackground(new SignUpCallback() {
             // TODO: throw error for edge cases / authenticate login
             @Override
@@ -69,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Successful Sign Up!", Toast.LENGTH_LONG).show();
                     NavigationUtils.goPreferencesActivity(SignUpActivity.this);
                 } else {
-                    ParseUser.logOut();
+                    User.logOut();
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }

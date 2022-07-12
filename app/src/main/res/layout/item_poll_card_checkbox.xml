@@ -1,70 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardView.Poll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin"
-    style="@style/CardView.Poll">
+    android:layout_margin="@dimen/card_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:context=".activities.PreferencesActivity">
 
         <TextView
             android:id="@+id/tvQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
-            android:id="@+id/btnOption0"
+        <ListView
+            android:id="@+id/lvOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestion">
 
-        <CheckBox
-            android:id="@+id/btnOption1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnOption0"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+        </ListView>
+                <CheckBox
+                    android:id="@+id/btnOption0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
 
-        <CheckBox
-            android:id="@+id/btnOption2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnOption1"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+                <CheckBox
+                    android:id="@+id/btnOption1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/btnOption0"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <CheckBox
-            android:id="@+id/btnOption3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnOption2"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+                <CheckBox
+                    android:id="@+id/btnOption2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/btnOption1"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <CheckBox
-            android:id="@+id/btnOption4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnOption3"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+                <CheckBox
+                    android:id="@+id/btnOption3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/btnOption2"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <CheckBox
-            android:id="@+id/btnOption5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnOption4"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+                <CheckBox
+                    android:id="@+id/btnOption4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/btnOption3"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <CheckBox
-            android:id="@+id/btnOption6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnOption5"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+                <CheckBox
+                    android:id="@+id/btnOption5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/btnOption4"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <CheckBox
+                    android:id="@+id/btnOption6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/btnOption5"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -13,6 +13,11 @@ import com.example.friendly.R;
 import com.example.friendly.fragments.ProfileFragment;
 import com.example.friendly.fragments.SearchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
+<<<<<<< HEAD
+=======
+import com.example.friendly.fragments.ProfileFragment;
+import com.example.friendly.objects.User;
+>>>>>>> 8815daa (saving progress; unable to save preference changes to database)
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
@@ -20,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Context mContext;
+    private static User currentUser;
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
@@ -56,4 +62,14 @@ public class MainActivity extends AppCompatActivity {
         // Set default fragment
         bottomNavigationView.setSelectedItemId(R.id.action_match);
     }
+<<<<<<< HEAD
+=======
+
+    public static void setCurrentUser(User user){
+        currentUser = user;
+    }
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+>>>>>>> 8815daa (saving progress; unable to save preference changes to database)
 }
