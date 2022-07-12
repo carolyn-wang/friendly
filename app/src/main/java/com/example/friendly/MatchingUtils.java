@@ -25,11 +25,17 @@ public class MatchingUtils {
     /*
     Matching algorithm that retrieves best match for current user based on
     - location
-    - time availability
-    - similarity preference **
+    - time availability (scheduling algorithm) --
+    - similarity preference ** --
     - hangout place/activity preference
     - hobbies
-    - mutual friends??
+    - mutual friends?? --
+
+    - can take into account hangout history?
+    - dynamically weigh?
+
+    - Elo matching (Tinder)
+    - bucket sorting (TikTok) -- gives you buckets of videos
      */
     public static HashMap<ParseUser, Double> findMatches(ParseUser currentUser){
         // TODO: move places query to separate file
@@ -38,6 +44,7 @@ public class MatchingUtils {
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNear(KEY_USER_LOCATION, currentLocation);
+//        query.whereWithinRadians(KEY_USER_LOCATION);
         query.setLimit(USER_QUERY_LIMIT); // out of 12 other nearest users
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
