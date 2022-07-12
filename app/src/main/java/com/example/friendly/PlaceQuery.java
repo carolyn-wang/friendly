@@ -25,13 +25,12 @@ public class PlaceQuery {
     private static final String TAG = "PlaceQuery";
     private static final String KEY_USER_LOCATION = "Location";
     protected static final int PLACES_TO_LOAD = 10;
-    public List<Place> nearbyPlaces = new ArrayList<>();
 
-    public List<Place> queryNearbyPlaces(int limit) {
+    public List<Place> queryNearbyPlaces() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
         ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_USER_LOCATION);
         query.whereNear(KEY_USER_LOCATION, currentLocation);
-        query.setLimit(limit);
+        query.setLimit(PLACES_TO_LOAD);
 
         List<Place> queryResults = null;
         try {
@@ -42,12 +41,6 @@ public class PlaceQuery {
 
         ParseQuery.clearAllCachedResults();
         return queryResults;
-
     }
-
-    public List<Place> getNearbyPlaces(){
-        return nearbyPlaces;
-    }
-
 
 }

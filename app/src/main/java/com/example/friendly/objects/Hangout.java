@@ -56,4 +56,8 @@ public class Hangout extends ParseObject {
         return getLocation().getName();
     }
 
+    public void setLocation(Place location) {
+        put(KEY_LOCATION, location);
+    }
+
 }

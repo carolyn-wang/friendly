@@ -64,5 +64,4 @@ public class MainActivity extends AppCompatActivity {
         // Set default fragment
         bottomNavigationView.setSelectedItemId(R.id.action_match);
     }
-
 }

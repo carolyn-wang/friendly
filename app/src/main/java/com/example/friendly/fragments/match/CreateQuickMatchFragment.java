@@ -24,22 +24,17 @@ import androidx.fragment.app.Fragment;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
-import com.example.friendly.activities.MainActivity;
-import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
-import com.example.friendly.objects.User;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,12 +56,9 @@ public class CreateQuickMatchFragment extends Fragment {
     private static final boolean is24HView = false;
     private int lastSelectedHour = 0;
     private int lastSelectedMinute = 0;
-    private static final String timePattern = "hh:mm a";
 
-    //TODO: fetch 50 nearest upon opening
-    private static final String[] PLACES = new String[]{
-            "Taco Chunkis", "Kati Vegan Thai", "Cinerama", "Tapster"
-    };
+    private String[] placeNameArray;
+    private List<Place> placeList;
 
     public CreateQuickMatchFragment() {
     }
@@ -87,11 +79,16 @@ public class CreateQuickMatchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PlaceQuery query = new PlaceQuery();
-        query.queryNearbyPlaces(5);
-
         mContext = getContext();
         mActivity = getActivity();
+
+//        Query Place list for locations and make String[] with only location names
+        PlaceQuery placeQuery = new PlaceQuery();
+        placeList = placeQuery.queryNearbyPlaces();
+        placeNameArray = new String[placeList.size()];
+        for (int i=0; i<placeList.size(); i++){
+            placeNameArray[i] = placeList.get(i).getName();
+        }
 
         autoCompletePlaces = (AutoCompleteTextView) view.findViewById(R.id.autoCompletePlaces);
         editTextDate = view.findViewById(R.id.editTextDate);
@@ -100,7 +97,7 @@ public class CreateQuickMatchFragment extends Fragment {
 
 //        Places Autocomplete
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
-                android.R.layout.select_dialog_item, PLACES);
+                android.R.layout.select_dialog_item, placeNameArray);
         autoCompletePlaces.setAdapter(adapter);
         autoCompletePlaces.setThreshold(1); //Autocomplete will start working from first character
 
@@ -158,6 +155,13 @@ public class CreateQuickMatchFragment extends Fragment {
     //TODO: add checks here (cannot create hangout in past)
     private void createHangout(Date date, ParseUser user1, String place) {
         Hangout hangout = new Hangout();
+        List <String> placeNameList = Arrays.asList(placeNameArray);
+        if (placeNameList.contains(place)){ // if location is one of autocomplete options
+            int index = placeNameList.indexOf(place);
+            hangout.setLocation(placeList.get(index));
+        }
+        // TODO: else create some way to store location that's not preexisting
+
         hangout.setDate(date);
         hangout.setUser1(user1);
         hangout.saveInBackground(new SaveCallback() {
