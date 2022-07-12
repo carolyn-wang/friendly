@@ -19,6 +19,7 @@ public class MatchingUtils {
     private static final String KEY_USER_LOCATION = "Location";
     private static final String KEY_ACTIVITIES_PREFERENCE = "activitiesPreference";
     private static final int USER_QUERY_LIMIT = 13;
+    private static final double MAX_DISTANCE = 0.3;
 
     private static final ParseUser currentUser = ParseUser.getCurrentUser();
 
@@ -44,7 +45,7 @@ public class MatchingUtils {
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNear(KEY_USER_LOCATION, currentLocation);
-//        query.whereWithinRadians(KEY_USER_LOCATION);
+        query.whereWithinRadians(KEY_USER_LOCATION, currentLocation, MAX_DISTANCE);
         query.setLimit(USER_QUERY_LIMIT); // out of 12 other nearest users
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
