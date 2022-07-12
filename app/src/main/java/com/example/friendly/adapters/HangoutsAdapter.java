@@ -87,7 +87,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             }
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
-            if(hangout.getLocation() != null){
+            if (hangout.getLocation() != null) {
                 tvHangoutLocation.setText(hangout.getLocationName());
             }
             // TODO: move into child classes
@@ -99,7 +99,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     if (position != RecyclerView.NO_POSITION) {
                         Hangout hangout = hangouts.get(position);
                         Log.i(TAG, hangout.getUser1().getUsername());
-                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity)mContext).getSupportFragmentManager() );
+                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
                     }
                 }
             });

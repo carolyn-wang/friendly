@@ -1,13 +1,17 @@
 package com.example.friendly.objects;
 
-@Deprecated
 public class Preference {
+    private String parseKey;
     private String question;
     private String[] options;
 
-    public Preference(String question, String[] options) {
+    public Preference(String userKey, String question, String[] options) {
+        this.parseKey = userKey;
         this.question = question;
         this.options = options;
+    }
+    public String getParseKey() {
+        return parseKey;
     }
 
     public String getQuestion() {

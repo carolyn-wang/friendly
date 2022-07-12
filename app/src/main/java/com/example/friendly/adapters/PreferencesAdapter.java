@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.objects.Preference;
 import com.example.friendly.R;
@@ -132,13 +131,28 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         // checkedId is the RadioButton selected
-                        RadioButton rb=(RadioButton) itemView.findViewById(checkedId);
-                        Log.i(TAG, "User selected " + rb.getText());
-                        PreferencesActivity.savePreference(ParseUser.getCurrentUser(), rb.getText());
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            String preferenceKey = preferences.get(position).getParseKey();
+                            RadioButton rb = (RadioButton) itemView.findViewById(checkedId);
+                            savePreference(ParseUser.getCurrentUser(), preferenceKey, rb.getText());
+                        }
+
                     }
                 });
             }
+
         }
+    }
+
+    private static void savePreference(ParseUser currentUser, String preferenceKey, CharSequence text) {
+        currentUser.put(preferenceKey, text.toString());
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Log.i(TAG, "saved preference");
+            }
+        });
     }
 
     // Clean all elements of the recycler
