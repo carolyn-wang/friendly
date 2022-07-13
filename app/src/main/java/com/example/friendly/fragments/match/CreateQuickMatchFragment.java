@@ -63,13 +63,6 @@ public class CreateQuickMatchFragment extends Fragment {
     public CreateQuickMatchFragment() {
     }
 
-    public static CreateQuickMatchFragment newInstance() {
-        Bundle args = new Bundle();
-        CreateQuickMatchFragment fragment = new CreateQuickMatchFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -121,7 +114,7 @@ public class CreateQuickMatchFragment extends Fragment {
         });
 
 //        Time Spinner
-        setCurrentTime();
+        initializeLastSelectedTime();
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hour, int minute) {
@@ -180,7 +173,7 @@ public class CreateQuickMatchFragment extends Fragment {
     /**
      * Sets the spinner hour and minutes to current time
      */
-    private void setCurrentTime() {
+    private void initializeLastSelectedTime() {
         lastSelectedHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         lastSelectedMinute = Calendar.getInstance().get(Calendar.MINUTE);
     }

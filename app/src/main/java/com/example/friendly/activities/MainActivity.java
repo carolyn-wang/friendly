@@ -1,28 +1,20 @@
 package com.example.friendly.activities;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.example.friendly.NavigationUtils;
-import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
-import com.example.friendly.fragments.MapFragment;
+import com.example.friendly.fragments.ProfileFragment;
 import com.example.friendly.fragments.SearchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
-import com.example.friendly.fragments.ProfileFragment;
-import com.example.friendly.objects.Place;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

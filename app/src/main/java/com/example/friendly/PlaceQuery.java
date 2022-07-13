@@ -24,13 +24,13 @@ import java.util.List;
 public class PlaceQuery {
     private static final String TAG = "PlaceQuery";
     private static final String KEY_USER_LOCATION = "Location";
-    private static final double MAX_DISTANCE = 0.15;
+    private static final double MAX_DISTANCE_RADIANS = 0.15;
 
     public List<Place> queryNearbyPlaces() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
         ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_USER_LOCATION);
         query.whereNear(KEY_USER_LOCATION, currentLocation);
-        query.whereWithinRadians(KEY_USER_LOCATION, currentLocation, MAX_DISTANCE);
+        query.whereWithinRadians(KEY_USER_LOCATION, currentLocation, MAX_DISTANCE_RADIANS);
 
         List<Place> queryResults = null;
         try {

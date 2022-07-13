@@ -45,4 +45,5 @@
     <string name="btn_next">Next</string>
     <string name="btn_create_quick">Create Hangout</string>
     <string name="match_description">Hangouts within the next 48 hours</string>
+    <string name="showClosestUser">We found the closest user from you! It\'s %s. \n You are .%2f km from this user.</string>
 </resources>
