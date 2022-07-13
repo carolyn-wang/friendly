@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/fragment_padding"
     tools:context=".activities.PreferencesActivity">
 
     <TextView
@@ -15,7 +16,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPreferences"
-        android:paddingTop="@dimen/fontSizeBig"
+        android:paddingVertical="@dimen/preferences_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

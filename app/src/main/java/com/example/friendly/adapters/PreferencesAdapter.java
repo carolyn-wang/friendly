@@ -32,10 +32,6 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     protected List<Preference> preferences;
     private static final String TAG = "PreferencesAdapter";
 
-    private static final String KEY_PREFERENCE0 = "yearPreference";
-    private static final String KEY_PREFERENCE1 = "similarityPreference";
-    private static final String KEY_PREFERENCE2 = "activitiesPreference";
-
     public PreferencesAdapter(Context context, List<Preference> preferences) {
         this.mContext = context;
         this.preferences = preferences;
@@ -93,30 +89,14 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvQuestion;
-        private Button btnOption0;
-        private Button btnOption1;
-        private Button btnOption2;
-        private Button btnOption3;
-        private Button btnOption4;
-        private Button btnOption5;
-        private Button btnOption6;
-        private View[] optionViews;
         RadioGroup rgOptions;
         LinearLayout lvOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvQuestion = itemView.findViewById(R.id.tvQuestion);
-//            btnOption0 = itemView.findViewById(R.id.btnOption0);
-//            btnOption1 = itemView.findViewById(R.id.btnOption1);
-//            btnOption2 = itemView.findViewById(R.id.btnOption2);
-//            btnOption3 = itemView.findViewById(R.id.btnOption3);
-//            btnOption4 = itemView.findViewById(R.id.btnOption4);
-//            btnOption5 = itemView.findViewById(R.id.btnOption5);
-//            btnOption6 = itemView.findViewById(R.id.btnOption6);
             rgOptions = (RadioGroup) itemView.findViewById(R.id.rgOptions);
             lvOptions = (LinearLayout) itemView.findViewById(R.id.lvOptions);
-//            optionViews = new View[]{btnOption0, btnOption1, btnOption2, btnOption3, btnOption4, btnOption5, btnOption6};
         }
 
         /**
@@ -166,9 +146,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                     btnOption.setText(preference.getOption(i));
                     lvOptions.addView(btnOption);
                 }
-
             }
-
         }
     }
 
