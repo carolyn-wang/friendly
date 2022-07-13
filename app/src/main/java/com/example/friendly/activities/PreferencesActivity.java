@@ -20,6 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,5 +69,17 @@ public class PreferencesActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public List<Preference> getAllPreferences(){
+        return allPreferences;
+    }
+
+    public List<String> getAllPreferenceKeys(){
+        List<String> preferenceKeys = new ArrayList<String>();
+        for (int i = 0; i < allPreferences.size(); i++){
+            preferenceKeys.add(allPreferences.get(i).getParseKey());
+        }
+        return preferenceKeys;
     }
 }

@@ -20,15 +20,20 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
-    protected Context context;
+    protected Context mContext;
     protected List<Preference> preferences;
     private static final String TAG = "PreferencesAdapter";
 
+    private static final String KEY_PREFERENCE0 = "yearPreference";
+    private static final String KEY_PREFERENCE1 = "similarityPreference";
+    private static final String KEY_PREFERENCE2 = "activitiesPreference";
+
     public PreferencesAdapter(Context context, List<Preference> preferences) {
-        this.context = context;
+        this.mContext = context;
         this.preferences = preferences;
     }
 
@@ -46,10 +51,10 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         View view;
         switch (viewType) {
             case 0:
-                view = LayoutInflater.from(context).inflate(R.layout.item_poll_card_radio, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_poll_card_radio, parent, false);
                 break;
             default:
-                view = LayoutInflater.from(context).inflate(R.layout.item_poll_card_checkbox, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_poll_card_checkbox, parent, false);
                 break;
         }
         return new ViewHolder(view);
@@ -91,7 +96,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         private Button btnOption4;
         private Button btnOption5;
         private Button btnOption6;
-        private Button[] optionViews;
+        private View[] optionViews;
         RadioGroup rgOptions;
 
         public ViewHolder(@NonNull View itemView) {
@@ -106,7 +111,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             btnOption6 = itemView.findViewById(R.id.btnOption6);
             rgOptions = (RadioGroup) itemView.findViewById(R.id.rgOptions);
 
-            optionViews = new Button[]{btnOption0, btnOption1, btnOption2, btnOption3, btnOption4, btnOption5, btnOption6};
+            optionViews = new View[]{btnOption0, btnOption1, btnOption2, btnOption3, btnOption4, btnOption5, btnOption6};
         }
 
         /**
@@ -117,14 +122,25 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
          */
         public void bind(Preference preference) {
             tvQuestion.setText(preference.getQuestion());
-            //
+
             for (int i = 0; i < optionViews.length; i++) {
                 if (i < preference.getOptions().length) {
-                    optionViews[i].setText(preference.getOption(i));
+                    ((Button) optionViews[i]).setText(preference.getOption(i));
                 } else {
-                    optionViews[i].setVisibility(View.GONE);
+                    ((Button) optionViews[i]).setVisibility(View.GONE);
                 }
             }
+
+            // show previous preferences if not null
+
+            int position = getAdapterPosition();
+            List<String> allPreferenceKeys = ((PreferencesActivity) mContext).getAllPreferenceKeys();
+            int preferenceIndex = ParseUser.getCurrentUser().getInt(allPreferenceKeys.get(position));
+            if (getItemViewType() == 0) {
+                View btn = optionViews[preferenceIndex];
+                ((RadioButton) btn).setChecked(true);
+            }
+
 
             if (getItemViewType() == 0) {
                 rgOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -136,7 +152,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                             Preference clickedPreference = preferences.get(position);
                             String preferenceKey = clickedPreference.getParseKey();
                             RadioButton rb = (RadioButton) itemView.findViewById(checkedId);
-                            savePreference(ParseUser.getCurrentUser(), preferenceKey, rb.getText());
+                            savePreference(ParseUser.getCurrentUser(), preferenceKey, Arrays.asList(preference.getOptions()).indexOf(rb.getText()));
                         }
 
                     }
@@ -146,8 +162,8 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         }
     }
 
-    private static void savePreference(ParseUser currentUser, String preferenceKey, CharSequence text) {
-        currentUser.put(preferenceKey, text.toString());
+    private static void savePreference(ParseUser currentUser, String preferenceKey, int index) {
+        currentUser.put(preferenceKey, index);
         currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
