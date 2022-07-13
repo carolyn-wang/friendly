@@ -55,17 +55,4 @@ public class MainActivity extends AppCompatActivity {
         // Set default fragment
         bottomNavigationView.setSelectedItemId(R.id.action_match);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-    public static void setCurrentUser(User user){
-        currentUser = user;
-    }
-    public static User getCurrentUser() {
-        return currentUser;
-    }
->>>>>>> 8815daa (saving progress; unable to save preference changes to database)
-=======
->>>>>>> 77f9318 (fixed preferences log out and deleted profile adapter)
 }

@@ -1,25 +1,18 @@
 package com.example.friendly.activities;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioGroup;
-
 import com.example.friendly.NavigationUtils;
-import com.example.friendly.objects.Preference;
-import com.example.friendly.adapters.PreferencesAdapter;
 import com.example.friendly.R;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
+import com.example.friendly.adapters.PreferencesAdapter;
+import com.example.friendly.objects.Preference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +68,7 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     public List<String> getAllPreferenceKeys(){
-        List<String> preferenceKeys = new ArrayList<String>();
+        List<String> preferenceKeys = new ArrayList<>();
         for (int i = 0; i < allPreferences.size(); i++){
             preferenceKeys.add(allPreferences.get(i).getParseKey());
         }

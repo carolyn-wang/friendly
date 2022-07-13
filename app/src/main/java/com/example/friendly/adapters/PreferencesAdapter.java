@@ -25,8 +25,6 @@ import com.parse.SaveCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
@@ -40,34 +38,23 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         this.preferences = preferences;
     }
 
-    /**
-     * Passes LayoutInflater a “blueprint” of the view (reference to XML layout file)
-     * Wraps view in a ViewHolder for easy access
-     *
-     * @param parent
-     * @param viewType
-     * @return
-     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        switch (viewType) {
-            case 0:
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_poll_card_radio, parent, false);
-                break;
-            default:
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_poll_card_checkbox, parent, false);
-                break;
+        if (viewType == 0) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_poll_card_radio, parent, false);
+        } else {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_poll_card_checkbox, parent, false);
         }
         return new ViewHolder(view);
     }
 
     /**
-     * Returns card type to be used (either radio (0) or checkbox (1))
+     * Returns card type to be used
      *
-     * @param position
-     * @return
+     * @param position - current adapter position
+     * @return int to indicate card type: radio (0) or checkbox (1)
      */
     @Override
     public int getItemViewType(int position) {
@@ -98,15 +85,15 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvQuestion = itemView.findViewById(R.id.tvQuestion);
-            rgOptions = (RadioGroup) itemView.findViewById(R.id.rgOptions);
-            lvOptions = (LinearLayout) itemView.findViewById(R.id.lvOptions);
+            rgOptions = itemView.findViewById(R.id.rgOptions);
+            lvOptions = itemView.findViewById(R.id.lvOptions);
         }
 
         /**
          * Set poll question.
          * Set text for Button option or set visibility to GONE
          *
-         * @param preference
+         * @param preference - current Preference object with question and options data to bind to card
          */
         public void bind(Preference preference) {
             tvQuestion.setText(preference.getQuestion());
@@ -152,11 +139,14 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                     CheckBox btnOption = new CheckBox(mContext);
                     btnOption.setText(preference.getOption(i));
                     lvOptions.addView(btnOption);
-                    try {
-                        btnOption.setChecked(previousPreferences.getBoolean(i));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (previousPreferences != null) {
+                        try {
+                            btnOption.setChecked(previousPreferences.getBoolean(i));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
+
 
                     btnOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
