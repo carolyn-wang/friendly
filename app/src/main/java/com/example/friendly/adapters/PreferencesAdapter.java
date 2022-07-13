@@ -123,26 +123,24 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         public void bind(Preference preference) {
             tvQuestion.setText(preference.getQuestion());
 
-            for (int i = 0; i < optionViews.length; i++) {
-                if (i < preference.getOptions().length) {
-                    ((Button) optionViews[i]).setText(preference.getOption(i));
-                } else {
-                    ((Button) optionViews[i]).setVisibility(View.GONE);
-                }
-            }
-
             // show previous preferences if not null
-
             int position = getAdapterPosition();
             List<String> allPreferenceKeys = ((PreferencesActivity) mContext).getAllPreferenceKeys();
             int preferenceIndex = ParseUser.getCurrentUser().getInt(allPreferenceKeys.get(position));
-            if (getItemViewType() == 0) {
-                View btn = optionViews[preferenceIndex];
-                ((RadioButton) btn).setChecked(true);
-            }
-
 
             if (getItemViewType() == 0) {
+                // Dynamically set preference option texts
+                for(int i = 0; i < preference.getOptions().length; i++) {
+                    RadioButton btnOption = new RadioButton(mContext);
+                    btnOption.setText(preference.getOption(i));
+                    rgOptions.addView(btnOption);
+                }
+
+                // Set previous preferences as checked
+                RadioButton option = (RadioButton) rgOptions.getChildAt(preferenceIndex);
+                option.setChecked(true);
+
+                // On Click Listener
                 rgOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
