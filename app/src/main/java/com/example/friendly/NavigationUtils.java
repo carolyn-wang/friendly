@@ -50,7 +50,6 @@ public class NavigationUtils {
 
     public static void goPreferencesActivity(Activity activity) {
         goActivity(activity, PreferencesActivity.class);
-
     }
 
     public static void displayFragmentQuickMatch(FragmentManager fragmentManager) {

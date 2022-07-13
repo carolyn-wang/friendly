@@ -111,22 +111,25 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         public void bind(Preference preference) {
             tvQuestion.setText(preference.getQuestion());
 
-            // show previous preferences if not null
             int cardPosition = getAdapterPosition();
             List<String> allPreferenceKeys = ((PreferencesActivity) mContext).getAllPreferenceKeys();
-            int preferenceIndex = currentUser.getInt(allPreferenceKeys.get(cardPosition));
 
             if (getItemViewType() == 0) {
-                // Dynamically set preference option texts
+                int preferenceIndex = currentUser.getInt(allPreferenceKeys.get(cardPosition));
+                Log.i(TAG, "preference index " + preferenceIndex);
+
+                // Dynamically set preference options and options text
                 for (int i = 0; i < preference.getOptions().length; i++) {
                     RadioButton btnOption = new RadioButton(mContext);
                     btnOption.setText(preference.getOption(i));
                     rgOptions.addView(btnOption);
                 }
 
-                // Set previous preferences as checked
-                RadioButton option = (RadioButton) rgOptions.getChildAt(preferenceIndex);
-                option.setChecked(true);
+                // Set previous preferences as checked if not null
+                if (preferenceIndex != -1) {
+                    RadioButton option = (RadioButton) rgOptions.getChildAt(preferenceIndex);
+                    option.setChecked(true);
+                }
 
                 // On Click Listener
                 rgOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
