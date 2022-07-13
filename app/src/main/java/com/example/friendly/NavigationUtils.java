@@ -27,8 +27,6 @@ import java.util.Arrays;
 
 public class NavigationUtils {
 
-    static MapFragment mapFragment;
-
     public static void goActivity(Activity activity, Class targetClass) {
         Context context = activity.getBaseContext();
         Intent i = new Intent(context, targetClass);
@@ -87,9 +85,5 @@ public class NavigationUtils {
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public static void pauseMapView(){
-        mapFragment.onPause();
     }
 }

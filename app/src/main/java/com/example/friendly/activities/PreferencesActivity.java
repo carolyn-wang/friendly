@@ -74,4 +74,5 @@ public class PreferencesActivity extends AppCompatActivity {
         }
         return preferenceKeys;
     }
+
 }

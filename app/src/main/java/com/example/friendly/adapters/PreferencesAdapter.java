@@ -31,7 +31,6 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     protected Context mContext;
     protected List<Preference> preferences;
     private static final String TAG = "PreferencesAdapter";
-    private static final ParseUser currentUser = ParseUser.getCurrentUser();
 
     public PreferencesAdapter(Context context, List<Preference> preferences) {
         this.mContext = context;
@@ -102,8 +101,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             List<String> allPreferenceKeys = ((PreferencesActivity) mContext).getAllPreferenceKeys();
 
             if (getItemViewType() == 0) {
-                int preferenceIndex = currentUser.getInt(allPreferenceKeys.get(cardPosition));
-                Log.i(TAG, "preference index " + preferenceIndex);
+                int preferenceIndex = ParseUser.getCurrentUser().getInt(allPreferenceKeys.get(cardPosition));
 
                 // Dynamically set preference options and options text
                 for (int i = 0; i < preference.getOptions().length; i++) {
@@ -133,7 +131,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                 });
             } else {
                 String preferenceKey = preference.getParseKey();
-                JSONArray previousPreferences = currentUser.getJSONArray(preferenceKey);
+                JSONArray previousPreferences = ParseUser.getCurrentUser().getJSONArray(preferenceKey);
 
                 for (int i = 0; i < preference.getOptions().length; i++) {
                     CheckBox btnOption = new CheckBox(mContext);
@@ -162,8 +160,8 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
 
     private static void saveRadioPreference(String preferenceKey, int index) {
-        currentUser.put(preferenceKey, index);
-        currentUser.saveInBackground(new SaveCallback() {
+        ParseUser.getCurrentUser().put(preferenceKey, index);
+        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 Log.d(TAG, "saved radio preference at index " + index);
@@ -177,8 +175,8 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        currentUser.put(preferenceKey, previousPreferences);
-        currentUser.saveInBackground(new SaveCallback() {
+        ParseUser.getCurrentUser().put(preferenceKey, previousPreferences);
+        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 Log.d(TAG, "saved checkbox preference at index " + index);
