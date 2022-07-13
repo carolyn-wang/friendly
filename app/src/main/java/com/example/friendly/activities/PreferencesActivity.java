@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
@@ -29,7 +30,7 @@ public class PreferencesActivity extends AppCompatActivity {
     private static final String TAG = "PreferencesActivity";
     private static final String KEY_PREFERENCE0 = "yearPreference";
     private static final String KEY_PREFERENCE1 = "similarityPreference";
-    private static final String KEY_PREFERENCE2 = "activitiesPreference";
+    private static final String KEY_PREFERENCE2 = "hobbyPreference";
 
     private Context mContext;
     private RecyclerView rvPreferences;
@@ -37,7 +38,6 @@ public class PreferencesActivity extends AppCompatActivity {
     protected PreferencesAdapter adapter;
     protected List<Preference> allPreferences;
     protected int scrollCounter;
-    private ListView lvOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,6 @@ public class PreferencesActivity extends AppCompatActivity {
         mContext = this;
         rvPreferences = findViewById(R.id.rvPreferences);
         nextButton = findViewById(R.id.nextButton);
-        lvOptions = findViewById(R.id.lvOptions);
 
         scrollCounter = 0;
 

@@ -38,7 +38,6 @@ public class NavigationUtils {
 
     public static void goLoginActivity(Activity activity) {
         goActivity(activity, LoginActivity.class);
-
     }
 
     public static void goMainActivity(Activity activity) {

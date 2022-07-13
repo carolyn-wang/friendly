@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.example.friendly.adapters.PreferencesAdapter;
 import com.parse.ParseUser;
 
 /**

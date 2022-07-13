@@ -5,16 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.activities.PreferencesActivity;
@@ -24,6 +22,10 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     protected Context mContext;
     protected List<Preference> preferences;
     private static final String TAG = "PreferencesAdapter";
+    private static final ParseUser currentUser = ParseUser.getCurrentUser();
 
     public PreferencesAdapter(Context context, List<Preference> preferences) {
         this.mContext = context;
@@ -109,9 +112,9 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             tvQuestion.setText(preference.getQuestion());
 
             // show previous preferences if not null
-            int position = getAdapterPosition();
+            int cardPosition = getAdapterPosition();
             List<String> allPreferenceKeys = ((PreferencesActivity) mContext).getAllPreferenceKeys();
-            int preferenceIndex = ParseUser.getCurrentUser().getInt(allPreferenceKeys.get(position));
+            int preferenceIndex = currentUser.getInt(allPreferenceKeys.get(cardPosition));
 
             if (getItemViewType() == 0) {
                 // Dynamically set preference option texts
@@ -130,32 +133,62 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         // checkedId is the RadioButton selected
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            Preference clickedPreference = preferences.get(position);
+                        int checkedRadioPosition = getAdapterPosition();
+                        if (checkedRadioPosition != RecyclerView.NO_POSITION) {
+                            Preference clickedPreference = preferences.get(checkedRadioPosition);
                             String preferenceKey = clickedPreference.getParseKey();
-                            RadioButton rb = (RadioButton) itemView.findViewById(checkedId);
-                            savePreference(ParseUser.getCurrentUser(), preferenceKey, Arrays.asList(preference.getOptions()).indexOf(rb.getText()));
+                            saveRadioPreference(preferenceKey, group.indexOfChild(itemView.findViewById(checkedId)));
                         }
-
                     }
                 });
             } else {
+                String preferenceKey = preference.getParseKey();
+                JSONArray previousPreferences = currentUser.getJSONArray(preferenceKey);
+
                 for (int i = 0; i < preference.getOptions().length; i++) {
                     CheckBox btnOption = new CheckBox(mContext);
                     btnOption.setText(preference.getOption(i));
                     lvOptions.addView(btnOption);
+                    try {
+                        btnOption.setChecked(previousPreferences.getBoolean(i));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    btnOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            int buttonIndex = lvOptions.indexOfChild(buttonView) - 1;
+                            saveCheckboxPreference(preferenceKey, buttonIndex, isChecked, previousPreferences);
+                        }
+                    });
                 }
             }
         }
     }
 
-    private static void savePreference(ParseUser currentUser, String preferenceKey, int index) {
+
+    private static void saveRadioPreference(String preferenceKey, int index) {
         currentUser.put(preferenceKey, index);
         currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                Log.i(TAG, "saved preference");
+                Log.d(TAG, "saved radio preference at index " + index);
+            }
+        });
+    }
+
+    private static void saveCheckboxPreference(String preferenceKey, int index, boolean bool, JSONArray previousPreferences) {
+        try {
+            previousPreferences = previousPreferences.put(index, bool);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        currentUser.put(preferenceKey, previousPreferences);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Log.d(TAG, "saved checkbox preference at index " + index);
             }
         });
     }
