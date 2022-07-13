@@ -17,7 +17,6 @@
     <dimen name="preferences_padding">40dp</dimen>
     <dimen name="fl_padding">25dp</dimen>
     <dimen name="upcoming_hangouts_height">500dp</dimen>
-    <dimen name="hangout_quick_height">630dp</dimen>
     <dimen name="quick_edittext_width">150dp</dimen>
     <dimen name="quick_edittext_height">60dp</dimen>
     <dimen name="edittext_padding">16dp</dimen>
@@ -35,4 +34,6 @@
     <dimen name="dialog_padding_small">8dp</dimen>
     <dimen name="close_button_margin">5dp</dimen>
     <dimen name="coupon_card_height">60dp</dimen>
+    <dimen name="hangout_history_height">500dp</dimen>
+    <dimen name="hangout_quick_height">600dp</dimen>
 </resources>

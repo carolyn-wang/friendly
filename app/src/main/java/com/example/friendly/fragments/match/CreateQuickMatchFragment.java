@@ -26,6 +26,7 @@ import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 import com.google.android.material.textfield.TextInputEditText;
+
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -53,6 +54,7 @@ public class CreateQuickMatchFragment extends Fragment {
     private AutoCompleteTextView autoCompletePlaces;
     private TextInputEditText editTextDate;
     private TextInputEditText editTextTime;
+
     private Button btnCreateHangout;
 
     private static final boolean is24HView = false;
@@ -79,7 +81,6 @@ public class CreateQuickMatchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
         mActivity = getActivity();
-
         placeList = ((MainActivity) mContext).getPlaceList();
         placeNameArray = ((MainActivity) mContext).getPlaceNames();
 

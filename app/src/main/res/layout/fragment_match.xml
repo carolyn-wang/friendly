@@ -42,11 +42,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLongHangout" />
 
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/upcomingHangouts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:paddingBottom="@dimen/bottom_navigation_padding"
+        android:layout_height="@dimen/hangout_history_height"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchUpcomingTitle" />
 
