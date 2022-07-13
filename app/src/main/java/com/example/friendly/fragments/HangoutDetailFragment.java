@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.friendly.DisplayUtils;
 import com.example.friendly.R;
 import com.example.friendly.objects.Hangout;
 import com.google.android.material.transition.MaterialContainerTransform;
@@ -29,12 +30,12 @@ public class HangoutDetailFragment extends Fragment {
     private Context mContext;
 
     private Hangout hangout;
+    private View vHangoutDetail;
     private TextView tvHangoutUser1;
     private TextView tvHangoutUser2;
     private TextView tvHangoutDate;
 
     public HangoutDetailFragment() {
-        // Required empty public constructor
     }
 
     public static HangoutDetailFragment newInstance(Hangout hangout) {
@@ -64,9 +65,12 @@ public class HangoutDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
+        vHangoutDetail = view.findViewById(R.id.vHangoutDetail);
         tvHangoutUser1 = view.findViewById(R.id.tvHangoutUser1);
         tvHangoutUser2 = view.findViewById(R.id.tvHangoutUser2);
         tvHangoutDate = view.findViewById(R.id.tvHangoutDate);
+
+        vHangoutDetail.setBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
 
         tvHangoutUser1.setText(hangout.getUser1().getUsername());
         if (hangout.getUser2() != null){

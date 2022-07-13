@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/fragment_padding"
     tools:context=".fragments.match.MatchFragment">
+
     <TextView
         android:id="@+id/matchTitle"
         style="@style/TitleFont.Big"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/match_title"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/match_title" />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btnQuickHangout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/matchTitle"
+        android:text="@string/match_btn_quick"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/match_btn_quick" />
+        app:layout_constraintTop_toBottomOf="@+id/matchTitle" />
 
     <Button
         android:id="@+id/btnLongHangout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnQuickHangout"
+        android:text="@string/match_btn_long"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/match_btn_long" />
+        app:layout_constraintTop_toBottomOf="@+id/btnQuickHangout" />
 
     <Button
         android:id="@+id/btnMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnLongHangout"
+        android:text="@string/match_map_text"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/match_map_text" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLongHangout" />
 
     <TextView
         android:id="@+id/matchUpcomingTitle"
+        style="@style/TitleFont.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnMap"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/match_btn_upcoming"
-        style="@style/TitleFont.Medium"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMap" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/matchHangoutHistory"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/matchUpcomingTitle"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:layout_height="@dimen/hangout_history_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/matchUpcomingTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

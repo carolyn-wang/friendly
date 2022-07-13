@@ -28,7 +28,8 @@ public class QuickMatchFragment extends Fragment {
     private static final String TAG = "QuickMatchFragment";
     private FloatingActionButton btnCreateQuickHangout;
     private Activity mActivity;
-    public QuickMatchFragment(){
+
+    public QuickMatchFragment() {
 
     }
 
@@ -44,20 +45,19 @@ public class QuickMatchFragment extends Fragment {
         mActivity = getActivity();
         btnCreateQuickHangout = view.findViewById(R.id.btnCreateQuickHangout);
 
-        FragmentManager fm = getParentFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
 
-        fm.beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "quick"));
-        Fragment fragTwo = HangoutsFragment.newInstance(conditions);
-        ft.add(R.id.quickMatchHangouts, fragTwo);
+        Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
+        ft.add(R.id.quickMatchHangouts, hangoutDetailFragment);
         ft.commit();
 
         btnCreateQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.flContainer, new CreateQuickMatchFragment()).commit();
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                ft.replace(R.id.flContainer, new CreateQuickMatchFragment());
+                ft.commit();
             }
         });
     }

@@ -8,6 +8,7 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.util.Date;
 import java.util.List;
@@ -53,6 +54,10 @@ public class Hangout extends ParseObject {
 
     public String getLocationName() {
         return getLocation().getName();
+    }
+
+    public void setLocation(Place location) {
+        put(KEY_LOCATION, location);
     }
 
 }

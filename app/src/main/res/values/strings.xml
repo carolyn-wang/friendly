@@ -24,9 +24,9 @@
     <string name="match_title">Home</string>
     <string name="profile_title">Profile</string>
     <string name="preference_title">Preferences</string>
-    <string name="username_title">"Username: "</string>
+    <string name="username_title">"Username: @"</string>
     <string name="username_default">username shows here</string>
-    <string name="name_title">Name: </string>
+    <string name="name_title">"Name: "</string>
     <string name="name_default">Name shows here</string>
     <string name="hangout_history_btn">Hangout History</string>
     <string name="change_preferences_btn">Change Preferences</string>
@@ -38,4 +38,12 @@
     <string name="match_long_text">Schedule for Later</string>
     <string name="match_map_text">Show Map</string>
     <string name="match_upcoming_hangouts">Upcoming Hangouts</string>
+    <string name="create_quick_match_title">Create Quick Match</string>
+    <string name="create_quick_location">Place</string>
+    <string name="create_quick_date">Date</string>
+    <string name="create_quick_time">Time</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_create_quick">Create Hangout</string>
+    <string name="match_description">Hangouts within the next 48 hours</string>
+    <string name="showClosestUser">We found the closest user from you! It\'s %s. \n You are .%2f km from this user.</string>
 </resources>
