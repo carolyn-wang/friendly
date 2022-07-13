@@ -133,7 +133,8 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                         // checkedId is the RadioButton selected
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            String preferenceKey = preferences.get(position).getParseKey();
+                            Preference clickedPreference = preferences.get(position);
+                            String preferenceKey = clickedPreference.getParseKey();
                             RadioButton rb = (RadioButton) itemView.findViewById(checkedId);
                             savePreference(ParseUser.getCurrentUser(), preferenceKey, rb.getText());
                         }

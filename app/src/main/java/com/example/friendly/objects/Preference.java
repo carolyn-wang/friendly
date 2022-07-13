@@ -1,5 +1,7 @@
 package com.example.friendly.objects;
 
+import java.util.List;
+
 public class Preference {
     private String parseKey;
     private String question;
