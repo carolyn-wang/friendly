@@ -6,11 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.activities.PreferencesActivity;
@@ -98,20 +102,21 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         private Button btnOption6;
         private View[] optionViews;
         RadioGroup rgOptions;
+        LinearLayout lvOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvQuestion = itemView.findViewById(R.id.tvQuestion);
-            btnOption0 = itemView.findViewById(R.id.btnOption0);
-            btnOption1 = itemView.findViewById(R.id.btnOption1);
-            btnOption2 = itemView.findViewById(R.id.btnOption2);
-            btnOption3 = itemView.findViewById(R.id.btnOption3);
-            btnOption4 = itemView.findViewById(R.id.btnOption4);
-            btnOption5 = itemView.findViewById(R.id.btnOption5);
-            btnOption6 = itemView.findViewById(R.id.btnOption6);
+//            btnOption0 = itemView.findViewById(R.id.btnOption0);
+//            btnOption1 = itemView.findViewById(R.id.btnOption1);
+//            btnOption2 = itemView.findViewById(R.id.btnOption2);
+//            btnOption3 = itemView.findViewById(R.id.btnOption3);
+//            btnOption4 = itemView.findViewById(R.id.btnOption4);
+//            btnOption5 = itemView.findViewById(R.id.btnOption5);
+//            btnOption6 = itemView.findViewById(R.id.btnOption6);
             rgOptions = (RadioGroup) itemView.findViewById(R.id.rgOptions);
-
-            optionViews = new View[]{btnOption0, btnOption1, btnOption2, btnOption3, btnOption4, btnOption5, btnOption6};
+            lvOptions = (LinearLayout) itemView.findViewById(R.id.lvOptions);
+//            optionViews = new View[]{btnOption0, btnOption1, btnOption2, btnOption3, btnOption4, btnOption5, btnOption6};
         }
 
         /**
@@ -130,7 +135,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
             if (getItemViewType() == 0) {
                 // Dynamically set preference option texts
-                for(int i = 0; i < preference.getOptions().length; i++) {
+                for (int i = 0; i < preference.getOptions().length; i++) {
                     RadioButton btnOption = new RadioButton(mContext);
                     btnOption.setText(preference.getOption(i));
                     rgOptions.addView(btnOption);
@@ -155,6 +160,13 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
                     }
                 });
+            } else {
+                for (int i = 0; i < preference.getOptions().length; i++) {
+                    CheckBox btnOption = new CheckBox(mContext);
+                    btnOption.setText(preference.getOption(i));
+                    lvOptions.addView(btnOption);
+                }
+
             }
 
         }
