@@ -62,7 +62,7 @@ public class MatchFragment extends Fragment {
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
         btnMap = view.findViewById(R.id.btnMap);
 
-        MatchingUtils.findMatches(ParseUser.getCurrentUser());
+        MatchingUtils.getMatches();
 
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
