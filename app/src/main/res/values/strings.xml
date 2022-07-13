@@ -40,16 +40,23 @@
     <string name="match_long_text">Schedule for Later</string>
     <string name="match_map_text">Show Map</string>
     <string name="match_upcoming_hangouts">Upcoming Hangouts</string>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5ab4b1b (Create quick match (#43))
     <string name="create_quick_match_title">Create Quick Match</string>
     <string name="create_quick_location">Place</string>
     <string name="create_quick_date">Date</string>
     <string name="create_quick_time">Time</string>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5ab4b1b (Create quick match (#43))
     <string name="btn_next">Next</string>
     <string name="btn_create_quick">Create Hangout</string>
     <string name="match_description">Hangouts within the next 48 hours</string>
     <string name="showClosestUser">We found the closest user from you! It\'s %s. \n You are .%2f km from this user.</string>
+<<<<<<< HEAD
 
     <string name="question0">What year are you in?</string>
     <string name="question1">Do you prefer to match with people similar or different to you?</string>
@@ -88,4 +95,6 @@
         <item>boba</item>
         <item>donuts</item>
     </string-array>
+=======
+>>>>>>> 5ab4b1b (Create quick match (#43))
 </resources>
