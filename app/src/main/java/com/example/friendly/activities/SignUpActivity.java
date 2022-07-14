@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;

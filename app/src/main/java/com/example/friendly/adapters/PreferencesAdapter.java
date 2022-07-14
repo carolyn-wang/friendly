@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.activities.PreferencesActivity;
@@ -28,8 +30,8 @@ import org.json.JSONException;
 import java.util.List;
 
 public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
-    protected Context mContext;
-    protected List<Preference> preferences;
+    private Context mContext;
+    private List<Preference> preferences;
     private static final String TAG = "PreferencesAdapter";
 
     public PreferencesAdapter(Context context, List<Preference> preferences) {
@@ -78,8 +80,8 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvQuestion;
-        RadioGroup rgOptions;
-        LinearLayout lvOptions;
+        private RadioGroup rgOptions;
+        private LinearLayout lvOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
