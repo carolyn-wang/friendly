@@ -2,6 +2,7 @@ package com.example.friendly.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import com.example.friendly.R;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.utils.NavigationUtils;
+import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,7 +46,7 @@ import com.parse.ParseUser;
 import java.util.List;
 import java.util.Locale;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
     private GoogleMap mGoogleMap;
     private MapView mapView;
@@ -68,6 +71,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final int REQUEST_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
 
+    private Marker currentUserMarker;
+
     public static MapFragment newInstance(ParseUser hangoutUser, Place hangoutPlace) {
 
         Bundle args = new Bundle();
@@ -91,6 +96,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
     @Override
@@ -109,7 +115,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mGoogleMap = googleMap;
-
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         if (getArguments() != null) {
@@ -122,9 +127,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             showPlacesInMap();
             showClosestPlace();
         }
+        showCurrentUserInMap();
+        showClosestUser();
+        showPlacesInMap();
+        showClosestPlace();
 
         //in old Api Needs to call MapsInitializer before doing any CameraUpdateFactory call
         MapsInitializer.initialize(mActivity);
+
+        mGoogleMap.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull final Marker marker) {
+        if(marker.equals(currentUserMarker)){
+            NavigationUtils.displayFragmentQuickMatch(((MainActivity)mContext).getSupportFragmentManager());
+        }
+        Log.i(TAG, "click");
+
+        // Return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
+        return false;
     }
 
     /**
@@ -231,7 +255,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onSuccess(ParseGeoPoint location) {
                 LatLng currentUser = new LatLng(location.getLatitude(), location.getLongitude());
-                setMarker(currentUser, ParseUser.getCurrentUser().getUsername(), BitmapDescriptorFactory.defaultMarker(currentUserMarkerHue));
+                currentUserMarker = setMarker(currentUser, ParseUser.getCurrentUser().getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                currentUserMarker.setTag(0);
                 moveCamera(currentUser, INITIAL_ZOOM);
             }
 
@@ -266,7 +291,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     double distance = getCurrentUserParseLocation().distanceInMilesTo(closestUser.getParseGeoPoint(KEY_USER_LOCATION));
                     Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestUser), closestUser.getUsername(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_LONG).show();
                     LatLng closestUserLocation = new LatLng(closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-                    showUserInMap(closestUser);
+                    setMarker(closestUserLocation, closestUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                     moveCamera(closestUserLocation, INITIAL_ZOOM);
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -333,8 +358,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      *
      * @param latLng
      */
-    private void setMarker(LatLng latLng, String title, BitmapDescriptor icon) {
-        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title).icon(icon));
+    private Marker setMarker(LatLng latLng, String title, BitmapDescriptor icon) {
+        return mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title).icon(icon));
     }
 
     @Override
