@@ -10,12 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.friendly.MatchingUtils;
 import com.example.friendly.R;
 
 public class LongMatchFragment extends Fragment {
-    private static final String TAG = "QuickMatchFragment";
-    private Button btnQuickHangout;
-    private Button btnLongHangout;
+    private static final String TAG = "LongMatchFragment";
     public LongMatchFragment(){
 
     }
@@ -29,5 +28,6 @@ public class LongMatchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MatchingUtils.getMatches();
     }
 }
