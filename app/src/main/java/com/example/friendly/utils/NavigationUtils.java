@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.net.Uri;
+import android.transition.TransitionInflater;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -145,4 +146,8 @@ public class NavigationUtils {
         mContext.startActivity(smsIntent);
     }
 
+    public static void setSlideInTransition(Fragment fragment) {
+        fragment.setEnterTransition(TransitionInflater.from(fragment.getContext())
+                .inflateTransition(R.transition.slide_transition));
+    }
 }

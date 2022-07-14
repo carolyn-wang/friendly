@@ -2,7 +2,6 @@ package com.example.friendly.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import com.example.friendly.R;
@@ -20,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.utils.NavigationUtils;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -141,9 +142,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public boolean onMarkerClick(@NonNull final Marker marker) {
         if(marker.equals(currentUserMarker)){
-            NavigationUtils.displayFragmentQuickMatch(((MainActivity)mContext).getSupportFragmentManager());
+            FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            Fragment mapDetailFragment = new MapDetailFragment();
+            ft.replace(R.id.mapDetail, mapDetailFragment);
+            ft.commit();
         }
-        Log.i(TAG, "click");
 
         // Return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the

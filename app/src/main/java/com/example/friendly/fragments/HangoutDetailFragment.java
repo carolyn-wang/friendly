@@ -81,6 +81,5 @@ public class HangoutDetailFragment extends Fragment {
             tvHangoutUser2.setText("");
         }
         tvHangoutDate.setText(dateTimeFormat.format(hangout.getDate()));
-
     }
 }

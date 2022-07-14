@@ -30,9 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvQuickMatchDescription"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/hangout_quick_height" >
-
-    </androidx.fragment.app.FragmentContainerView>
+        android:layout_height="@dimen/hangout_quick_height" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnCreateQuickHangout"
