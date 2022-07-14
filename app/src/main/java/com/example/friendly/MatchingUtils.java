@@ -51,7 +51,17 @@ TODO:
     - bucket sorting (TikTok) -- gives you buckets of videos
      */
 
-    public static Set<ParseUser> getMatches(){
+    public static Set<ParseUser> getMatches() {
+
+        int arr1[][] = {{0, 4}, {5, 10},
+                {13, 20}, {24, 25}};
+
+        int arr2[][] = {{1, 5}, {8, 12},
+                {15, 24}, {25, 26}};
+
+        int overlapHours = findIntersection(arr1, arr2);
+        Log.i(TAG, String.valueOf(overlapHours));
+
         HashMap<ParseUser, Double> sortedMatches = getSortedMatches();
         return sortedMatches.keySet();
     }
@@ -62,6 +72,7 @@ TODO:
         // TODO: move places query to separate file
         HashMap<ParseUser, Double> topMatches = new HashMap<>();
         // TODO: account for if user location is null (hasn't opened map fragment yet)
+        // TODO: account for if user preference JSONarrays have null values
         ParseGeoPoint currentLocation = currentUser.getParseGeoPoint(KEY_USER_LOCATION);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -109,6 +120,7 @@ TODO:
         int score = 0;
         for (int i = 0; i < currentUserList.length(); i++) {
             try {
+                assert nearbyUserList != null;
                 if (Objects.equals(currentUserList.getBoolean(i), nearbyUserList.getBoolean(i))) {
                     score++;
                 }
@@ -131,5 +143,50 @@ TODO:
         int nearbyUserInt = nearbyUser.getInt(listKey);
         return (double) Math.abs(currentUserInt - nearbyUserInt);
     }
+
+
+    /**
+     * Finds intersection between user availabilities and returns number of overlapping hours
+     * @param arr1 int[][] - first User's time availability
+     * @param arr2 int[][] - second User's time availability
+     * @return - int number of overlapping hours in availabilities
+     */
+    static int findIntersection(int arr1[][],
+                                 int arr2[][]) {
+
+        int totalHoursOverlap = 0;
+
+        // i and j pointers for arr1 and
+        // arr2 respectively
+        int i = 0, j = 0;
+
+        int n = arr1.length, m = arr2.length;
+
+        // Loop through all intervals until one of the interval gets exhausted
+        while (i < n && j < m) {
+
+            // Left bound for intersecting segment
+            int l = Math.max(arr1[i][0], arr2[j][0]);
+
+            // Right bound for intersecting segment
+            int r = Math.min(arr1[i][1], arr2[j][1]);
+
+            // If segment is valid print it
+            if (l < r)
+                Log.i(TAG, "{" + l + ", " +
+                        r + "}");
+            int numHoursOverlap = r - l;
+            totalHoursOverlap += numHoursOverlap;
+
+            // If i-th interval's right bound is
+            // smaller increment i else increment j
+            if (arr1[i][1] < arr2[j][1])
+                i++;
+            else
+                j++;
+        }
+        return totalHoursOverlap;
+    }
+
 
 }
