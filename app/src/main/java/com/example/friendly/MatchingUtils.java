@@ -2,9 +2,6 @@ package com.example.friendly;
 
 import android.util.Log;
 
-import com.example.friendly.activities.PreferencesActivity;
-import com.example.friendly.objects.Place;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
@@ -13,16 +10,11 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 public class MatchingUtils {
     private static final String TAG = "MatchingUtils";
@@ -34,11 +26,14 @@ public class MatchingUtils {
     private static final int USER_QUERY_LIMIT = 13;
     private static final double MAX_DISTANCE_RADIANS = 0.5;
     private static final int YEAR_OPTIONS_LENGTH = 5;
+    private static final String KEY_DISTANCE_WEIGHT = "distanceWeight";
+    private static final String KEY_ACTIVITY_WEIGHT = "activityWeight";
+    private static final String KEY_HOBBY_WEIGHT = "hobbyWeight";
+    private static final String KEY_YEAR_WEIGHT = "yearWeight";
 
     private static ParseUser currentUser;
     private static ParseGeoPoint currentLocation;
 
-    // TODO: account for null preference/location values
     // TODO: fix nearby queries
 
 /*
@@ -107,11 +102,18 @@ public class MatchingUtils {
         return topMatches;
     }
 
-    private static double calculateScore(ParseUser nearbyUser) {// if number of overlapping hours is 0; deduct score by a lot
-        double distanceWeight = 1.0;
-        double activityWeight = 1.0;
-        double hobbyWeight = 1.0;
-        double yearWeight = 1.0;
+    /**
+     * Calculates overall similarity score between current user and another given user.
+     * Queries user's weights and preference values from database.
+     * Doesn't take into account user preferences for how similar other person should be
+     * @param nearbyUser ParseUser to compare
+     * @return double overall score
+     */
+    private static double calculateScore(ParseUser nearbyUser) {// if number of overlapping hours is 0, deduct score by a lot; and vice versa
+        double distanceWeight = nearbyUser.getDouble(KEY_DISTANCE_WEIGHT);
+        double activityWeight = nearbyUser.getDouble(KEY_ACTIVITY_WEIGHT);
+        double hobbyWeight = nearbyUser.getDouble(KEY_HOBBY_WEIGHT);
+        double yearWeight = nearbyUser.getDouble(KEY_YEAR_WEIGHT);
         double distanceScore = currentLocation.distanceInKilometersTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);

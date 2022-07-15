@@ -1,7 +1,5 @@
 package com.example.friendly.objects;
 
-import java.util.List;
-
 public class Preference {
     private String parseKey;
     private String question;
@@ -12,6 +10,7 @@ public class Preference {
         this.question = question;
         this.options = options;
     }
+
     public String getParseKey() {
         return parseKey;
     }

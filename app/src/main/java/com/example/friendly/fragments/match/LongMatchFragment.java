@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +18,8 @@ import java.util.Collection;
 
 public class LongMatchFragment extends Fragment {
     private static final String TAG = "LongMatchFragment";
-    public LongMatchFragment(){
+
+    public LongMatchFragment() {
 
     }
 
@@ -33,7 +33,7 @@ public class LongMatchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Collection<ParseUser> topMatches = MatchingUtils.getMatches();
-        for (ParseUser user: topMatches){
+        for (ParseUser user : topMatches) {
             Log.i(TAG, user.getUsername());
         }
     }

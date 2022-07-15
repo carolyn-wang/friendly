@@ -55,6 +55,7 @@ public class QuickMatchFragment extends Fragment {
         btnCreateQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
                 ft.replace(R.id.flContainer, new CreateQuickMatchFragment()).commit();
             }
         });
