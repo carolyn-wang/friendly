@@ -2,7 +2,6 @@ package com.example.friendly;
 
 import android.util.Log;
 
-import com.example.friendly.activities.MainActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -19,7 +18,7 @@ import java.util.Set;
 
 public class MatchingUtils {
     private static final String TAG = "MatchingUtils";
-    private static final String KEY_USER_LOCATION = "Location";
+    private static final String KEY_LOCATION = "Location";
     private static final String KEY_SIMILARITY_PREFERENCE = "similarityPreference";
     private static final String KEY_HOBBY_PREFERENCE = "hobbyPreference";
     private static final String KEY_YEAR_PREFERENCE = "yearPreference";
@@ -42,16 +41,17 @@ public class MatchingUtils {
     - bucket sorting (TikTok) -- gives you buckets of videos
      */
 
-    /** Matching algorithm that retrieves best user matches for current user based on:
-     - location (user must be within certain radius)
-     - time availability (number overlapping hours)
-     - similarity preference (negatively or positively
-        weigh hobbies, year, and mutual friends score,
-        depending on how similar users want matches to be)
-     - hangout activity preference
-     - year
-     - hobbies
-     - mutual friends?? -- TODO
+    /**
+     * Matching algorithm that retrieves best user matches for current user based on:
+     * - location (user must be within certain radius)
+     * - time availability (number overlapping hours)
+     * - similarity preference (negatively or positively
+     * weigh hobbies, year, and mutual friends score,
+     * depending on how similar users want matches to be)
+     * - hangout activity preference
+     * - year
+     * - hobbies
+     * - mutual friends?? -- TODO
      *
      * @return Set of optimal users to hangout with
      */
@@ -67,7 +67,7 @@ public class MatchingUtils {
         int overlapHours = findIntersection(arr1, arr2);
 
         currentUser = ParseUser.getCurrentUser();
-        currentLocation = currentUser.getParseGeoPoint(KEY_USER_LOCATION);
+        currentLocation = currentUser.getParseGeoPoint(KEY_LOCATION);
 
         HashMap<ParseUser, Double> sortedMatches = getSortedMatches();
         return sortedMatches.keySet();
@@ -81,14 +81,14 @@ public class MatchingUtils {
         // TODO: account for if user preference JSONarrays have null values
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereNear(KEY_USER_LOCATION, currentLocation);
-        query.whereWithinRadians(KEY_USER_LOCATION, currentLocation, MAX_DISTANCE_RADIANS);
+        query.whereNear(KEY_LOCATION, currentLocation);
+        query.whereWithinRadians(KEY_LOCATION, currentLocation, MAX_DISTANCE_RADIANS);
         query.setLimit(USER_QUERY_LIMIT); // out of 12 other nearest users
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> nearUsers, ParseException e) {
                 if (e == null) {
-                    for (int i = 1; i < nearUsers.size(); i++) { // index set to 1 to skip over current user (index 0)
+                    for (int index1 = 1; index1 < nearUsers.size(); i++) { // index set to 1 to skip over current user (index 0)
                         ParseUser nearbyUser = nearUsers.get(i);
                         Double overallScore = calculateScore(nearbyUser);
                         topMatches.put(nearbyUser, overallScore);
@@ -103,12 +103,11 @@ public class MatchingUtils {
     }
 
     private static double calculateScore(ParseUser nearbyUser) {// if number of overlapping hours is 0; deduct score by a lot
-
         double distanceWeight = 1.0;
         double activityWeight = 1.0;
         double hobbyWeight = 1.0;
         double yearWeight = 1.0;
-        double distanceScore = currentLocation.distanceInKilometersTo(nearbyUser.getParseGeoPoint(KEY_USER_LOCATION));
+        double distanceScore = currentLocation.distanceInKilometersTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
         // TODO: get length of array from Preference class after merging branch
@@ -137,7 +136,7 @@ public class MatchingUtils {
         JSONArray currentUserList = currentUser.getJSONArray(listKey);
         JSONArray nearbyUserList = nearbyUser.getJSONArray(listKey);
         int score = 0;
-        for (int i = 0; i < currentUserList.length(); i++) {
+        for (int index1 = 0; index1 < currentUserList.length(); i++) {
             try {
                 assert nearbyUserList != null;
                 if (Objects.equals(currentUserList.getBoolean(i), nearbyUserList.getBoolean(i))) {
@@ -161,7 +160,7 @@ public class MatchingUtils {
     private static double getIntSimilarityScore(ParseUser nearbyUser, String listKey, int lenArray) {
         int currentUserInt = currentUser.getInt(listKey);
         int nearbyUserInt = nearbyUser.getInt(listKey);
-        return (double) (lenArray - Math.abs(currentUserInt - nearbyUserInt))/lenArray;
+        return (double) (lenArray - Math.abs(currentUserInt - nearbyUserInt)) / lenArray;
     }
 
 
@@ -176,26 +175,26 @@ public class MatchingUtils {
                                 int arr2[][]) {
         int totalHoursOverlap = 0;
 
-        // i and j pointers for arr1 and arr2 respectively
-        int i = 0, j = 0;
-        int n = arr1.length, m = arr2.length;
+        // index1 and j pointers for arr1 and arr2 respectively
+        int index1 = 0, index2 = 0;
+        int len1 = arr1.length, len2 = arr2.length;
 
-        while (i < n && j < m) {
+        while (index1 < len1 && index2 < len2) {
             // Left bound for intersecting segment
-            int l = Math.max(arr1[i][0], arr2[j][0]);
+            int l = Math.max(arr1[index1][0], arr2[index2][0]);
             // Right bound for intersecting segment
-            int r = Math.min(arr1[i][1], arr2[j][1]);
+            int r = Math.min(arr1[index1][1], arr2[index2][1]);
             // If segment is valid, store in array
             if (l < r)
                 Log.i(TAG, "{" + l + ", " +
                         r + "}");
             int numHoursOverlap = r - l;
             totalHoursOverlap += numHoursOverlap;
-            // else if i-th interval's right bound is smaller, increment i else increment j
-            if (arr1[i][1] < arr2[j][1])
-                i++;
+            // else if i-th interval's right bound is smaller, increment index1 else increment j
+            if (arr1[index1][1] < arr2[index2][1])
+                index1++;
             else
-                j++;
+                index2++;
         }
         return totalHoursOverlap;
     }
