@@ -51,9 +51,9 @@
         app:layout_constraintTop_toBottomOf="@+id/btnMap" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/hangoutDetail"
+        android:id="@+id/upcomingHangouts"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/hangout_history_height"
+        android:layout_height="@dimen/upcoming_hangouts_height"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchUpcomingTitle" />
 

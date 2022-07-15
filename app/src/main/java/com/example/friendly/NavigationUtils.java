@@ -13,6 +13,7 @@ import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
+import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.match.QuickMatchDetailFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
@@ -49,28 +50,16 @@ public class NavigationUtils {
 
     public static void displayFragmentQuickMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment quickMatchFragment = new QuickMatchFragment();
-        ft.replace(R.id.flContainer, quickMatchFragment)
-                .addToBackStack(null);
-        ft.commit();
+        ft.replace(R.id.flContainer, new QuickMatchFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     public static void displayFragmentLongMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment longMatchFragment = new LongMatchFragment();
-        ft.replace(R.id.flContainer, longMatchFragment)
-                .addToBackStack(null);
-        ft.commit();
-    }
-
-    public static void displayFragmentHangoutHistory(FragmentManager fragmentManager) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        // TODO: put "past", "user", "first name" all in a strings constant file
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("past", "user"));
-        Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(conditions);
-        ft.replace(R.id.flContainer, hangoutHistoryFragment)
-                .addToBackStack(null);
-        ft.commit();
+        ft.replace(R.id.flContainer, new LongMatchFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     /**
@@ -96,6 +85,14 @@ public class NavigationUtils {
     public static void displayFragmentQuickMatchDetail(Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = QuickMatchDetailFragment.newInstance(hangout);
+        ft.replace(R.id.flContainer, hangoutDetailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void displayFragmentHangoutHistory(FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment hangoutDetailFragment = new HangoutHistoryFragment();
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();

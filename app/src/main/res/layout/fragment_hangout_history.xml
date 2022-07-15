@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/fragment_padding"
+    tools:context=".fragments.HangoutHistoryFragment">
+
+    <TextView
+        android:id="@+id/hangoutHistoryTitle"
+        style="@style/TitleFont.Big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hangout_history_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/rvHangoutHistory"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hangout_history_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hangoutHistoryTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
