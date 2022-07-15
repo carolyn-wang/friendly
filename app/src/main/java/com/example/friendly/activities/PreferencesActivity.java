@@ -25,6 +25,7 @@ public class PreferencesActivity extends AppCompatActivity {
     private static final String KEY_PREFERENCE1 = "similarityPreference";
     private static final String KEY_PREFERENCE2 = "hobbyPreference";
     private static final String KEY_PREFERENCE3 = "activityPreference";
+    private static final String KEY_PREFERENCE4 = "availabilityPreference";
 
     private Context mContext;
     private RecyclerView rvPreferences;
@@ -50,7 +51,8 @@ public class PreferencesActivity extends AppCompatActivity {
                 new Preference(KEY_PREFERENCE0, getString(R.string.question0), mContext.getResources().getStringArray(R.array.option0)),
                 new Preference(KEY_PREFERENCE1, getString(R.string.question1), mContext.getResources().getStringArray(R.array.option1)),
                 new Preference(KEY_PREFERENCE2, getString(R.string.question2), mContext.getResources().getStringArray(R.array.option2)),
-                new Preference(KEY_PREFERENCE3, getString(R.string.question3), mContext.getResources().getStringArray(R.array.option3)));
+                new Preference(KEY_PREFERENCE3, getString(R.string.question3), mContext.getResources().getStringArray(R.array.option3)),
+                new Preference(KEY_PREFERENCE4, getString(R.string.question4), mContext.getResources().getStringArray(R.array.option4)));
 
         preferenceKeys = new ArrayList<>();
         for (Preference preference: allPreferences){

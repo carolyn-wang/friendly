@@ -52,38 +52,6 @@
     <string name="question1">Do you prefer to match with people similar or different to you?</string>
     <string name="question2">What are your hobbies?</string>
     <string name="question3">What are your preferences for hangout activites?</string>
-
-    <string-array name="option0">
-        <item>Year 1</item>
-        <item>Year 2</item>
-        <item>Year 3</item>
-        <item>Year 4</item>
-        <item>Year 5 (Masters/Postgrad)</item>
-    </string-array>
-    <string-array name="option1">
-        <item>Very similar</item>
-        <item>Somewhat similar</item>
-        <item>Neutral (either works)</item>
-        <item>Somewhat Different</item>
-        <item>Very Different</item>
-    </string-array>
-    <string-array name="option2">
-        <item>gaming</item>
-        <item>reading</item>
-        <item>hiking</item>
-        <item>gym</item>
-        <item>art</item>
-        <item>music</item>
-        <item>anime</item>
-        <item>sports</item>
-        <item>politics</item>
-    </string-array>
-    <string-array name="option3">
-        <item>tacos</item>
-        <item>bar</item>
-        <item>hiking</item>
-        <item>boba</item>
-        <item>donuts</item>
-    </string-array>
+    <string name="question4">When are you generally avaliable?</string>
 
 </resources>

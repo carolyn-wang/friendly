@@ -2,6 +2,7 @@ package com.example.friendly;
 
 import android.util.Log;
 
+import com.example.friendly.activities.MainActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -25,6 +26,7 @@ public class MatchingUtils {
     private static final String KEY_ACTIVITY_PREFERENCE = "activityPreference";
     private static final int USER_QUERY_LIMIT = 13;
     private static final double MAX_DISTANCE_RADIANS = 0.5;
+    private static final int YEAR_OPTIONS_LENGTH = 5;
 
     private static ParseUser currentUser;
     private static ParseGeoPoint currentLocation;
@@ -110,7 +112,7 @@ public class MatchingUtils {
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
         // TODO: get length of array from Preference class after merging branch
-        double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, 5);
+        double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
         Log.i(TAG, "distance: " + distanceScore
                 + "; hobby: " + hobbyScore
                 + "; year: " + yearScore
