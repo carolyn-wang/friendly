@@ -19,21 +19,22 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilPlaces"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/quick_edittext_height"
+        app:endIconMode="clear_text"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCreateQuickMatch"
-        app:endIconMode="clear_text">
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateQuickMatch">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/autoCompletePlaces"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/create_quick_location" />
+            android:hint="@string/create_quick_location"
+            android:padding="@dimen/quick_edittext_padding" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilDate"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/quick_edittext_width"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilPlaces">
@@ -51,8 +52,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="150dp"
+        android:id="@+id/tilTime"
+        android:layout_width="@dimen/quick_edittext_width"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/quick_edittext_padding"
         app:layout_constraintLeft_toRightOf="@+id/tilDate"
         app:layout_constraintTop_toBottomOf="@id/tilPlaces">
 
@@ -65,9 +68,8 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:hint="@string/create_quick_time"
-            android:inputType="time" />
+            android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreateHangout"
@@ -75,7 +77,7 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_create_quick"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tilDate" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

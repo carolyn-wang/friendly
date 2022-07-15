@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -18,10 +21,10 @@ import com.parse.ParseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private EditText etUsername;
-    private EditText etPassword;
-    private Button btnLogin;
-    private Button btnSignup;
+    private TextInputEditText etUsername;
+    private TextInputEditText etPassword;
+    private MaterialButton btnLogin;
+    private MaterialButton btnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
