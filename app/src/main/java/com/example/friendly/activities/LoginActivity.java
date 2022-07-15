@@ -1,5 +1,6 @@
 package com.example.friendly.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.parse.ParseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+    private Context mContext;
     private TextInputEditText etUsername;
     private TextInputEditText etPassword;
     private MaterialButton btnLogin;
@@ -31,9 +33,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (ParseUser.getCurrentUser() != null){
+        if (ParseUser.getCurrentUser() != null) {
             NavigationUtils.goMainActivity(LoginActivity.this);
         }
+
+        mContext = LoginActivity.this;
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
@@ -43,9 +47,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick login button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+                if (username.equals("") || password.equals("")) {
+                    Toast.makeText(mContext, "Need to fill out username or password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 loginUser(username, password);
             }
         });
@@ -67,12 +74,13 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if (e != null) {
+                if (e == null) {
+                    NavigationUtils.goMainActivity(LoginActivity.this);
+                    Toast.makeText(mContext, "Login Success", Toast.LENGTH_SHORT).show();
+                } else {
                     Log.e(TAG, "Issue with login", e);
-                    return;
                 }
-                NavigationUtils.goMainActivity(LoginActivity.this);
-                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT);
+
             }
         });
     }
