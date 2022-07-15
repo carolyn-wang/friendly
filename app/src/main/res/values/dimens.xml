@@ -16,4 +16,5 @@
     <dimen name="hangout_history_height">500dp</dimen>
     <dimen name="hangout_quick_height">600dp</dimen>
     <dimen name="preferences_padding">40dp</dimen>
+    <dimen name="fl_padding">25dp</dimen>
 </resources>

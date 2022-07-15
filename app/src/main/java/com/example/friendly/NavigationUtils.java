@@ -50,14 +50,16 @@ public class NavigationUtils {
     public static void displayFragmentQuickMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment quickMatchFragment = new QuickMatchFragment();
-        ft.replace(R.id.flContainer, quickMatchFragment);
+        ft.replace(R.id.flContainer, quickMatchFragment)
+                .addToBackStack(null);
         ft.commit();
     }
 
     public static void displayFragmentLongMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment longMatchFragment = new LongMatchFragment();
-        ft.replace(R.id.flContainer, longMatchFragment);
+        ft.replace(R.id.flContainer, longMatchFragment)
+                .addToBackStack(null);
         ft.commit();
     }
 
@@ -66,7 +68,8 @@ public class NavigationUtils {
         // TODO: put "past", "user", "first name" all in a strings constant file
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("past", "user"));
         Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(conditions);
-        ft.replace(R.id.flContainer, hangoutHistoryFragment);
+        ft.replace(R.id.flContainer, hangoutHistoryFragment)
+                .addToBackStack(null);
         ft.commit();
     }
 
@@ -98,4 +101,9 @@ public class NavigationUtils {
                 .commit();
     }
 
+    public static void onBackPressed(FragmentManager fragmentManager) {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+    }
 }

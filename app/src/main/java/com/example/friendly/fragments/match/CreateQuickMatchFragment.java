@@ -26,6 +26,7 @@ import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
+import com.google.android.material.textfield.TextInputEditText;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -49,8 +50,8 @@ public class CreateQuickMatchFragment extends Fragment {
 
     private Calendar calendar;
     private AutoCompleteTextView autoCompletePlaces;
-    private EditText editTextDate;
-    private EditText editTextTime;
+    private TextInputEditText editTextDate;
+    private TextInputEditText editTextTime;
     private Button btnCreateHangout;
 
     private static final boolean is24HView = false;

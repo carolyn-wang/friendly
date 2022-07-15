@@ -84,8 +84,9 @@ public class MatchFragment extends Fragment {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
-        Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
-        ft.add(R.id.hangoutDetail, hangoutDetailFragment);
+        Fragment upcomingHangoutsFragment = HangoutsFragment.newInstance(conditions);
+        ft.add(R.id.hangoutDetail, upcomingHangoutsFragment);
         ft.commit();
+
     }
 }
