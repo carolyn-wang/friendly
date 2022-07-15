@@ -29,6 +29,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+
 }
 
 dependencies {
@@ -48,4 +49,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1' // for logging API calls to LogCat
     // Cardview
     implementation "androidx.cardview:cardview:1.0.0"
+    // DragSelectRV
+    implementation 'com.github.MFlisar:DragSelectRecyclerView:0.3'
 }

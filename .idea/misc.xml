@@ -3,30 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2665" />
-        <entry key="app/src/main/res/drawable/item_poll_checklist.xml" value="0.4095" />
-        <entry key="app/src/main/res/layout/activity_google_maps.xml" value="0.11018237082066869" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.22056159420289856" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.28002018163471243" />
-        <entry key="app/src/main/res/layout/activity_preferences.xml" value="0.23285064697265648" />
-        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.23505434782608695" />
-        <entry key="app/src/main/res/layout/fragment_create_quick_match.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_hangout_detail.xml" value="0.4641769409179688" />
-        <entry key="app/src/main/res/layout/fragment_hangout_history.xml" value="0.15489404641775983" />
-        <entry key="app/src/main/res/layout/fragment_hangouts.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_long_match.xml" value="0.26992753623188404" />
+        <entry key="app/src/main/res/layout/fragment_hangouts.xml" value="0.28802083333333334" />
         <entry key="app/src/main/res/layout/fragment_map.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_match.xml" value="0.23505434782608695" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5661881977671451" />
-        <entry key="app/src/main/res/layout/fragment_quick_match.xml" value="0.26992753623188404" />
-        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.26992753623188404" />
-        <entry key="app/src/main/res/layout/item_card.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_hangout_card.xml" value="0.11639492753623189" />
-        <entry key="app/src/main/res/layout/item_poll_card.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_poll_card_radio.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_poll_checklist.xml" value="0.26992753623188404" />
-        <entry key="app/src/main/res/layout/item_poll_row.xml" value="0.15208333333333332" />
-        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.31979166666666664" />
+        <entry key="app/src/main/res/layout/fragment_map_detail.xml" value="0.13179347826086957" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.13677536231884058" />
+        <entry key="app/src/main/res/layout/item_poll_card_checkbox.xml" value="0.3765625" />
       </map>
     </option>
   </component>

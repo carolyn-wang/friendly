@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue">#BEEBE9</color>
     <color name="yellow">#FBBC54</color>
-    <color name="light_tan">#F8DCB0</color>
-    <color name="tan">#F2B190</color>
-    <color name="light_pink">#F4DADA</color>
     <color name="pink">#FFB6B9</color>
 
 <!--    TODO: try to fix later, replace with variables-->
