@@ -95,27 +95,6 @@ public class HangoutsFragment extends Fragment {
         query.queryHangouts(adapter, queryConditions);
 
 
-//        DragSelectTouchListener mDragSelectTouchListener = new DragSelectTouchListener()
-//                // check region OnDragSelectListener for more infos
-//                .withSelectListener(new DragSelectTouchListener.OnDragSelectListener() {
-//                    @Override
-//                    public void onSelectChange(int start, int end, boolean isSelected) {
-//                        Log.i(TAG, "dragging");
-//                    }
-//                });
-//                // following is all optional
-//                .withMaxScrollDistance(distance)    // default: 16; 	defines the speed of the auto scrolling
-//                .withTopOffset(toolbarHeight)       // default: 0; 		set an offset for the touch region on top of the RecyclerView
-//                .withBottomOffset(toolbarHeight)    // default: 0; 		set an offset for the touch region on bottom of the RecyclerView
-//                .withScrollAboveTopRegion(enabled)  // default: true; 	enable auto scrolling, even if the finger is moved above the top region
-//                .withScrollBelowTopRegion(enabled)  // default: true; 	enable auto scrolling, even if the finger is moved below the top region
-//                .withDebug(enabled);                // default: false;
-
-//        rvHangouts.addOnItemTouchListener((RecyclerView.OnItemTouchListener) mDragSelectTouchListener);
-//        mDragSelectTouchListener.startDragSelection(0);
-
-
-
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
         setPullToRefresh();
         setScrollListener();
