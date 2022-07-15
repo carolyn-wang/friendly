@@ -31,16 +31,8 @@ public class MatchingUtils {
 
     // TODO: account for null preference/location values
     // TODO: fix nearby queries
-    /*
-    Matching algorithm that retrieves best match for current user based on
-    - location
-    - time availability (scheduling algorithm) --
-    - similarity preference ** -- (negatively or positively weigh hobbies, year, and mutual friends score)
-    - hangout place/activity preference
-    - year
-    - hobbies
-    - mutual friends?? -- **
 
+/*
     - can take into account hangout history?
     - dynamically weigh?
 
@@ -48,8 +40,22 @@ public class MatchingUtils {
     - bucket sorting (TikTok) -- gives you buckets of videos
      */
 
+    /** Matching algorithm that retrieves best user matches for current user based on:
+     - location (user must be within certain radius)
+     - time availability (number overlapping hours)
+     - similarity preference (negatively or positively
+        weigh hobbies, year, and mutual friends score,
+        depending on how similar users want matches to be)
+     - hangout activity preference
+     - year
+     - hobbies
+     - mutual friends?? -- TODO
+     *
+     * @return Set of optimal users to hangout with
+     */
     public static Set<ParseUser> getMatches() {
 
+        // hard coded arrays for testing purposes
         int arr1[][] = {{0, 4}, {5, 10},
                 {13, 20}, {24, 25}};
 
@@ -57,7 +63,6 @@ public class MatchingUtils {
                 {15, 24}, {25, 26}};
 
         int overlapHours = findIntersection(arr1, arr2);
-        Log.i(TAG, String.valueOf(overlapHours));
 
         currentUser = ParseUser.getCurrentUser();
         currentLocation = currentUser.getParseGeoPoint(KEY_USER_LOCATION);
