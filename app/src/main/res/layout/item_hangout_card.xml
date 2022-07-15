@@ -11,14 +11,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/hangout_card_padding"
+        android:padding="@dimen/card_padding"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvHangoutUser1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/hangout_card_padding"
+            android:layout_marginEnd="@dimen/card_padding"
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"/>
 
@@ -26,7 +26,7 @@
             android:id="@+id/tvHangoutUser2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/hangout_card_padding"
+            android:layout_marginStart="@dimen/card_padding"
             card_view:layout_constraintLeft_toRightOf="@+id/tvHangoutUser1"
             card_view:layout_constraintTop_toTopOf="parent"/>
 

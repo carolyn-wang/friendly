@@ -14,7 +14,6 @@ import com.example.friendly.fragments.ProfileFragment;
 import com.example.friendly.fragments.SearchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new MatchFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ProfileFragment().newInstance(ParseUser.getCurrentUser());
+                        fragment = new ProfileFragment();
                         break;
                     default: return true;
                 }

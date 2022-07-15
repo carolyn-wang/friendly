@@ -39,4 +39,13 @@
     <dimen name="fontSizeBig">25dp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
 
+    <style name="CardView.Poll" parent="CardView">
+        <item name="android:layout_margin">@dimen/poll_card_margin</item>
+        <item name="cardCornerRadius">@dimen/poll_card_radius</item>
+        <item name="cardElevation">@dimen/poll_card_elevation</item>
+    </style>
+
+    <dimen name="poll_card_margin">10dp</dimen>
+    <dimen name="poll_card_radius">16dp</dimen>
+    <dimen name="poll_card_elevation">8dp</dimen>
 </resources>

@@ -27,8 +27,6 @@ import java.util.Arrays;
 
 public class NavigationUtils {
 
-    static MapFragment mapFragment;
-
     public static void goActivity(Activity activity, Class targetClass) {
         Context context = activity.getBaseContext();
         Intent i = new Intent(context, targetClass);
@@ -38,7 +36,6 @@ public class NavigationUtils {
 
     public static void goLoginActivity(Activity activity) {
         goActivity(activity, LoginActivity.class);
-
     }
 
     public static void goMainActivity(Activity activity) {
@@ -51,7 +48,6 @@ public class NavigationUtils {
 
     public static void goPreferencesActivity(Activity activity) {
         goActivity(activity, PreferencesActivity.class);
-
     }
 
     public static void displayFragmentQuickMatch(FragmentManager fragmentManager) {
@@ -89,9 +85,5 @@ public class NavigationUtils {
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public static void pauseMapView(){
-        mapFragment.onPause();
     }
 }
