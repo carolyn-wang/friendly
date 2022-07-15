@@ -33,10 +33,15 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     private Context mContext;
     private List<Preference> preferences;
     private static final String TAG = "PreferencesAdapter";
+    private static List<String> allPreferenceKeys;
+
+    private static final int RADIO_TYPE = 0;
+    private static final int CHECKBOX_TYPE = 1;
 
     public PreferencesAdapter(Context context, List<Preference> preferences) {
         this.mContext = context;
         this.preferences = preferences;
+        allPreferenceKeys = ((PreferencesActivity) mContext).getAllPreferenceKeys();
     }
 
     @NonNull
@@ -60,9 +65,9 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     @Override
     public int getItemViewType(int position) {
         if (position < 2) {
-            return 0;
+            return RADIO_TYPE;
         } else {
-            return 1;
+            return CHECKBOX_TYPE;
         }
     }
 
@@ -100,15 +105,14 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             tvQuestion.setText(preference.getQuestion());
 
             int cardPosition = getAdapterPosition();
-            List<String> allPreferenceKeys = ((PreferencesActivity) mContext).getAllPreferenceKeys();
 
-            if (getItemViewType() == 0) {
+            if (getItemViewType() == RADIO_TYPE) {
                 int preferenceIndex = ParseUser.getCurrentUser().getInt(allPreferenceKeys.get(cardPosition));
 
                 // Dynamically set preference options and options text
-                for (int i = 0; i < preference.getOptions().length; i++) {
+                for (String option: preference.getOptions()) {
                     RadioButton btnOption = new RadioButton(mContext);
-                    btnOption.setText(preference.getOption(i));
+                    btnOption.setText(option);
                     rgOptions.addView(btnOption);
                 }
 

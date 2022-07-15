@@ -24,6 +24,7 @@ public class PreferencesActivity extends AppCompatActivity {
     private static final String KEY_PREFERENCE0 = "yearPreference";
     private static final String KEY_PREFERENCE1 = "similarityPreference";
     private static final String KEY_PREFERENCE2 = "hobbyPreference";
+    private static final String KEY_PREFERENCE3 = "activityPreference";
 
     private Context mContext;
     private RecyclerView rvPreferences;
@@ -31,6 +32,8 @@ public class PreferencesActivity extends AppCompatActivity {
     protected PreferencesAdapter adapter;
     protected List<Preference> allPreferences;
     protected int scrollCounter;
+    private List<String> preferenceKeys;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,13 @@ public class PreferencesActivity extends AppCompatActivity {
         allPreferences = Arrays.asList(
                 new Preference(KEY_PREFERENCE0, getString(R.string.question0), mContext.getResources().getStringArray(R.array.option0)),
                 new Preference(KEY_PREFERENCE1, getString(R.string.question1), mContext.getResources().getStringArray(R.array.option1)),
-                new Preference(KEY_PREFERENCE2, getString(R.string.question2), mContext.getResources().getStringArray(R.array.option2)));
+                new Preference(KEY_PREFERENCE2, getString(R.string.question2), mContext.getResources().getStringArray(R.array.option2)),
+                new Preference(KEY_PREFERENCE3, getString(R.string.question3), mContext.getResources().getStringArray(R.array.option3)));
+
+        preferenceKeys = new ArrayList<>();
+        for (Preference preference: allPreferences){
+            preferenceKeys.add(preference.getParseKey());
+        }
 
         adapter = new PreferencesAdapter(mContext, allPreferences);
         rvPreferences.setAdapter(adapter);
@@ -68,10 +77,6 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     public List<String> getAllPreferenceKeys(){
-        List<String> preferenceKeys = new ArrayList<>();
-        for (int i = 0; i < allPreferences.size(); i++){
-            preferenceKeys.add(allPreferences.get(i).getParseKey());
-        }
         return preferenceKeys;
     }
 

@@ -54,6 +54,7 @@
     <string name="question0">What year are you in?</string>
     <string name="question1">Do you prefer to match with people similar or different to you?</string>
     <string name="question2">What are your hobbies?</string>
+    <string name="question3">What are your preferences for hangout activites?</string>
 
     <string-array name="option0">
         <item>Year 1</item>
@@ -79,5 +80,12 @@
         <item>anime</item>
         <item>sports</item>
         <item>politics</item>
+    </string-array>
+    <string-array name="option3">
+        <item>tacos</item>
+        <item>bar</item>
+        <item>hiking</item>
+        <item>boba</item>
+        <item>donuts</item>
     </string-array>
 </resources>
