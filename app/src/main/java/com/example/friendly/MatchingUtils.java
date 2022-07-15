@@ -2,6 +2,8 @@ package com.example.friendly;
 
 import android.util.Log;
 
+import com.example.friendly.activities.PreferencesActivity;
+import com.example.friendly.objects.Place;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -11,10 +13,16 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Stream;
 
 public class MatchingUtils {
     private static final String TAG = "MatchingUtils";
@@ -55,7 +63,7 @@ public class MatchingUtils {
      *
      * @return Set of optimal users to hangout with
      */
-    public static Set<ParseUser> getMatches() {
+    public static Collection<ParseUser> getMatches() {
 
         // hard coded arrays for testing purposes
         int arr1[][] = {{0, 4}, {5, 10},
@@ -69,35 +77,32 @@ public class MatchingUtils {
         currentUser = ParseUser.getCurrentUser();
         currentLocation = currentUser.getParseGeoPoint(KEY_LOCATION);
 
-        HashMap<ParseUser, Double> sortedMatches = getSortedMatches();
-        return sortedMatches.keySet();
+        return getSortedMatches().values();
     }
 
 
-    public static HashMap<ParseUser, Double> getSortedMatches() {
+    public static Map<Double, ParseUser> getSortedMatches() {
         // TODO: move places query to separate file
-        HashMap<ParseUser, Double> topMatches = new HashMap<>();
-        // TODO: account for if user location is null (hasn't opened map fragment yet)
-        // TODO: account for if user preference JSONarrays have null values
+        Map<Double, ParseUser> topMatches = new TreeMap<>();
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNear(KEY_LOCATION, currentLocation);
         query.whereWithinRadians(KEY_LOCATION, currentLocation, MAX_DISTANCE_RADIANS);
         query.setLimit(USER_QUERY_LIMIT); // out of 12 other nearest users
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> nearUsers, ParseException e) {
-                if (e == null) {
-                    for (int index1 = 1; index1 < nearUsers.size(); i++) { // index set to 1 to skip over current user (index 0)
-                        ParseUser nearbyUser = nearUsers.get(i);
-                        Double overallScore = calculateScore(nearbyUser);
-                        topMatches.put(nearbyUser, overallScore);
-                    }
-                } else {
-                    Log.d(TAG, "Error: " + e.getMessage());
-                }
-            }
-        });
+
+        List<ParseUser> nearUsers = null;
+        try {
+            nearUsers = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 1; i < nearUsers.size(); i++) { // index set to 1 to skip over current user (index 0)
+            ParseUser nearbyUser = nearUsers.get(i);
+            Double overallScore = calculateScore(nearbyUser);
+            topMatches.put(overallScore, nearbyUser);
+        }
+
         ParseQuery.clearAllCachedResults();
         return topMatches;
     }
@@ -110,7 +115,6 @@ public class MatchingUtils {
         double distanceScore = currentLocation.distanceInKilometersTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
-        // TODO: get length of array from Preference class after merging branch
         double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
         Log.i(TAG, "distance: " + distanceScore
                 + "; hobby: " + hobbyScore
@@ -136,7 +140,7 @@ public class MatchingUtils {
         JSONArray currentUserList = currentUser.getJSONArray(listKey);
         JSONArray nearbyUserList = nearbyUser.getJSONArray(listKey);
         int score = 0;
-        for (int index1 = 0; index1 < currentUserList.length(); i++) {
+        for (int i = 0; i < currentUserList.length(); i++) {
             try {
                 assert nearbyUserList != null;
                 if (Objects.equals(currentUserList.getBoolean(i), nearbyUserList.getBoolean(i))) {

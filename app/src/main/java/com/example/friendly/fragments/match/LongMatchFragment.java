@@ -1,6 +1,7 @@
 package com.example.friendly.fragments.match;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.friendly.MatchingUtils;
 import com.example.friendly.R;
+import com.parse.ParseUser;
+
+import java.util.Collection;
 
 public class LongMatchFragment extends Fragment {
     private static final String TAG = "LongMatchFragment";
@@ -28,6 +32,9 @@ public class LongMatchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MatchingUtils.getMatches();
+        Collection<ParseUser> topMatches = MatchingUtils.getMatches();
+        for (ParseUser user: topMatches){
+            Log.i(TAG, user.getUsername());
+        }
     }
 }
