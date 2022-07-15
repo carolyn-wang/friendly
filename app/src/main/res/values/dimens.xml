@@ -20,5 +20,5 @@
     <dimen name="fl_padding">25dp</dimen>
     <dimen name="quick_edittext_width">150dp</dimen>
     <dimen name="quick_edittext_height">60dp</dimen>
-    <dimen name="quick_edittext_padding">16dp</dimen>
+    <dimen name="edittext_padding">16dp</dimen>
 </resources>

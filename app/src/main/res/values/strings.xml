@@ -14,7 +14,7 @@
     <string name="signupEmailHint">Email</string>
     <string name="signupUsernameHint">Username</string>
     <string name="signupPasswordHint">Password</string>
-
+    <string name="signupConfirmPasswordHint">Confirm Password</string>
     <string name="hangoutUser1">User 1</string>
     <string name="hangoutUser2">User 2</string>
     <string name="hangoutDate">Hangout date</string>

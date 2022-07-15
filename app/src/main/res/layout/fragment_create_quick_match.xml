@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/create_quick_location"
-            android:padding="@dimen/quick_edittext_padding" />
+            android:padding="@dimen/edittext_padding" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -55,7 +55,7 @@
         android:id="@+id/tilTime"
         android:layout_width="@dimen/quick_edittext_width"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/quick_edittext_padding"
+        android:layout_marginStart="@dimen/edittext_padding"
         app:layout_constraintLeft_toRightOf="@+id/tilDate"
         app:layout_constraintTop_toBottomOf="@id/tilPlaces">
 
