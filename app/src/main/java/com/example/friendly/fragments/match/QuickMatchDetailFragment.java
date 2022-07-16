@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.friendly.MatchingUtils;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
@@ -74,6 +75,7 @@ public class QuickMatchDetailFragment extends Fragment {
                     public void done(ParseException e) {
                         // TODO: move to navUtils
                         ((MainActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new MatchFragment()).commit();
+                        MatchingUtils.adjustWeights(hangout.getUser1());
                     }
                 });
             }

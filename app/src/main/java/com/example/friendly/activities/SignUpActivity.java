@@ -32,6 +32,8 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String KEY_ACTIVITY_PREFERENCE = "activityPreference";
     private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
     private static final String KEY_LOCATION = "Location";
+    private static final String KEY_PREFERENCE_WEIGHTS = "preferenceWeights";
+    private static final String KEY_AVERAGE_SIMILARITY_SCORES = "averageSimilarityScores";
     private EditText etFirstName;
     private EditText etLastName;
     private EditText etEmail;
@@ -85,9 +87,13 @@ public class SignUpActivity extends AppCompatActivity {
         boolean[] hobbyArr = new boolean[hobby_options_len];
         boolean[] activityArr = new boolean[activity_options_len];
         boolean[] availabilityArr = new boolean[availability_options_len];
+        double[] weightsArray = new double[]{1.0, 1.0, 1.0, 1.0};
+        double[] averageSimilarity = new double[]{10.0, 0.8, 1.0, 1.0};
         user.put(KEY_HOBBY_PREFERENCE, new JSONArray(hobbyArr));
         user.put(KEY_ACTIVITY_PREFERENCE, new JSONArray(activityArr));
         user.put(KEY_AVAILABILITY_PREFERENCE, new JSONArray(availabilityArr));
+        user.put(KEY_PREFERENCE_WEIGHTS, new JSONArray(weightsArray));
+        user.put(KEY_AVERAGE_SIMILARITY_SCORES, new JSONArray(averageSimilarity));
 
         user.put(KEY_LOCATION, new ParseGeoPoint());
 

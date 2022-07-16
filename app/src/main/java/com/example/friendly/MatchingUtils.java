@@ -10,11 +10,13 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.stream.DoubleStream;
 
 public class MatchingUtils {
     private static final String TAG = "MatchingUtils";
@@ -26,10 +28,14 @@ public class MatchingUtils {
     private static final int USER_QUERY_LIMIT = 13;
     private static final double MAX_DISTANCE_RADIANS = 0.5;
     private static final int YEAR_OPTIONS_LENGTH = 5;
-    private static final String KEY_DISTANCE_WEIGHT = "distanceWeight";
-    private static final String KEY_ACTIVITY_WEIGHT = "activityWeight";
-    private static final String KEY_HOBBY_WEIGHT = "hobbyWeight";
-    private static final String KEY_YEAR_WEIGHT = "yearWeight";
+    private static final String KEY_PREFERENCE_WEIGHTS = "preferenceWeights";
+    private static final String KEY_AVERAGE_SIMILARITY_SCORES = "averageSimilarityScores";
+    private static final int KEY_DISTANCE_WEIGHT_INDEX = 0;
+    private static final int KEY_ACTIVITY_WEIGHT_INDEX = 1;
+    private static final int KEY_HOBBY_WEIGHT_INDEX = 2;
+    private static final int KEY_YEAR_WEIGHT_INDEX = 3;
+
+
 
     private static ParseUser currentUser;
     private static ParseGeoPoint currentLocation;
@@ -94,7 +100,13 @@ public class MatchingUtils {
 
         for (int i = 1; i < nearUsers.size(); i++) { // index set to 1 to skip over current user (index 0)
             ParseUser nearbyUser = nearUsers.get(i);
-            Double overallScore = calculateScore(nearbyUser);
+            double[] scoresArray = new double[0];
+            try {
+                scoresArray = getSimilarityArray(nearbyUser);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            double overallScore = DoubleStream.of(scoresArray).sum();
             topMatches.put(overallScore, nearbyUser);
         }
 
@@ -106,14 +118,17 @@ public class MatchingUtils {
      * Calculates overall similarity score between current user and another given user.
      * Queries user's weights and preference values from database.
      * Doesn't take into account user preferences for how similar other person should be
+     *
      * @param nearbyUser ParseUser to compare
-     * @return double overall score
+     * @return double[] containing similarity score for each category
      */
-    private static double calculateScore(ParseUser nearbyUser) {// if number of overlapping hours is 0, deduct score by a lot; and vice versa
-        double distanceWeight = nearbyUser.getDouble(KEY_DISTANCE_WEIGHT);
-        double activityWeight = nearbyUser.getDouble(KEY_ACTIVITY_WEIGHT);
-        double hobbyWeight = nearbyUser.getDouble(KEY_HOBBY_WEIGHT);
-        double yearWeight = nearbyUser.getDouble(KEY_YEAR_WEIGHT);
+    private static double[] getSimilarityArray(ParseUser nearbyUser) throws JSONException {// if number of overlapping hours is 0, deduct score by a lot; and vice versa
+        JSONArray preferenceWeights = ParseUser.getCurrentUser().getJSONArray(KEY_PREFERENCE_WEIGHTS);
+
+        double distanceWeight = (double) preferenceWeights.getDouble(KEY_DISTANCE_WEIGHT_INDEX);
+        double activityWeight = (double) preferenceWeights.getDouble(KEY_ACTIVITY_WEIGHT_INDEX);
+        double hobbyWeight = (double) preferenceWeights.getDouble(KEY_HOBBY_WEIGHT_INDEX);
+        double yearWeight = (double) preferenceWeights.getDouble(KEY_YEAR_WEIGHT_INDEX);
         double distanceScore = currentLocation.distanceInKilometersTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
@@ -123,11 +138,11 @@ public class MatchingUtils {
                 + "; year: " + yearScore
                 + "; activity: " + activityScore);
 
-        double overallScore = (distanceWeight * distanceScore)
-                + (activityWeight * activityScore)
-                + (hobbyWeight * hobbyScore)
-                + (yearWeight * yearScore);
-        return overallScore;
+        double[] scoresArray = {distanceWeight * distanceScore,
+                activityWeight * activityScore,
+                hobbyWeight * hobbyScore,
+                yearWeight * yearScore};
+        return scoresArray;
     }
 
 
@@ -196,12 +211,39 @@ public class MatchingUtils {
                         r + "}");
             int numHoursOverlap = r - l;
             totalHoursOverlap += numHoursOverlap;
-            // else if i-th interval's right bound is smaller, increment index1 else increment j
+            // else if index1 interval's right bound is smaller, increment index1; else increment index2
             if (arr1[index1][1] < arr2[index2][1])
                 index1++;
             else
                 index2++;
         }
         return totalHoursOverlap;
+    }
+
+    /**
+     * Dynamically adjust weights after current user matches with a new user using Quick Match.
+     * Compares scores between current and matched User, then adjusts current user's weights dependent on
+     * recent match's difference from average.
+     *
+     * @param matchedUser ParseUser that current user chose to hangout with.
+     */
+    public static void adjustWeights(ParseUser matchedUser) {
+        double[] similarityScores = new double[0];
+        try {
+            similarityScores = getSimilarityArray(matchedUser);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray averageSimilarityScore = ParseUser.getCurrentUser().getJSONArray(KEY_AVERAGE_SIMILARITY_SCORES);
+        if (!averageSimilarityScore.equals(null)) {
+            for (int i = 0; i < averageSimilarityScore.length(); i++) {
+                try {
+                    double difference = similarityScores[i] - averageSimilarityScore.getDouble(i);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
