@@ -7,6 +7,7 @@
     tools:context=".activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topAppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -23,16 +24,13 @@
     <FrameLayout
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNavigation"
-        android:layout_below="@+id/topAppBar"
-        android:paddingVertical= "@dimen/action_bar_height" />
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/action_bar_height" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         app:menu="@menu/menu_bottom_navigation" />
 

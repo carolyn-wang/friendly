@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.DisplayUtils;
+import com.example.friendly.HangoutQuery;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
@@ -110,7 +111,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
             if (hangout.getLocation() != null) {
-                tvHangoutLocation.setText(hangout.getLocationName());
+                tvHangoutLocation.setText(DisplayUtils.getEmojiByPlace(hangout.getLocation()) + " " + hangout.getLocationName());
             }
             // TODO: move into child classes
 

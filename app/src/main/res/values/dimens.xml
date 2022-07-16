@@ -17,11 +17,11 @@
     <dimen name="preferences_padding">40dp</dimen>
     <dimen name="fl_padding">25dp</dimen>
     <dimen name="upcoming_hangouts_height">500dp</dimen>
-    <dimen name="hangout_history_height">630dp</dimen>
     <dimen name="hangout_quick_height">630dp</dimen>
     <dimen name="quick_edittext_width">150dp</dimen>
     <dimen name="quick_edittext_height">60dp</dimen>
     <dimen name="edittext_padding">16dp</dimen>
     <dimen name="action_bar_height">45dp</dimen>
     <dimen name="nav_icon_size">20dp</dimen>
+    <dimen name="bottom_navigation_padding">75dp</dimen>
 </resources>

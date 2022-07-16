@@ -46,6 +46,4 @@ public class HangoutHistoryFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-
 }

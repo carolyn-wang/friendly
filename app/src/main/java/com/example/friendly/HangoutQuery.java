@@ -16,9 +16,9 @@ import java.util.List;
 
 public class HangoutQuery{
     private static final String TAG = "HangoutQuery";
-    protected static final int POSTS_TO_LOAD = 10;
-    protected int scrollCounter = 0;
-    protected List<Hangout> allHangouts = new ArrayList<>();
+    private static final int POSTS_TO_LOAD = 10;
+    private int scrollCounter = 0;
+    protected List<Hangout> allHangouts =  new ArrayList<>();
 
     // TODO: maybe change queryConditions into separate booleans
     public void queryHangouts(HangoutsAdapter adapter, ArrayList<String> queryConditions) {

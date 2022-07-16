@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="?attr/actionBarSize"
     tools:context=".fragments.HangoutsFragment">
 
     <ProgressBar
@@ -26,7 +27,7 @@
             android:id="@+id/rvHangouts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
