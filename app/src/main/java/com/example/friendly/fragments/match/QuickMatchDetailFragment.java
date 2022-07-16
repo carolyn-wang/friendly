@@ -24,6 +24,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link QuickMatchDetailFragment#newInstance} factory method to
@@ -75,7 +77,11 @@ public class QuickMatchDetailFragment extends Fragment {
                     public void done(ParseException e) {
                         // TODO: move to navUtils
                         ((MainActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new MatchFragment()).commit();
-                        MatchingUtils.adjustWeights(hangout.getUser1());
+                        try {
+                            MatchingUtils.adjustWeights(hangout.getUser1());
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 });
             }

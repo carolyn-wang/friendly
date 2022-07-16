@@ -6,11 +6,11 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ public class MatchingUtils {
     private static final int KEY_ACTIVITY_WEIGHT_INDEX = 1;
     private static final int KEY_HOBBY_WEIGHT_INDEX = 2;
     private static final int KEY_YEAR_WEIGHT_INDEX = 3;
-
+    private static final int NUM_WEIGHTS = 4;
 
 
     private static ParseUser currentUser;
@@ -102,7 +102,7 @@ public class MatchingUtils {
             ParseUser nearbyUser = nearUsers.get(i);
             double[] scoresArray = new double[0];
             try {
-                scoresArray = getSimilarityArray(nearbyUser);
+                scoresArray = calculateSimilarityArray(nearbyUser);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -122,7 +122,7 @@ public class MatchingUtils {
      * @param nearbyUser ParseUser to compare
      * @return double[] containing similarity score for each category
      */
-    private static double[] getSimilarityArray(ParseUser nearbyUser) throws JSONException {// if number of overlapping hours is 0, deduct score by a lot; and vice versa
+    private static double[] calculateSimilarityArray(ParseUser nearbyUser) throws JSONException {// if number of overlapping hours is 0, deduct score by a lot; and vice versa
         JSONArray preferenceWeights = ParseUser.getCurrentUser().getJSONArray(KEY_PREFERENCE_WEIGHTS);
 
         double distanceWeight = (double) preferenceWeights.getDouble(KEY_DISTANCE_WEIGHT_INDEX);
@@ -222,28 +222,46 @@ public class MatchingUtils {
 
     /**
      * Dynamically adjust weights after current user matches with a new user using Quick Match.
-     * Compares scores between current and matched User, then adjusts current user's weights dependent on
-     * recent match's difference from average.
+     * Compares scores between current and matched User, then adjusts current user's weights
+     * and updates current user's average hangout similarity scores dependent on
+     * recent match's deviation from average.
      *
      * @param matchedUser ParseUser that current user chose to hangout with.
      */
-    public static void adjustWeights(ParseUser matchedUser) {
-        double[] similarityScores = new double[0];
+    public static void adjustWeights(ParseUser matchedUser) throws JSONException {
+        double[] similarityScores = new double[NUM_WEIGHTS];
         try {
-            similarityScores = getSimilarityArray(matchedUser);
+            similarityScores = calculateSimilarityArray(matchedUser);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         JSONArray averageSimilarityScore = ParseUser.getCurrentUser().getJSONArray(KEY_AVERAGE_SIMILARITY_SCORES);
-        if (!averageSimilarityScore.equals(null)) {
+        JSONArray preferenceWeights = ParseUser.getCurrentUser().getJSONArray(KEY_PREFERENCE_WEIGHTS);
+
+        if (averageSimilarityScore != null && preferenceWeights != null) {
+            double[] updatedScores = new double[NUM_WEIGHTS];
+            double[] updatedWeights = new double[NUM_WEIGHTS];
             for (int i = 0; i < averageSimilarityScore.length(); i++) {
                 try {
-                    double difference = similarityScores[i] - averageSimilarityScore.getDouble(i);
+                    double averageScore = averageSimilarityScore.getDouble(i);
+                    double differenceScore = similarityScores[i] - averageScore;
+                    double updatedScore = averageScore + (differenceScore / averageScore);
+                    updatedScores[i] = updatedScore;
+                    double updatedWeight = preferenceWeights.getDouble(i) * (updatedScore / averageScore);
+                    updatedWeights[i] = updatedWeight;
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+            ParseUser.getCurrentUser().put(KEY_AVERAGE_SIMILARITY_SCORES,  new JSONArray(updatedScores));
+            ParseUser.getCurrentUser().put(KEY_PREFERENCE_WEIGHTS, new JSONArray(updatedWeights));
+            ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Log.d(TAG, "updated weights successfully");
+                }
+            });
         }
     }
 }
