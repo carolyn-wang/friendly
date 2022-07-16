@@ -14,7 +14,6 @@ public class DisplayUtils {
     private static final String TYPE_PARK = "park";
 
 
-
     /**
      * Get card color based off hangout's createdAt value
      *
@@ -28,33 +27,33 @@ public class DisplayUtils {
         return Color.parseColor(randomStr);
     }
 
-    public static String getEmojiByPlace(Place place) {
+    public static String getEmojiByPlace(Context mContext, Place place) {
         String category = place.getCategory();
         if (category == null) {
-            return getEmojiByUnicode(0x1F4CD);
+            return getEmojiByUnicode(mContext.getResources().getInteger(R.integer.pin_emoji));
         } else {
-            String emoji;
+            int emojiUnicode;
             switch (category) {
                 case TYPE_BAR:
-                    emoji = getEmojiByUnicode(0x1F37A);
+                    emojiUnicode = R.integer.bar_emoji;
                     break;
                 case TYPE_NOODLE:
-                    emoji = getEmojiByUnicode(0x1F35C);
+                    emojiUnicode = R.integer.noodle_emoji;
                     break;
                 case TYPE_TACO:
-                    emoji = getEmojiByUnicode(0x1F32E);
+                    emojiUnicode = R.integer.taco_emoji;
                     break;
                 case TYPE_MOVIE:
-                    emoji = getEmojiByUnicode(0x1F3AC);
+                    emojiUnicode = R.integer.movie_emoji;
                     break;
                 case TYPE_PARK:
-                    emoji = getEmojiByUnicode(0x1F333);
+                    emojiUnicode = R.integer.park_emoji;
                     break;
                 default:
-                    emoji = getEmojiByUnicode(0x1F4CD);
+                    emojiUnicode = R.integer.pin_emoji;
                     break;
             }
-            return emoji;
+            return getEmojiByUnicode(mContext.getResources().getInteger(emojiUnicode));
         }
     }
 

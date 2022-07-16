@@ -1,5 +1,6 @@
 package com.example.friendly.fragments;
 
+import android.app.SharedElementCallback;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.HangoutQuery;
@@ -23,6 +25,7 @@ import com.example.friendly.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,7 +99,6 @@ public class HangoutsFragment extends Fragment {
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
         setPullToRefresh();
         setScrollListener();
-
     }
 
     public static void hideProgressBar() {

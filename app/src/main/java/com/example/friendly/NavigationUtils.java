@@ -3,10 +3,14 @@ package com.example.friendly;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.transition.Transition;
+import androidx.transition.TransitionInflater;
 
 import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
@@ -14,14 +18,11 @@ import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutHistoryFragment;
-import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.fragments.match.QuickMatchDetailFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.example.friendly.objects.Hangout;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.google.android.material.transition.MaterialContainerTransform;
 
 public class NavigationUtils {
 
@@ -82,12 +83,23 @@ public class NavigationUtils {
      * @param hangout
      * @param fragmentManager
      */
-    public static void displayFragmentQuickMatchDetail(Hangout hangout, FragmentManager fragmentManager) {
+    public static void displayFragmentQuickMatchDetail(Context mContext, View view, Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = QuickMatchDetailFragment.newInstance(hangout);
+        setCardToDetailTransition(mContext, view, DisplayUtils.getCardColor(mContext, hangout), hangoutDetailFragment);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private static void setCardToDetailTransition(Context mContext, View view, int containerColor, Fragment fragment) {
+        MaterialContainerTransform enterTransition = new MaterialContainerTransform();
+        enterTransition.setStartView(view);
+        enterTransition.setEndView(((MainActivity) mContext).findViewById(R.id.vHangoutDetail));
+        enterTransition.setDuration(700);
+        enterTransition.setScrimColor(Color.TRANSPARENT);
+        enterTransition.setContainerColor(containerColor);
+        fragment.setEnterTransition(enterTransition);
     }
 
     public static void displayFragmentHangoutHistory(FragmentManager fragmentManager) {

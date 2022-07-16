@@ -1,5 +1,6 @@
 package com.example.friendly.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -103,7 +104,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Hangout hangout = hangouts.get(position);
-                            NavigationUtils.displayFragmentQuickMatchDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
+                            NavigationUtils.displayFragmentQuickMatchDetail(mContext, v, hangout, ((MainActivity) mContext).getSupportFragmentManager());
                         }
                     }
                 });
@@ -111,10 +112,9 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
             if (hangout.getLocation() != null) {
-                tvHangoutLocation.setText(DisplayUtils.getEmojiByPlace(hangout.getLocation()) + " " + hangout.getLocationName());
+                tvHangoutLocation.setText(DisplayUtils.getEmojiByPlace(mContext, hangout.getLocation()) + " " + hangout.getLocationName());
             }
             // TODO: move into child classes
-
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
         }
     }
