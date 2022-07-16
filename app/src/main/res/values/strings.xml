@@ -53,5 +53,6 @@
     <string name="question2">What are your hobbies?</string>
     <string name="question3">What are your preferences for hangout activites?</string>
     <string name="question4">When are you generally avaliable?</string>
+    <string name="join_quick_match_btn">Join Hangout</string>
 
 </resources>

@@ -14,13 +14,10 @@ import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutsFragment;
-import com.example.friendly.fragments.match.CreateQuickMatchFragment;
-import com.example.friendly.fragments.MapFragment;
+import com.example.friendly.fragments.match.QuickMatchDetailFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.example.friendly.objects.Hangout;
-import com.google.android.gms.maps.MapView;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,9 +78,24 @@ public class NavigationUtils {
      */
     public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment hangoutDetailFragment = new HangoutDetailFragment().newInstance(hangout);
+        Fragment hangoutDetailFragment = HangoutDetailFragment.newInstance(hangout);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
     }
+
+    /**
+     * Show Hangout Detail fragment for setting up quick match
+     *
+     * @param hangout
+     * @param fragmentManager
+     */
+    public static void displayFragmentQuickMatchDetail(Hangout hangout, FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment hangoutDetailFragment = QuickMatchDetailFragment.newInstance(hangout);
+        ft.replace(R.id.flContainer, hangoutDetailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }
