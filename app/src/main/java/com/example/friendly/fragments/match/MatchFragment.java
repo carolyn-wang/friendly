@@ -76,7 +76,7 @@ public class MatchFragment extends Fragment {
                             .commit();
                 }
             });
-            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
 
             ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
             Fragment upcomingHangoutsFragment = HangoutsFragment.newInstance(conditions);
