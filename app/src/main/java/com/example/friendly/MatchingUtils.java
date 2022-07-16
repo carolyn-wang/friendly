@@ -26,7 +26,7 @@ public class MatchingUtils {
     private static final String KEY_YEAR_PREFERENCE = "yearPreference";
     private static final String KEY_ACTIVITY_PREFERENCE = "activityPreference";
     private static final int USER_QUERY_LIMIT = 13;
-    private static final double MAX_DISTANCE_RADIANS = 0.5;
+    private static final double MAX_DISTANCE_MILES = 3.0;
     private static final int YEAR_OPTIONS_LENGTH = 5;
     private static final String KEY_PREFERENCE_WEIGHTS = "preferenceWeights";
     private static final String KEY_AVERAGE_SIMILARITY_SCORES = "averageSimilarityScores";
@@ -35,10 +35,6 @@ public class MatchingUtils {
     private static final int KEY_HOBBY_WEIGHT_INDEX = 2;
     private static final int KEY_YEAR_WEIGHT_INDEX = 3;
     private static final int NUM_WEIGHTS = 4;
-
-
-    private static ParseUser currentUser;
-    private static ParseGeoPoint currentLocation;
 
     // TODO: fix nearby queries
 
@@ -75,9 +71,6 @@ public class MatchingUtils {
 
         int overlapHours = findIntersection(arr1, arr2);
 
-        currentUser = ParseUser.getCurrentUser();
-        currentLocation = currentUser.getParseGeoPoint(KEY_LOCATION);
-
         return getSortedMatches().values();
     }
 
@@ -85,10 +78,10 @@ public class MatchingUtils {
     public static Map<Double, ParseUser> getSortedMatches() {
         // TODO: move places query to separate file
         Map<Double, ParseUser> topMatches = new TreeMap<>();
-
         ParseQuery<ParseUser> query = ParseUser.getQuery();
+        ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_LOCATION);
         query.whereNear(KEY_LOCATION, currentLocation);
-        query.whereWithinRadians(KEY_LOCATION, currentLocation, MAX_DISTANCE_RADIANS);
+        query.whereWithinMiles(KEY_LOCATION, currentLocation, MAX_DISTANCE_MILES);
         query.setLimit(USER_QUERY_LIMIT); // out of 12 other nearest users
 
         List<ParseUser> nearUsers = null;
@@ -124,12 +117,12 @@ public class MatchingUtils {
      */
     private static double[] calculateSimilarityArray(ParseUser nearbyUser) throws JSONException {// if number of overlapping hours is 0, deduct score by a lot; and vice versa
         JSONArray preferenceWeights = ParseUser.getCurrentUser().getJSONArray(KEY_PREFERENCE_WEIGHTS);
-
+        ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_LOCATION);
         double distanceWeight = (double) preferenceWeights.getDouble(KEY_DISTANCE_WEIGHT_INDEX);
         double activityWeight = (double) preferenceWeights.getDouble(KEY_ACTIVITY_WEIGHT_INDEX);
         double hobbyWeight = (double) preferenceWeights.getDouble(KEY_HOBBY_WEIGHT_INDEX);
         double yearWeight = (double) preferenceWeights.getDouble(KEY_YEAR_WEIGHT_INDEX);
-        double distanceScore = currentLocation.distanceInKilometersTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
+        double distanceScore = MAX_DISTANCE_MILES - currentLocation.distanceInMilesTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
         double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
@@ -154,7 +147,7 @@ public class MatchingUtils {
      * @return double number of overlapping preferences
      */
     private static double getArraySimilarityScore(ParseUser nearbyUser, String listKey) {
-        JSONArray currentUserList = currentUser.getJSONArray(listKey);
+        JSONArray currentUserList = ParseUser.getCurrentUser().getJSONArray(listKey);
         JSONArray nearbyUserList = nearbyUser.getJSONArray(listKey);
         int score = 0;
         for (int i = 0; i < currentUserList.length(); i++) {
@@ -179,7 +172,7 @@ public class MatchingUtils {
      * @return double difference between two users' integer values
      */
     private static double getIntSimilarityScore(ParseUser nearbyUser, String listKey, int lenArray) {
-        int currentUserInt = currentUser.getInt(listKey);
+        int currentUserInt = ParseUser.getCurrentUser().getInt(listKey);
         int nearbyUserInt = nearbyUser.getInt(listKey);
         return (double) (lenArray - Math.abs(currentUserInt - nearbyUserInt)) / lenArray;
     }
