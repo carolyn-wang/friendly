@@ -51,16 +51,6 @@ public class MatchingUtils {
      * @return Set of optimal users to hangout with
      */
     public static Collection<ParseUser> getMatches() {
-
-        // hard coded arrays for testing purposes
-        int arr1[][] = {{0, 4}, {5, 10},
-                {13, 20}, {24, 25}};
-
-        int arr2[][] = {{1, 5}, {8, 12},
-                {15, 24}, {25, 26}};
-
-        int overlapHours = findIntersection(arr1, arr2);
-
         return getSortedMatches().values();
     }
 
@@ -165,6 +155,19 @@ public class MatchingUtils {
         int currentUserInt = ParseUser.getCurrentUser().getInt(listKey);
         int nearbyUserInt = nearbyUser.getInt(listKey);
         return (double) (lenArray - Math.abs(currentUserInt - nearbyUserInt)) / lenArray;
+    }
+
+
+    private static double getAvailabilitySimilarityScore(){
+        // hard coded arrays for testing purposes
+        int arr1[][] = {{0, 4}, {5, 10},
+                {13, 20}, {24, 25}};
+
+        int arr2[][] = {{1, 5}, {8, 12},
+                {15, 24}, {25, 26}};
+
+        int overlapHours = findIntersection(arr1, arr2);
+        return (double) overlapHours;
     }
 
 

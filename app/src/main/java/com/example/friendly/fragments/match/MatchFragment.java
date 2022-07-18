@@ -34,9 +34,6 @@ public class MatchFragment extends Fragment {
     private Button btnLongHangout;
     private Button btnMap;
 
-    private RecyclerView rvHangouts;
-    protected HangoutsAdapter adapter;
-    protected List<Hangout> allHangouts;
     public MatchFragment(){
 
     }
@@ -84,10 +81,8 @@ public class MatchFragment extends Fragment {
                         .commit();
             }
         });
-        FragmentManager fm = getChildFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 
-        fm.beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
         Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.hangoutDetail, hangoutDetailFragment);
