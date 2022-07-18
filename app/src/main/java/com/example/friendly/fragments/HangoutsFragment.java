@@ -1,8 +1,11 @@
 package com.example.friendly.fragments;
 
-import android.app.SharedElementCallback;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,21 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
-import com.example.friendly.activities.MainActivity;
-import com.example.friendly.objects.Hangout;
-import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.HangoutQuery;
 import com.example.friendly.R;
+import com.example.friendly.adapters.HangoutsAdapter;
+import com.example.friendly.objects.Hangout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.

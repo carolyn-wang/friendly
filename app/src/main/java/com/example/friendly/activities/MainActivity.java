@@ -16,6 +16,7 @@ import com.example.friendly.R;
 import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.fragments.ProfileFragment;
 import com.example.friendly.fragments.SearchFragment;
+import com.example.friendly.fragments.match.CreateQuickMatchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new MapFragment();
                         break;
                     case R.id.create:
-                        fragment = new MatchFragment();
+                        fragment = new CreateQuickMatchFragment();
                         break;
                     default: return true;
                 }

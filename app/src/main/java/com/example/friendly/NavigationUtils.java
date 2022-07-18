@@ -9,8 +9,6 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.transition.Transition;
-import androidx.transition.TransitionInflater;
 
 import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
@@ -86,13 +84,13 @@ public class NavigationUtils {
     public static void displayFragmentQuickMatchDetail(Context mContext, View view, Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = QuickMatchDetailFragment.newInstance(hangout);
-        setCardToDetailTransition(mContext, view, DisplayUtils.getCardColor(mContext, hangout), hangoutDetailFragment);
+        setCardTransition(mContext, view, DisplayUtils.getCardColor(mContext, hangout), hangoutDetailFragment);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
-    private static void setCardToDetailTransition(Context mContext, View view, int containerColor, Fragment fragment) {
+    private static void setCardTransition(Context mContext, View view, int containerColor, Fragment fragment) {
         MaterialContainerTransform enterTransition = new MaterialContainerTransform();
         enterTransition.setStartView(view);
         enterTransition.setEndView(((MainActivity) mContext).findViewById(R.id.vHangoutDetail));
