@@ -48,11 +48,11 @@ public class PreferencesActivity extends AppCompatActivity {
 
         scrollCounter = 0;
         allPreferences = Arrays.asList(
-                new Preference(KEY_PREFERENCE0, this.getString(R.string.question0), this.getResources().getStringArray(R.array.option0)),
-                new Preference(KEY_PREFERENCE1, this.getString(R.string.question1), this.getResources().getStringArray(R.array.option1)),
-                new Preference(KEY_PREFERENCE2, this.getString(R.string.question2), this.getResources().getStringArray(R.array.option2)),
-                new Preference(KEY_PREFERENCE3, this.getString(R.string.question3), this.getResources().getStringArray(R.array.option3)),
-                new Preference(KEY_PREFERENCE4, this.getString(R.string.question4), this.getResources().getStringArray(R.array.option4)));
+                new Preference(KEY_PREFERENCE0, getString(R.string.question0), getResources().getStringArray(R.array.option0)),
+                new Preference(KEY_PREFERENCE1, getString(R.string.question1), getResources().getStringArray(R.array.option1)),
+                new Preference(KEY_PREFERENCE2, getString(R.string.question2), getResources().getStringArray(R.array.option2)),
+                new Preference(KEY_PREFERENCE3, getString(R.string.question3), getResources().getStringArray(R.array.option3)),
+                new Preference(KEY_PREFERENCE4, getString(R.string.question4), getResources().getStringArray(R.array.option4)));
         preferenceKeys = new ArrayList<>();
         for (Preference preference: allPreferences){
             preferenceKeys.add(preference.getParseKey());

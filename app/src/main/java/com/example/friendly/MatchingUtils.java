@@ -36,16 +36,6 @@ public class MatchingUtils {
     private static final int KEY_YEAR_WEIGHT_INDEX = 3;
     private static final int NUM_WEIGHTS = 4;
 
-    // TODO: fix nearby queries
-
-/*
-    - can take into account hangout history?
-    - dynamically weigh?
-
-    - Elo matching (Tinder)
-    - bucket sorting (TikTok) -- gives you buckets of videos
-     */
-
     /**
      * Matching algorithm that retrieves best user matches for current user based on:
      * - location (user must be within certain radius)
