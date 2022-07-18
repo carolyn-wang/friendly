@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
-        android:title="Search"
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_search"/>
+        android:title="@string/search_title"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/search"/>
     <item
         android:id="@+id/action_match"
-        android:title="Match"
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_edit"/>
+        android:title="@string/match_title"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/home"/>
     <item
         android:id="@+id/action_profile"
-        android:title="Profile"
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_input_add"/>
+        android:title="@string/profile_title"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/person_outline"/>
 </menu>

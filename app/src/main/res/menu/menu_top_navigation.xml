@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/edit"
-        android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="edit"
-        android:contentDescription="search"
-        app:showAsAction="never" />
-
+        android:id="@+id/map"
+        android:contentDescription="@string/map"
+        android:icon="@drawable/map"
+        android:title="@string/map"
+        app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/favorite"
+        android:id="@+id/create"
+        android:contentDescription="@string/create_hangout"
         android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="favorite"
-        android:contentDescription="favorite"
+        android:title="@string/create_hangout"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/more"
-        android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="more"
-        android:contentDescription="more"
-        app:showAsAction="never" />
-
 </menu>

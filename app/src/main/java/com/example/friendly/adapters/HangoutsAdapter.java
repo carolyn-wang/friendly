@@ -80,7 +80,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
             tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
-            cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
+            cdHangout = itemView.findViewById(R.id.cdHangout);
         }
 
         public void bind(Hangout hangout) {
@@ -108,11 +108,14 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                         }
                     }
                 });
+                tvHangoutUser2.setText("");
             }
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
             if (hangout.getLocation() != null) {
                 tvHangoutLocation.setText(DisplayUtils.getEmojiByPlace(mContext, hangout.getLocation()) + " " + hangout.getLocationName());
+            }else{
+                tvHangoutLocation.setText("");
             }
             // TODO: move into child classes
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));

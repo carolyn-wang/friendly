@@ -31,56 +31,44 @@ public class MatchFragment extends Fragment {
     private Button btnMap;
 
     public MatchFragment() {
-        }
 
-        @Override
-        public View onCreateView (LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState){
-            return inflater.inflate(R.layout.fragment_match, container, false);
-        }
-
-
-        @Override
-        public void onViewCreated (@NonNull View view, @Nullable Bundle savedInstanceState){
-            super.onViewCreated(view, savedInstanceState);
-
-            mContext = view.getContext();
-
-            btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
-            btnLongHangout = view.findViewById(R.id.btnLongHangout);
-            btnMap = view.findViewById(R.id.btnMap);
-
-            btnQuickHangout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NavigationUtils.displayFragmentQuickMatch(((MainActivity) mContext).getSupportFragmentManager());
-                }
-            });
-
-            btnLongHangout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NavigationUtils.displayFragmentLongMatch(((MainActivity) mContext).getSupportFragmentManager());
-                }
-            });
-
-            btnMap.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    FragmentManager fragmentManager = ((MainActivity) mContext).getSupportFragmentManager();
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    MapFragment mapFragment = new MapFragment();
-                    ft.replace(R.id.flContainer, mapFragment)
-                            .addToBackStack("map")
-                            .commit();
-                }
-            });
-            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-
-            ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
-            Fragment upcomingHangoutsFragment = HangoutsFragment.newInstance(conditions);
-            ft.add(R.id.upcomingHangouts, upcomingHangoutsFragment).commit();
-
-        }
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_match, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mContext = view.getContext();
+
+        btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
+        btnLongHangout = view.findViewById(R.id.btnLongHangout);
+
+        btnQuickHangout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.displayFragmentQuickMatch(((MainActivity) mContext).getSupportFragmentManager());
+            }
+        });
+
+        btnLongHangout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.displayFragmentLongMatch(((MainActivity) mContext).getSupportFragmentManager());
+            }
+        });
+
+        FragmentManager fm = getParentFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
+        ft.add(R.id.upcomingHangouts, HangoutsFragment.newInstance(conditions));
+        ft.commit();
+
+    }
+}
