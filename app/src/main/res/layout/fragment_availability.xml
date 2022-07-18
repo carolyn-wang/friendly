@@ -7,8 +7,6 @@
 
     <TableRow
         android:id="@+id/row1"
-        android:clickable="true"
-        android:onClick="clickHandlerCell"
         >
         <TextView
             android:layout_column="1"
@@ -20,7 +18,9 @@
             android:padding="3dip" />
     </TableRow>
 
-    <TableRow>
+    <TableRow
+        android:id="@+id/row2"
+        >
         <TextView
             android:layout_column="1"
             android:text="Save..."
@@ -31,7 +31,9 @@
             android:padding="3dip" />
     </TableRow>
 
-    <TableRow>
+    <TableRow
+        android:id="@+id/row3"
+        >
         <TextView
             android:layout_column="1"
             android:text="Save As..."
@@ -46,7 +48,9 @@
         android:layout_height="2dip"
         android:background="#FF909090" />
 
-    <TableRow>
+    <TableRow
+        android:id="@+id/row4"
+        >
         <TextView
             android:text="X"
             android:padding="3dip" />
