@@ -20,7 +20,7 @@ import java.util.stream.DoubleStream;
 
 public class MatchingUtils {
     private static final String TAG = "MatchingUtils";
-    private static final String KEY_LOCATION = "Location";
+    private static final String KEY_LOCATION = "location";
     private static final String KEY_SIMILARITY_PREFERENCE = "similarityPreference";
     private static final String KEY_HOBBY_PREFERENCE = "hobbyPreference";
     private static final String KEY_YEAR_PREFERENCE = "yearPreference";
@@ -106,7 +106,7 @@ public class MatchingUtils {
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
         double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
-        Log.i(TAG, "distance: " + distanceScore
+        Log.d(TAG, "distance: " + distanceScore
                 + "; hobby: " + hobbyScore
                 + "; year: " + yearScore
                 + "; activity: " + activityScore);
@@ -132,8 +132,8 @@ public class MatchingUtils {
         int score = 0;
         for (int i = 0; i < currentUserList.length(); i++) {
             try {
-                assert nearbyUserList != null;
-                if (Objects.equals(currentUserList.getBoolean(i), nearbyUserList.getBoolean(i))) {
+                if ((nearbyUserList != null) &&
+                        Objects.equals(currentUserList.getBoolean(i), nearbyUserList.getBoolean(i))) {
                     score++;
                 }
             } catch (JSONException e) {
@@ -158,7 +158,7 @@ public class MatchingUtils {
     }
 
 
-    private static double getAvailabilitySimilarityScore(){
+    private static double getAvailabilitySimilarityScore() {
         // hard coded arrays for testing purposes
         int arr1[][] = {{0, 4}, {5, 10},
                 {13, 20}, {24, 25}};
@@ -182,7 +182,7 @@ public class MatchingUtils {
                                 int arr2[][]) {
         int totalHoursOverlap = 0;
 
-        // index1 and j pointers for arr1 and arr2 respectively
+        // index1 and index2 pointers for arr1 and arr2 respectively
         int index1 = 0, index2 = 0;
         int len1 = arr1.length, len2 = arr2.length;
 
@@ -240,7 +240,7 @@ public class MatchingUtils {
                     e.printStackTrace();
                 }
             }
-            ParseUser.getCurrentUser().put(KEY_AVERAGE_SIMILARITY_SCORES,  new JSONArray(updatedScores));
+            ParseUser.getCurrentUser().put(KEY_AVERAGE_SIMILARITY_SCORES, new JSONArray(updatedScores));
             ParseUser.getCurrentUser().put(KEY_PREFERENCE_WEIGHTS, new JSONArray(updatedWeights));
             ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                 @Override

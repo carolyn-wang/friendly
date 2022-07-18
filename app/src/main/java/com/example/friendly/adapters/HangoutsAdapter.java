@@ -90,14 +90,12 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            Hangout hangout = hangouts.get(position);
-                            NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
-                        }
+                        Hangout hangout = hangouts.get(position);
+                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
+
                     }
                 });
-            }
-            else{ // click listener for if RV is showing upcoming quick hangouts
+            } else { // click listener for if RV is showing upcoming quick hangouts
                 cdHangout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -119,6 +117,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
         }
     }
+
     // Clean all elements of the recycler
     public void clear() {
         hangouts.clear();
