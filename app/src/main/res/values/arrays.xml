@@ -45,4 +45,19 @@
         <item>9</item>
         <item>10</item>
     </string-array>
+
+    <integer-array name="default_weights">
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
+
+
+    <integer-array name="default_average_similarity">
+        <item>10</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
 </resources>

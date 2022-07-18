@@ -34,8 +34,6 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String KEY_LOCATION = "Location";
     private static final String KEY_PREFERENCE_WEIGHTS = "preferenceWeights";
     private static final String KEY_AVERAGE_SIMILARITY_SCORES = "averageSimilarityScores";
-    private static final double[] DEFAULT_WEIGHTS_ARRAY = new double[]{1.0, 1.0, 1.0, 1.0};
-    private static final double[] DEFAULT_AVERAGE_SIMILARITY = new double[]{10.0, 0.8, 1.0, 1.0};
 
     private EditText etFirstName;
     private EditText etLastName;
@@ -83,18 +81,17 @@ public class SignUpActivity extends AppCompatActivity {
         user.setPassword(password);
 
         // setting default values for database
-        int hobby_options_len = this.getResources().getStringArray(R.array.option2).length;
-        int activity_options_len = this.getResources().getStringArray(R.array.option3).length;
-        int availability_options_len = this.getResources().getStringArray(R.array.option4).length;
+        int hobby_options_len = getResources().getStringArray(R.array.option2).length;
+        int activity_options_len = getResources().getStringArray(R.array.option3).length;
+        int availability_options_len = getResources().getStringArray(R.array.option4).length;
         boolean[] hobbyArr = new boolean[hobby_options_len];
         boolean[] activityArr = new boolean[activity_options_len];
         boolean[] availabilityArr = new boolean[availability_options_len];
         user.put(KEY_HOBBY_PREFERENCE, new JSONArray(hobbyArr));
         user.put(KEY_ACTIVITY_PREFERENCE, new JSONArray(activityArr));
         user.put(KEY_AVAILABILITY_PREFERENCE, new JSONArray(availabilityArr));
-        user.put(KEY_PREFERENCE_WEIGHTS, new JSONArray(DEFAULT_WEIGHTS_ARRAY));
-        user.put(KEY_AVERAGE_SIMILARITY_SCORES, new JSONArray(DEFAULT_AVERAGE_SIMILARITY));
-
+        user.put(KEY_PREFERENCE_WEIGHTS, new JSONArray(getResources().getIntArray(R.array.default_weights)));
+        user.put(KEY_AVERAGE_SIMILARITY_SCORES, new JSONArray(getResources().getIntArray(R.array.default_average_similarity)));
         user.put(KEY_LOCATION, new ParseGeoPoint());
 
         user.signUpInBackground(new SignUpCallback() {
