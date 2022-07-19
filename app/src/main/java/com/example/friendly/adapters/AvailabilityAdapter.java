@@ -3,6 +3,7 @@ package com.example.friendly.adapters;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -66,9 +67,16 @@ public class AvailabilityAdapter extends BaseAdapter {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             ClipData data = ClipData.newPlainText("", "");
-            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-            view.startDragAndDrop(data, shadowBuilder, view, 0);
+            view.startDragAndDrop(data, new EmptyDragShadowBuilder(), view, 0);
             return true;
+        }
+    }
+
+    public static class EmptyDragShadowBuilder extends View.DragShadowBuilder {
+        @Override
+        public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
+            outShadowSize.set(1,1);
+            outShadowTouchPoint.set(0,0);
         }
     }
 
