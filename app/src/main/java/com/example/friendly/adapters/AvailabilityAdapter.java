@@ -111,20 +111,4 @@ public class AvailabilityAdapter extends BaseAdapter {
 
         }
     }
-
-    /**
-     * Invert color and availability for given time slot.
-     *
-     * @param view Row that was just selected.
-     */
-    private void changeAvailability(View view) {
-        int rowIndex = 0;
-//        int rowIndex = availabilityGrid.indexOfChild(view);
-        availability[rowIndex] = !availability[rowIndex];
-        if (availability[rowIndex]) {
-            view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
-        } else {
-            view.setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
 }

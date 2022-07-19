@@ -3,8 +3,7 @@
     android:id="@+id/availabilityGrid"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:columnWidth="100dp"
-    android:stretchMode="columnWidth"
-    android:numColumns="auto_fit"
     android:gravity="center"
-    />
+    android:horizontalSpacing="6dp"
+    android:numColumns="2"
+    android:verticalSpacing="6dp" />

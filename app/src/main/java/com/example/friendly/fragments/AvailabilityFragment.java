@@ -26,6 +26,7 @@ public class AvailabilityFragment extends Fragment {
     private GridView availabilityGrid;
 
 
+
     public AvailabilityFragment() {
     }
 
@@ -44,8 +45,10 @@ public class AvailabilityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         availabilityGrid = view.findViewById(R.id.availabilityGrid);
+
         AvailabilityAdapter adapter = new AvailabilityAdapter(getContext());
         availabilityGrid.setAdapter(adapter);
+
     }
 
 }
