@@ -9,11 +9,26 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.TextView;
+
+import com.example.friendly.R;
 
 public class AvailabilityAdapter extends BaseAdapter {
     private Context mContext;
+    private boolean[] availability = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false,
+            false, false, false, false, false, false,
+            false, false, false, false, false};
     private static final String TAG = "AvailabilityAdapter";
+    String[] timesArray = {"9 AM - 9:30 AM", "9:30 AM - 10 AM ", "10 AM - 10:30 AM", "10:30 AM - 11 AM",
+            "11 AM - 11:30 AM", "11:30 AM - 12 PM ", "12 PM - 12:30 PM", "12:30 PM - 1 PM",
+            "1 PM - 1:30 PM", "1:30 PM - 2 PM", "2 PM - 2:30 PM", "2:30 PM - 3 PM",
+            "3 PM - 3:30 PM", "3:30 PM - 4 PM", "4 PM - 4:30 PM", "4:30 PM - 5 PM",
+            "5 PM - 5:30 PM", "5:30 PM - 6 PM",
+            "1 PM - 2 PM", "2 PM - 3 PM", "3 PM - 4 PM", "4 PM - 5 PM", "5 PM - 6 PM", "6 PM - 7 PM",
+            "7 PM - 8 PM", "8 PM - 9 PM", "9 PM - 10 PM", "10 PM - 11 PM", "11 PM - 12 AM"
+    };
 
     public AvailabilityAdapter(Context context) {
         mContext = context;
@@ -37,28 +52,15 @@ public class AvailabilityAdapter extends BaseAdapter {
 
         if (convertView == null) {
             view = new TextView(mContext);
+            //            view.setLayoutParams(new GridView.LayoutParams(150, 85));
             view.setOnTouchListener(new GridTouchListener());
-//            view.setLayoutParams(new GridView.LayoutParams(150, 85));
-
-
             view.setOnDragListener(new GridDragListener());
-        }
-        else
-        {
+        } else {
             view = (TextView) convertView;
         }
         view.setText(timesArray[position]);
         return view;
     }
-
-    String[] timesArray = {"9 AM - 9:30 AM", "9:30 AM - 10 AM ", "10 AM - 10:30 AM", "10:30 AM - 11 AM",
-            "11 AM - 11:30 AM", "11:30 AM - 12 PM ", "12 PM - 12:30 PM", "12:30 PM - 1 PM",
-            "1 PM - 1:30 PM", "1:30 PM - 2 PM","2 PM - 2:30 PM", "2:30 PM - 3 PM",
-            "3 PM - 3:30 PM", "3:30 PM - 4 PM",  "4 PM - 4:30 PM", "4:30 PM - 5 PM",
-            "5 PM - 5:30 PM", "5:30 PM - 6 PM",
-            "1 PM - 2 PM", "2 PM - 3 PM", "3 PM - 4 PM", "4 PM - 5 PM", "5 PM - 6 PM", "6 PM - 7 PM",
-            "7 PM - 8 PM", "8 PM - 9 PM", "9 PM - 10 PM", "10 PM - 11 PM", "11 PM - 12 AM"
-    };
 
     private static final class GridTouchListener implements View.OnTouchListener {
         @Override
@@ -78,27 +80,51 @@ public class AvailabilityAdapter extends BaseAdapter {
             final int action = event.getAction();
             switch (action) {
                 case DragEvent.ACTION_DRAG_STARTED:
-                    Log.i(TAG, "drag started **");
                     return true;
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    Log.i(TAG, "drag entered");
-                    view.setBackgroundColor(Color.GREEN);
+                    if (view.isActivated()) {
+                        view.setBackgroundColor(Color.TRANSPARENT);
+                    } else {
+                        view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
+                    }
                     return true;
                 case DragEvent.ACTION_DRAG_EXITED:
-                    Log.i(TAG, "drag exited");
-                    view.setBackgroundColor(Color.BLUE);
-                    view.invalidate();
+                    if (view.isActivated()) {
+                        view.setBackgroundColor(Color.TRANSPARENT);
+                        view.setActivated(false);
+                    } else {
+                        view.setActivated(true);
+                        view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
+                    }
                     return true;
                 case DragEvent.ACTION_DROP:
-                case DragEvent.ACTION_DRAG_ENDED:
-
-                    view.setBackgroundColor(Color.YELLOW);
+                    if (view.isActivated()) {
+                        view.setActivated(false);
+                    } else {
+                        view.setActivated(true);
+                    }
                     return true;
                 default:
                     break;
             }
             return false;
 
+        }
+    }
+
+    /**
+     * Invert color and availability for given time slot.
+     *
+     * @param view Row that was just selected.
+     */
+    private void changeAvailability(View view) {
+        int rowIndex = 0;
+//        int rowIndex = availabilityGrid.indexOfChild(view);
+        availability[rowIndex] = !availability[rowIndex];
+        if (availability[rowIndex]) {
+            view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
+        } else {
+            view.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 }
