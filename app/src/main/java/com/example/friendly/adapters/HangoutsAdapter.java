@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.DisplayUtils;
@@ -84,6 +85,27 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser1.setText(hangout.getUser1().getUsername());
             if (hangout.getUser2() != null) {
                 tvHangoutUser2.setText(hangout.getUser2().getUsername());
+                // click listener to open DetailFragment for hangout, only if no User 2 (is quick match)
+                cdHangout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getAdapterPosition();
+                        Hangout hangout = hangouts.get(position);
+                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
+
+                    }
+                });
+            } else { // click listener for if RV is showing upcoming quick hangouts
+                cdHangout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Hangout hangout = hangouts.get(position);
+                            NavigationUtils.displayFragmentQuickMatchDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
+                        }
+                    }
+                });
             }
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
@@ -91,22 +113,11 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                 tvHangoutLocation.setText(hangout.getLocationName());
             }
             // TODO: move into child classes
-            // click listener to open DetailFragment for hangout
-            cdHangout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Hangout hangout = hangouts.get(position);
-                        Log.i(TAG, hangout.getUser1().getUsername());
-                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
-                    }
-                }
-            });
+
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
         }
-
     }
+
     // Clean all elements of the recycler
     public void clear() {
         hangouts.clear();

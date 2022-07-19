@@ -1,9 +1,7 @@
 package com.example.friendly.fragments.match;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,9 +34,6 @@ public class MatchFragment extends Fragment {
     private Button btnLongHangout;
     private Button btnMap;
 
-    private RecyclerView rvHangouts;
-    protected HangoutsAdapter adapter;
-    protected List<Hangout> allHangouts;
     public MatchFragment(){
 
     }
@@ -87,13 +81,11 @@ public class MatchFragment extends Fragment {
                         .commit();
             }
         });
-        FragmentManager fm = getChildFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 
-        fm.beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
-        Fragment fragTwo = HangoutsFragment.newInstance(conditions);
-        ft.add(R.id.matchHangoutHistory, fragTwo);
+        Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
+        ft.add(R.id.hangoutDetail, hangoutDetailFragment);
         ft.commit();
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="option0">
+        <item>Year 1</item>
+        <item>Year 2</item>
+        <item>Year 3</item>
+        <item>Year 4</item>
+        <item>Year 5 (Masters/Postgrad)</item>
+    </string-array>
+    <string-array name="option1">
+        <item>Very similar</item>
+        <item>Somewhat similar</item>
+        <item>Neutral (either works)</item>
+        <item>Somewhat Different</item>
+        <item>Very Different</item>
+    </string-array>
+    <string-array name="option2">
+        <item>gaming</item>
+        <item>reading</item>
+        <item>hiking</item>
+        <item>gym</item>
+        <item>art</item>
+        <item>music</item>
+        <item>anime</item>
+        <item>sports</item>
+        <item>politics</item>
+    </string-array>
+    <string-array name="option3">
+        <item>tacos</item>
+        <item>bar</item>
+        <item>hiking</item>
+        <item>boba</item>
+        <item>donuts</item>
+    </string-array>
+    <string-array name="option4">
+        <item>12 AM - 1 PM</item>
+        <item>1 PM - 2 PM</item>
+        <item>2 PM - 3 PM</item>
+        <item>3 PM - 4 PM</item>
+        <item>4 PM - 5 PM</item>
+        <item>5 PM - 6 PM</item>
+        <item>6 PM - 7 PM</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <integer-array name="default_weights">
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
+
+
+    <integer-array name="default_average_similarity">
+        <item>10</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
+</resources>

@@ -56,8 +56,7 @@ public class QuickMatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-                ft.replace(R.id.flContainer, new CreateQuickMatchFragment());
-                ft.commit();
+                ft.replace(R.id.flContainer, new CreateQuickMatchFragment()).commit();
             }
         });
     }
