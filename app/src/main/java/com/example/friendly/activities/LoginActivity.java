@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if (username.equals("") || password.equals("")) {
-                    Toast.makeText(mContext, "Need to fill out username or password", Toast.LENGTH_SHORT).show();
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(mContext, R.string.login_null_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 loginUser(username, password);
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
                     NavigationUtils.goMainActivity(LoginActivity.this);
-                    Toast.makeText(mContext, "Login Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.login_success, Toast.LENGTH_SHORT).show();
                 } else {
                     Log.e(TAG, "Issue with login", e);
                 }

@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.friendly.fragments.HangoutsFragment;
-import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
@@ -66,7 +65,7 @@ public class MatchFragment extends Fragment {
 
         FragmentManager fm = getParentFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.query_key_future), getString(R.string.query_key_current_user)));
         ft.add(R.id.upcomingHangouts, HangoutsFragment.newInstance(conditions));
         ft.commit();
 

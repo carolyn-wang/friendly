@@ -2,6 +2,7 @@ package com.example.friendly.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -57,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.create:
                         fragment = new CreateQuickMatchFragment();
                         break;
-                    default: return true;
+                    default:
+                        Log.d(TAG, "Unable to create fragment");
+                        return true;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
                 return true;

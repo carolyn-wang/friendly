@@ -29,10 +29,10 @@ public class DisplayUtils {
 
     public static String getEmojiByPlace(Context mContext, Place place) {
         String category = place.getCategory();
+        int emojiUnicode;
         if (category == null) {
-            return getEmojiByUnicode(mContext.getResources().getInteger(R.integer.pin_emoji));
+            emojiUnicode = R.integer.pin_emoji;
         } else {
-            int emojiUnicode;
             switch (category) {
                 case TYPE_BAR:
                     emojiUnicode = R.integer.bar_emoji;
@@ -53,8 +53,8 @@ public class DisplayUtils {
                     emojiUnicode = R.integer.pin_emoji;
                     break;
             }
-            return getEmojiByUnicode(mContext.getResources().getInteger(emojiUnicode));
         }
+        return getEmojiByUnicode(mContext.getResources().getInteger(emojiUnicode));
     }
 
     public static String getEmojiByUnicode(int unicode) {

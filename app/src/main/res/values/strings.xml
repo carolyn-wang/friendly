@@ -48,6 +48,7 @@
     <string name="btn_create_quick">Create Hangout</string>
     <string name="match_description">Hangouts within the next 48 hours</string>
     <string name="showClosestUser">We found the closest user from you! It\'s %s. \n You are .%2f miles from this user.</string>
+    <string name="showClosestPlace">We found the closest place from you! It\'s %s. \n You are .%2f miles from this place.</string>
     <string name="hangout_history_title">Hangout History</string>
 
     <string name="question0">What year are you in?</string>
@@ -60,5 +61,13 @@
     <string name="search_title">Search</string>
     <string name="map">Map</string>
     <string name="create_hangout">Create Hangout</string>
+    <string name="login_null_error">Need to fill out username or password</string>
+    <string name="login_success">Login Success</string>
+    <string name="map_error_location">Can\'t access user\'s current location from database</string>
+    <string name="map_error_save">Can\'t save user\'s current location</string>
+    <string name="query_key_future">future</string>
+    <string name="query_key_current_user">user</string>
+    <string name="query_key_past">past</string>
+    <string name="query_key_quick">quick</string>
 
 </resources>

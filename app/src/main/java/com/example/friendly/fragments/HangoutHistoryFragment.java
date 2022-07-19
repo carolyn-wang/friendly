@@ -41,7 +41,7 @@ public class HangoutHistoryFragment extends Fragment {
         FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         // TODO: put "past", "user", "first name" all in a strings constant file
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("past", "user"));
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.query_key_past), getString(R.string.query_key_current_user)));
         ft.replace(R.id.rvHangoutHistory, HangoutsFragment.newInstance(conditions))
                 .addToBackStack(null)
                 .commit();

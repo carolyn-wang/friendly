@@ -2,24 +2,18 @@ package com.example.friendly.fragments.match;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
-import com.example.friendly.activities.MainActivity;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +41,7 @@ public class QuickMatchFragment extends Fragment {
 
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
 
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "quick"));
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getResources().getString(R.string.query_key_future), getString(R.string.query_key_quick)));
         Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.quickMatchHangouts, hangoutDetailFragment);
         ft.commit();

@@ -94,7 +94,6 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                         int position = getAdapterPosition();
                         Hangout hangout = hangouts.get(position);
                         NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
-
                     }
                 });
             } else { // click listener for if RV is showing upcoming quick hangouts
@@ -112,12 +111,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             }
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
-            if (hangout.getLocation() != null) {
-                tvHangoutLocation.setText(DisplayUtils.getEmojiByPlace(mContext, hangout.getLocation()) + " " + hangout.getLocationName());
-            }else{
-                tvHangoutLocation.setText("");
-            }
-            // TODO: move into child classes
+            tvHangoutLocation.setText(hangout.getLocation() != null ? DisplayUtils.getEmojiByPlace(mContext, hangout.getLocation()) + " " + hangout.getLocationName() : "");
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
         }
     }
