@@ -75,4 +75,12 @@
     <string name="quick_match_success">Hangout Created!</string>
     <string name="login_error">Issue with login</string>
 
+    <string name="btn_th">Th</string>
+    <string name="btn_F">F</string>
+    <string name="btn_Sa">Sa</string>
+    <string name="btn_Su">Su</string>
+    <string name="btn_m">M</string>
+    <string name="btn_tu">Tu</string>
+    <string name="btn_w">W</string>
+
 </resources>

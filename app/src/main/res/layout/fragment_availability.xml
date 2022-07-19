@@ -1,9 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/availabilityGrid"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:horizontalSpacing="6dp"
-    android:numColumns="2"
-    android:verticalSpacing="6dp" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnM"
+        style="@style/CircularButton"
+        android:text="@string/btn_m"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnTu"/>
+
+    <Button
+        android:id="@+id/btnTu"
+        style="@style/CircularButton"
+        android:text="@string/btn_tu"
+        app:layout_constraintLeft_toRightOf="@id/btnM"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnW"
+        />
+
+    <Button
+        android:id="@+id/btnW"
+        style="@style/CircularButton"
+        android:text="@string/btn_w"
+        app:layout_constraintLeft_toRightOf="@id/btnTu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnTh"/>
+
+
+    <Button
+        android:id="@+id/btnTh"
+        style="@style/CircularButton"
+        android:text="@string/btn_th"
+        app:layout_constraintLeft_toRightOf="@id/btnW"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnF"/>
+
+
+    <Button
+        android:id="@+id/btnF"
+        style="@style/CircularButton"
+        android:text="@string/btn_F"
+        app:layout_constraintLeft_toRightOf="@id/btnTh"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnSa"/>
+
+    <Button
+        android:id="@+id/btnSa"
+        style="@style/CircularButton"
+        android:text="@string/btn_Sa"
+        app:layout_constraintLeft_toRightOf="@id/btnF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnSu"/>
+    <Button
+        android:id="@+id/btnSu"
+        style="@style/CircularButton"
+        android:text="@string/btn_Su"
+        app:layout_constraintLeft_toRightOf="@id/btnSa"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/btnM"-->
+<!--        android:id="@+id/flAvailability"/>-->
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

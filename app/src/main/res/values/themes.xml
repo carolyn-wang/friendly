@@ -21,8 +21,7 @@
     <style name="TitleFont">
         <item name="android:fontFamily">@font/nunito_sans_semibold</item>
         <item name="android:textColor">@android:color/darker_gray</item>
-        <item name="android:fontWeight">800</item>
-        <item name="android:paddingBottom">@dimen/paddingMedium</item>
+=        <item name="android:paddingBottom">@dimen/paddingMedium</item>
     </style>
 
     <style name="TitleFont.Big">
@@ -38,4 +37,22 @@
     <dimen name="fontSizeBig">25dp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
 
+    <style name="CardView.Poll" parent="CardView">
+        <item name="android:layout_margin">@dimen/poll_card_margin</item>
+        <item name="cardCornerRadius">@dimen/poll_card_radius</item>
+        <item name="cardElevation">@dimen/poll_card_elevation</item>
+    </style>
+
+    <style name="CircularButton" parent="@style/Widget.Material3.Button.ElevatedButton">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:textSize">@dimen/fontSizeSmall</item>
+        <item name="fontFamily">@font/nunito_sans_semibold</item>
+    </style>
+
+    <dimen name="poll_card_margin">10dp</dimen>
+    <dimen name="poll_card_radius">16dp</dimen>
+    <dimen name="poll_card_elevation">8dp</dimen>
 </resources>
