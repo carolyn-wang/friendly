@@ -10,6 +10,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:horizontalSpacing="6dp"
-        android:numColumns="2"
+        android:numColumns="1"
         android:verticalSpacing="6dp" />
 </GridLayout>

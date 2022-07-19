@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -20,7 +19,6 @@ import android.widget.Button;
 
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,13 +38,13 @@ public class AvailabilityFragment extends Fragment {
     private Button btnF;
     private Button btnSa;
     private Button btnSu;
-    private int clickedIndex = 0;
+    private int previousIndex = 0;
     private int nextIndex = 1;
 
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 7;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -96,40 +94,22 @@ public class AvailabilityFragment extends Fragment {
         pagerAdapter = new ScreenSlidePagerAdapter(((MainActivity) mContext).getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
 
-
         List<Button> buttons = Arrays.asList(btnM, btnTu, btnW, btnTh, btnF, btnSa, btnSu);
 
         for (Button btn : buttons) {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    buttons.get(clickedIndex).setBackgroundColor(Color.WHITE);
-                    buttons.get(nextIndex).setBackgroundColor(Color.WHITE);
+                    buttons.get(previousIndex).setBackgroundColor(Color.WHITE);
 
-                    clickedIndex = buttons.indexOf(btn);
-                    if (nextIndex + 1 == buttons.size()) {
-                        nextIndex = 0;
-                    } else {
-                        nextIndex = clickedIndex + 1;
-                    }
+                    previousIndex = buttons.indexOf(btn);
 
                     btn.setBackgroundColor(Color.BLACK);
-                    buttons.get(nextIndex).setBackgroundColor(Color.BLACK);
 
-                    mPager.setCurrentItem(clickedIndex);
-
-//
-//                    FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
-//                    FragmentTransaction ft = fragmentManager.beginTransaction();
-//                    ft.replace(R.id.flAvailability, new AvailabilityList())
-//                            .addToBackStack(null)
-//                            .commit();
+                    mPager.setCurrentItem(previousIndex);
                 }
             });
-
-
         }
-
     }
 
 
@@ -155,8 +135,8 @@ public class AvailabilityFragment extends Fragment {
 
 
     private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-        private static final float MIN_SCALE = 0.85f;
-        private static final float MIN_ALPHA = 0.5f;
+        private static final float MIN_SCALE = 1.0f;
+        private static final float MIN_ALPHA = 0.6f;
 
         public void transformPage(View view, float position) {
             int pageWidth = view.getWidth();
