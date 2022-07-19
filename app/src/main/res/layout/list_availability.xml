@@ -8,8 +8,11 @@
         android:id="@+id/availabilityGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fadeScrollbars="false"
         android:gravity="center"
         android:horizontalSpacing="6dp"
         android:numColumns="1"
+        android:scrollbarSize="15dp"
+        android:scrollbarStyle="outsideInset"
         android:verticalSpacing="6dp" />
 </GridLayout>
