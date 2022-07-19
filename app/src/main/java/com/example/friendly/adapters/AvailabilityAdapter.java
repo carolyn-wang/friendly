@@ -14,25 +14,16 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.friendly.R;
+import com.example.friendly.activities.MainActivity;
 
 public class AvailabilityAdapter extends BaseAdapter {
     private Context mContext;
-    private boolean[] availability = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false,
-            false, false, false, false, false, false,
-            false, false, false, false, false};
     private static final String TAG = "AvailabilityAdapter";
-    String[] timesArray = {"9 AM - 9:30 AM", "9:30 AM - 10 AM ", "10 AM - 10:30 AM", "10:30 AM - 11 AM",
-            "11 AM - 11:30 AM", "11:30 AM - 12 PM ", "12 PM - 12:30 PM", "12:30 PM - 1 PM",
-            "1 PM - 1:30 PM", "1:30 PM - 2 PM", "2 PM - 2:30 PM", "2:30 PM - 3 PM",
-            "3 PM - 3:30 PM", "3:30 PM - 4 PM", "4 PM - 4:30 PM", "4:30 PM - 5 PM",
-            "5 PM - 5:30 PM", "5:30 PM - 6 PM", "6 PM - 6:30 PM", "6:30 PM - 7 PM",
-            "7 PM - 7:30 PM", "7:30 PM - 8 PM", "8 PM - 8:30 PM", "8:30 PM - 9 PM",
-            "9 PM - 9:30 PM", "9:30 PM - 10 PM", "10 PM - 10:30 PM", "10:30 PM - 11 PM",
-            "11 PM - 11:30 PM", "11:30 PM - 12 PM"};
+    private String[] timesArray;
 
     public AvailabilityAdapter(Context context) {
         mContext = context;
+        timesArray = ((MainActivity) mContext).getResources().getStringArray(R.array.times_array);
     }
 
     public int getCount() {
@@ -47,10 +38,8 @@ public class AvailabilityAdapter extends BaseAdapter {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view;
-
         if (convertView == null) {
             view = new TextView(mContext);
             //            view.setLayoutParams(new GridView.LayoutParams(150, 85));

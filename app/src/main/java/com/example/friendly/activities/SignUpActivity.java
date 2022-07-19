@@ -36,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String KEY_LOCATION = "location";
     private static final String KEY_PREFERENCE_WEIGHTS = "preferenceWeights";
     private static final String KEY_AVERAGE_SIMILARITY_SCORES = "averageSimilarityScores";
+    private static final int DAYS_IN_WEEK = 7;
 
     private static Context mContext;
     private TextInputEditText etFirstName;
@@ -94,7 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
         // setting default values for database
         int hobby_options_len = getResources().getStringArray(R.array.option2).length;
         int activity_options_len = getResources().getStringArray(R.array.option3).length;
-        int availability_options_len = getResources().getStringArray(R.array.option4).length;
+        int availability_options_len = getResources().getStringArray(R.array.times_array).length * DAYS_IN_WEEK;
         boolean[] hobbyArr = new boolean[hobby_options_len];
         boolean[] activityArr = new boolean[activity_options_len];
         boolean[] availabilityArr = new boolean[availability_options_len];
