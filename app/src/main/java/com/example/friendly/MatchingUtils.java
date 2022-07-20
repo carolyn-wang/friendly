@@ -111,7 +111,7 @@ public class MatchingUtils {
         double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
         double availabilityScore = getArraySimilarityScore(nearbyUser, KEY_AVAILABILITY_PREFERENCE);
 
-        Log.i(TAG, "distance: " + distanceScore
+        Log.d(TAG, "distance: " + distanceScore
                 + "; hobby: " + hobbyScore
                 + "; year: " + yearScore
                 + "; activity: " + activityScore
@@ -165,15 +165,8 @@ public class MatchingUtils {
     }
 
 
-    private static double getAvailabilitySimilarityScore() {
-        // hard coded arrays for testing purposes
-        int arr1[][] = {{0, 4}, {5, 10},
-                {13, 20}, {24, 25}};
-
-        int arr2[][] = {{1, 5}, {8, 12},
-                {15, 24}, {25, 26}};
-
-        int overlapHours = findIntersection(arr1, arr2);
+    private static double getAvailabilitySimilarityScore(int user1Availability[][], int user2Availability[][]) {
+        int overlapHours = findIntersection(user1Availability, user2Availability);
         return (double) overlapHours;
     }
 
@@ -252,7 +245,6 @@ public class MatchingUtils {
             ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    Log.d(TAG, "updated weights successfully");
                 }
             });
         }

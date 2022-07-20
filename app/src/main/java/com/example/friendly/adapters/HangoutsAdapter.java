@@ -1,10 +1,6 @@
 package com.example.friendly.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +8,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.DisplayUtils;
-import com.example.friendly.HangoutQuery;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
-import com.google.android.material.timepicker.TimeFormat;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
 
 public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHolder> {
 

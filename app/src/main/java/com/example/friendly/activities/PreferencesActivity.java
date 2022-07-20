@@ -6,17 +6,12 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.adapters.PreferencesAdapter;
-import com.example.friendly.fragments.AvailabilityFragment;
-import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.objects.Preference;
 
 import java.util.ArrayList;
@@ -30,7 +25,6 @@ public class PreferencesActivity extends AppCompatActivity {
     private static final String KEY_PREFERENCE1 = "similarityPreference";
     private static final String KEY_PREFERENCE2 = "hobbyPreference";
     private static final String KEY_PREFERENCE3 = "activityPreference";
-    private static final String KEY_PREFERENCE4 = "availabilityPreference";
 
     private Context mContext;
     private RecyclerView rvPreferences;
@@ -58,7 +52,7 @@ public class PreferencesActivity extends AppCompatActivity {
                 new Preference(KEY_PREFERENCE2, getString(R.string.question2), getResources().getStringArray(R.array.option2)),
                 new Preference(KEY_PREFERENCE3, getString(R.string.question3), getResources().getStringArray(R.array.option3)));
         preferenceKeys = new ArrayList<>();
-        for (Preference preference: allPreferences){
+        for (Preference preference : allPreferences) {
             preferenceKeys.add(preference.getParseKey());
         }
 
@@ -77,11 +71,11 @@ public class PreferencesActivity extends AppCompatActivity {
 
     }
 
-    public List<Preference> getAllPreferences(){
+    public List<Preference> getAllPreferences() {
         return allPreferences;
     }
 
-    public List<String> getAllPreferenceKeys(){
+    public List<String> getAllPreferenceKeys() {
         return preferenceKeys;
     }
 

@@ -37,11 +37,6 @@ public class AvailabilityList extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_availability, container, false);
@@ -53,7 +48,7 @@ public class AvailabilityList extends Fragment {
         availabilityList = view.findViewById(R.id.availabilityGrid);
 
         userAvailabilityPreference = ParseUser.getCurrentUser().getList(KEY_AVAILABILITY_PREFERENCE);
-        AvailabilityAdapter adapter = new AvailabilityAdapter(getContext(), userAvailabilityPreference, dayOfWeek);
+        AvailabilityAdapter adapter = new AvailabilityAdapter(mContext, userAvailabilityPreference, dayOfWeek);
         availabilityList.setAdapter(adapter);
     }
 

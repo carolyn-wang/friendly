@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.google.android.material.button.MaterialButton;
@@ -104,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(KEY_AVAILABILITY_PREFERENCE, availabilityArr);
         user.put(KEY_PREFERENCE_WEIGHTS, new JSONArray(getResources().getIntArray(R.array.default_weights)));
         user.put(KEY_AVERAGE_SIMILARITY_SCORES, new JSONArray(getResources().getIntArray(R.array.default_average_similarity)));
-//        user.put(KEY_LOCATION, new ParseGeoPoint());
+        user.put(KEY_LOCATION, new ParseGeoPoint());
 
         user.signUpInBackground(new SignUpCallback() {
             // TODO: throw error for edge cases / authenticate login

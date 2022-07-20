@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/fragment_padding"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/fragment_padding">
 
     <TextView
         android:id="@+id/availabilityTitle"
@@ -12,19 +12,19 @@
         android:layout_height="wrap_content"
         android:text="@string/availability_title"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/weekTabs"
-        layout="@layout/item_week_tabs"/>
+        layout="@layout/item_week_tabs" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pagerAvailability"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pager_availability_height"
+        app:layout_constraintBottom_toTopOf="@id/saveButton"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weekTabs"
-        app:layout_constraintBottom_toTopOf="@id/saveButton"/>
+        app:layout_constraintTop_toBottomOf="@id/weekTabs" />
 
     <Button
         android:id="@+id/saveButton"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="@string/availability_next_btn"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
