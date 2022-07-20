@@ -38,28 +38,14 @@ public class AvailabilityFragment extends Fragment {
     private Button btnF;
     private Button btnSa;
     private Button btnSu;
-    private int previousIndex = 0;
+    private int pagerIndex = 0;
     private int nextIndex = 1;
-
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
     private static final int NUM_PAGES = 7;
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
     private ViewPager mPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
     private PagerAdapter pagerAdapter;
 
 
     public AvailabilityFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -70,7 +56,6 @@ public class AvailabilityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_availability, container, false);
     }
 
@@ -87,7 +72,6 @@ public class AvailabilityFragment extends Fragment {
         btnSa = view.findViewById(R.id.btnSa);
         btnSu = view.findViewById(R.id.btnSu);
 
-        // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) view.findViewById(R.id.pager);
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
@@ -100,13 +84,10 @@ public class AvailabilityFragment extends Fragment {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    buttons.get(previousIndex).setBackgroundColor(Color.WHITE);
-
-                    previousIndex = buttons.indexOf(btn);
-
+                    buttons.get(pagerIndex).setBackgroundColor(Color.WHITE);
+                    pagerIndex = buttons.indexOf(btn);
                     btn.setBackgroundColor(Color.BLACK);
-
-                    mPager.setCurrentItem(previousIndex);
+                    mPager.setCurrentItem(pagerIndex);
                 }
             });
         }
@@ -124,7 +105,7 @@ public class AvailabilityFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return new AvailabilityList();
+            return new AvailabilityList(getContext(), position);
         }
 
         @Override

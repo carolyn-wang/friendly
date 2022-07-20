@@ -4,30 +4,42 @@ import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.List;
 
 public class AvailabilityAdapter extends BaseAdapter {
     private Context mContext;
     private static final String TAG = "AvailabilityAdapter";
-    private String[] timesArray;
+    private List<Boolean> availabilityPreference;
+    private String[] timeOptionsArray;
+    private int startIndex;
+    private int endIndex;
+    private List<Boolean> availabilityPreferenceForDay;
 
-    public AvailabilityAdapter(Context context) {
-        mContext = context;
-        timesArray = ((MainActivity) mContext).getResources().getStringArray(R.array.times_array);
+    public AvailabilityAdapter(Context context, List<Boolean> availabilityPreference, int dayOfWeek) {
+        this.mContext = context;
+        this.timeOptionsArray = ((MainActivity) mContext).getResources().getStringArray(R.array.time_options_array);
+        this.availabilityPreference = availabilityPreference;
+        startIndex = timeOptionsArray.length * dayOfWeek;
+        endIndex = startIndex + timeOptionsArray.length;
+        availabilityPreferenceForDay = availabilityPreference.subList(startIndex, endIndex);
     }
 
     public int getCount() {
-        return timesArray.length;
+        return timeOptionsArray.length;
     }
 
     public Object getItem(int position) {
@@ -42,13 +54,16 @@ public class AvailabilityAdapter extends BaseAdapter {
         TextView view;
         if (convertView == null) {
             view = new TextView(mContext);
-            //            view.setLayoutParams(new GridView.LayoutParams(150, 85));
             view.setOnTouchListener(new GridTouchListener());
             view.setOnDragListener(new GridDragListener());
         } else {
             view = (TextView) convertView;
         }
-        view.setText(timesArray[position]);
+        view.setText(timeOptionsArray[position]);
+        // set user's previous time preferences as highlighted
+            if (availabilityPreferenceForDay.get(position)){
+                view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
+            }
         return view;
     }
 
@@ -105,7 +120,7 @@ public class AvailabilityAdapter extends BaseAdapter {
                     break;
             }
             return false;
-
         }
+
     }
 }

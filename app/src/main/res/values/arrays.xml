@@ -48,7 +48,7 @@
         <item>1</item>
     </integer-array>
 
-    <string-array name="times_array">
+    <string-array name="time_options_array">
         <item>9 AM - 9:30 AM</item>
         <item>9:30 AM - 10 AM</item>
         <item>10 AM - 10:30 AM</item>

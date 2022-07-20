@@ -1,5 +1,7 @@
 package com.example.friendly.fragments;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.friendly.R;
+import com.example.friendly.activities.MainActivity;
 import com.example.friendly.adapters.AvailabilityAdapter;
+import com.example.friendly.objects.Place;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,12 +32,12 @@ import com.example.friendly.adapters.AvailabilityAdapter;
 public class AvailabilityList extends Fragment {
 
     private static final String TAG = "AvailabilityList";
-    private boolean[] availability = new boolean[30];
+    private List<Boolean> userAvailabilityPreference;
     private GridView availabilityGrid;
+    private int dayOfWeek;
 
-
-
-    public AvailabilityList() {
+    public AvailabilityList(Context mContext, int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     @Override
@@ -45,9 +56,14 @@ public class AvailabilityList extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         availabilityGrid = view.findViewById(R.id.availabilityGrid);
 
-        AvailabilityAdapter adapter = new AvailabilityAdapter(getContext());
+        userAvailabilityPreference = ParseUser.getCurrentUser().getList("availabilityPreference");
+        AvailabilityAdapter adapter = new AvailabilityAdapter(getContext(), userAvailabilityPreference, dayOfWeek);
         availabilityGrid.setAdapter(adapter);
 
+        View selectedRow = adapter.getView(0, null, availabilityGrid);
+        selectedRow.isActivated();
+        selectedRow.setVisibility(View.VISIBLE);
+        selectedRow.setBackgroundColor(Color.RED);
     }
 
 }
