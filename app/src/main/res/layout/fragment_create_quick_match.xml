@@ -16,46 +16,68 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompletePlaces"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPlaces"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/create_quick_location"
+        android:layout_height="@dimen/quick_edittext_height"
+        app:endIconMode="clear_text"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCreateQuickMatch" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateQuickMatch">
 
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/autoCompletePlaces"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/create_quick_location"
+            android:padding="@dimen/edittext_padding" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDate"
+        android:layout_width="@dimen/quick_edittext_width"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:hint="@string/create_quick_date"
-        android:inputType="date"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompletePlaces" />
+        app:layout_constraintTop_toBottomOf="@+id/tilPlaces">
 
-    <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/create_quick_date"
+            android:inputType="date" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTime"
+        android:layout_width="@dimen/quick_edittext_width"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:hint="@string/create_quick_time"
-        android:inputType="time"
-        app:layout_constraintLeft_toRightOf="@+id/editTextDate"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompletePlaces" />
+        android:layout_marginStart="@dimen/edittext_padding"
+        app:layout_constraintLeft_toRightOf="@+id/tilDate"
+        app:layout_constraintTop_toBottomOf="@id/tilPlaces">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/create_quick_time"
+            android:inputType="date" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreateHangout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_create_quick"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
+        app:layout_constraintTop_toBottomOf="@id/tilDate" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

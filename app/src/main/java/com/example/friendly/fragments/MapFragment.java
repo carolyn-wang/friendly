@@ -140,7 +140,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public ParseGeoPoint getCurrentUserParseLocation() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
-            Toast.makeText(mContext, "Can't access user's current location from database", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.map_error_location, Toast.LENGTH_SHORT).show();
             NavigationUtils.goLoginActivity(mActivity);
         }
         return currentUser.getParseGeoPoint(KEY_USER_LOCATION);
@@ -203,7 +203,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             currentUser.saveInBackground();
             Log.i(TAG, "Saved user location to database");
         } else {
-            Toast.makeText(mContext, "Can't save user's current location", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.map_error_save, Toast.LENGTH_SHORT).show();
             NavigationUtils.goLoginActivity(mActivity);
         }
     }
@@ -247,9 +247,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             public void done(List<ParseUser> nearUsers, ParseException e) {
                 if (e == null) {
                     ParseUser closestUser = ParseUser.getCurrentUser();
-                    for (int i = 0; i < nearUsers.size(); i++) {
-                        if (!nearUsers.get(i).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                            closestUser = nearUsers.get(i);
+                    for (ParseUser nearbyUser : nearUsers) {
+                        if (!nearbyUser.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                            closestUser = nearbyUser;
                         }
                     }
                     double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestUser.getParseGeoPoint(KEY_USER_LOCATION));
@@ -299,7 +299,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if (e == null) {
                     Place closestPlace = nearStores.get(0);
                     double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getLocation());
-                    Toast.makeText(mContext, "We found the closest place from you! It's " + closestPlace.getName() + ". \nYou are " + Math.round(distance * 100.0) / 100.0 + " km from this store.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestPlace), closestPlace.getName(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_SHORT).show();
                     LatLng closestPlaceLocation = new LatLng(closestPlace.getLocation().getLatitude(), closestPlace.getLocation().getLongitude());
                     setMarker(closestPlaceLocation, closestPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 } else {

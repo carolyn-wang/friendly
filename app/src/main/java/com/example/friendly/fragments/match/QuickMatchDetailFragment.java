@@ -92,6 +92,6 @@ public class QuickMatchDetailFragment extends Fragment {
         ft.add(R.id.hangoutDetail, hangoutDetailFragment).commit();
 
         setEnterTransition(TransitionInflater.from(getContext())
-                .inflateTransition(R.transition.grid_expand_transition));
+                .inflateTransition(R.transition.slide_transition));
     }
 }

@@ -2,6 +2,10 @@ package com.example.friendly.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,16 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
-import com.example.friendly.objects.Hangout;
-import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.HangoutQuery;
 import com.example.friendly.R;
+import com.example.friendly.adapters.HangoutsAdapter;
+import com.example.friendly.objects.Hangout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +71,6 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO: move keys into final String
         queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
 
         if (queryConditions != null) {
@@ -96,7 +93,6 @@ public class HangoutsFragment extends Fragment {
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
         setPullToRefresh();
         setScrollListener();
-
     }
 
     public static void hideProgressBar() {

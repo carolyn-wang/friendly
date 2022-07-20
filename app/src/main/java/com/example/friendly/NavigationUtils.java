@@ -3,6 +3,8 @@ package com.example.friendly;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,14 +15,12 @@ import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;
-import com.example.friendly.fragments.HangoutsFragment;
+import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.match.QuickMatchDetailFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
 import com.example.friendly.objects.Hangout;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.google.android.material.transition.MaterialContainerTransform;
 
 public class NavigationUtils {
 
@@ -49,25 +49,16 @@ public class NavigationUtils {
 
     public static void displayFragmentQuickMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment quickMatchFragment = new QuickMatchFragment();
-        ft.replace(R.id.flContainer, quickMatchFragment);
-        ft.commit();
+        ft.replace(R.id.flContainer, new QuickMatchFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     public static void displayFragmentLongMatch(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment longMatchFragment = new LongMatchFragment();
-        ft.replace(R.id.flContainer, longMatchFragment);
-        ft.commit();
-    }
-
-    public static void displayFragmentHangoutHistory(FragmentManager fragmentManager) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        // TODO: put "past", "user", "first name" all in a strings constant file
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("past", "user"));
-        Fragment hangoutHistoryFragment = new HangoutsFragment().newInstance(conditions);
-        ft.replace(R.id.flContainer, hangoutHistoryFragment);
-        ft.commit();
+        ft.replace(R.id.flContainer, new LongMatchFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     /**
@@ -76,9 +67,10 @@ public class NavigationUtils {
      * @param hangout
      * @param fragmentManager
      */
-    public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager) {
+    public static void displayFragmentHangoutDetail(Context mContext, View view, Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = HangoutDetailFragment.newInstance(hangout);
+        setCardTransition(mContext, view, DisplayUtils.getCardColor(mContext, hangout), hangoutDetailFragment);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
@@ -90,7 +82,7 @@ public class NavigationUtils {
      * @param hangout
      * @param fragmentManager
      */
-    public static void displayFragmentQuickMatchDetail(Hangout hangout, FragmentManager fragmentManager) {
+    public static void displayFragmentQuickMatchDetail(Context mContext, View view, Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = QuickMatchDetailFragment.newInstance(hangout);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
@@ -98,4 +90,27 @@ public class NavigationUtils {
                 .commit();
     }
 
+    private static void setCardTransition(Context mContext, View view, int containerColor, Fragment fragment) {
+        MaterialContainerTransform enterTransition = new MaterialContainerTransform();
+        enterTransition.setStartView(view);
+        enterTransition.setEndView(((MainActivity) mContext).findViewById(R.id.vHangoutDetail));
+        enterTransition.setDuration(700);
+        enterTransition.setScrimColor(Color.TRANSPARENT);
+        enterTransition.setContainerColor(containerColor);
+        fragment.setEnterTransition(enterTransition);
+    }
+
+    public static void displayFragmentHangoutHistory(FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment hangoutDetailFragment = new HangoutHistoryFragment();
+        ft.replace(R.id.flContainer, hangoutDetailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void onBackPressed(FragmentManager fragmentManager) {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+    }
 }

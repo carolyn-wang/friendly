@@ -1,5 +1,6 @@
 package com.example.friendly.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -16,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.DisplayUtils;
+import com.example.friendly.HangoutQuery;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
@@ -78,7 +80,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
             tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
-            cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
+            cdHangout = itemView.findViewById(R.id.cdHangout);
         }
 
         public void bind(Hangout hangout) {
@@ -91,8 +93,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     public void onClick(View v) {
                         int position = getAdapterPosition();
                         Hangout hangout = hangouts.get(position);
-                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
-
+                        NavigationUtils.displayFragmentHangoutDetail(mContext, v, hangout, ((MainActivity) mContext).getSupportFragmentManager());
                     }
                 });
             } else { // click listener for if RV is showing upcoming quick hangouts
@@ -102,18 +103,15 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Hangout hangout = hangouts.get(position);
-                            NavigationUtils.displayFragmentQuickMatchDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
+                            NavigationUtils.displayFragmentQuickMatchDetail(mContext, v, hangout, ((MainActivity) mContext).getSupportFragmentManager());
                         }
                     }
                 });
+                tvHangoutUser2.setText("");
             }
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
-            if (hangout.getLocation() != null) {
-                tvHangoutLocation.setText(hangout.getLocationName());
-            }
-            // TODO: move into child classes
-
+            tvHangoutLocation.setText(hangout.getLocation() != null ? DisplayUtils.getEmojiByPlace(mContext, hangout.getLocation()) + " " + hangout.getLocationName() : "");
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
         }
     }

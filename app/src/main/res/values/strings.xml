@@ -14,14 +14,14 @@
     <string name="signupEmailHint">Email</string>
     <string name="signupUsernameHint">Username</string>
     <string name="signupPasswordHint">Password</string>
-
+    <string name="signupConfirmPasswordHint">Confirm Password</string>
     <string name="hangoutUser1">User 1</string>
     <string name="hangoutUser2">User 2</string>
     <string name="hangoutDate">Hangout date</string>
 
     <string name="match_btn_quick">Quick Match</string>
     <string name="match_btn_long">Schedule for Later</string>
-    <string name="match_btn_upcoming">Upcoming Hangouts</string>
+    <string name="match_btn_upcoming">My Upcoming Hangouts</string>
     <string name="quick_match_title">Quick Match</string>
     <string name="match_title">Home</string>
     <string name="profile_title">Profile</string>
@@ -48,11 +48,31 @@
     <string name="btn_create_quick">Create Hangout</string>
     <string name="match_description">Hangouts within the next 48 hours</string>
     <string name="showClosestUser">We found the closest user from you! It\'s %s. \n You are .%2f miles from this user.</string>
+    <string name="showClosestPlace">We found the closest place from you! It\'s %s. \n You are .%2f miles from this place.</string>
+    <string name="hangout_history_title">Hangout History</string>
+
     <string name="question0">What year are you in?</string>
     <string name="question1">Do you prefer to match with people similar or different to you?</string>
     <string name="question2">What are your hobbies?</string>
     <string name="question3">What are your preferences for hangout activites?</string>
     <string name="question4">When are you generally avaliable?</string>
     <string name="join_quick_match_btn">Join Hangout</string>
+
+    <string name="search_title">Search</string>
+    <string name="map">Map</string>
+    <string name="create_hangout">Create Hangout</string>
+    <string name="login_null_error">Need to fill out username or password</string>
+    <string name="login_success">Login Success</string>
+    <string name="map_error_location">Can\'t access user\'s current location from database</string>
+    <string name="map_error_save">Can\'t save user\'s current location</string>
+    <string name="query_key_future">future</string>
+    <string name="query_key_current_user">user</string>
+    <string name="query_key_past">past</string>
+    <string name="query_key_quick">quick</string>
+    <string name="sign_up_password_error">Passwords don\'t match</string>
+    <string name="sign_up_success">Successful Sign Up!</string>
+    <string name="quick_match_error">Error creating hangout</string>
+    <string name="quick_match_success">Hangout Created!</string>
+    <string name="login_error">Issue with login</string>
 
 </resources>

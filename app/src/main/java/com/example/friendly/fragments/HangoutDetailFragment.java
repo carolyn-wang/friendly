@@ -1,10 +1,8 @@
 package com.example.friendly.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.transition.ChangeBounds;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.transition.Slide;
+import androidx.transition.TransitionInflater;
 
 import com.example.friendly.DisplayUtils;
 import com.example.friendly.R;
@@ -73,16 +73,12 @@ public class HangoutDetailFragment extends Fragment {
         vHangoutDetail.setBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
 
         tvHangoutUser1.setText(hangout.getUser1().getUsername());
-        if (hangout.getUser2() != null){
+        if (hangout.getUser2() != null) {
             tvHangoutUser2.setText(hangout.getUser2().getUsername());
-        }
-        else
-        {
+        } else {
             tvHangoutUser2.setText("");
         }
         tvHangoutDate.setText(hangout.getDate().toString());
-        
-        setEnterTransition(TransitionInflater.from(getContext())
-                .inflateTransition(R.transition.grid_expand_transition));
+
     }
 }

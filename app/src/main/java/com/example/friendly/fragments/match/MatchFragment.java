@@ -12,19 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.friendly.fragments.HangoutsFragment;
-import com.example.friendly.fragments.MapFragment;
-import com.example.friendly.objects.Hangout;
-import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.fragments.HangoutsFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MatchFragment extends Fragment {
     private static final String TAG = "MatchFragment";
@@ -32,9 +27,8 @@ public class MatchFragment extends Fragment {
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
-    private Button btnMap;
 
-    public MatchFragment(){
+    public MatchFragment() {
 
     }
 
@@ -53,39 +47,26 @@ public class MatchFragment extends Fragment {
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
-        btnMap = view.findViewById(R.id.btnMap);
 
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.displayFragmentQuickMatch(((MainActivity)mContext).getSupportFragmentManager());
+                NavigationUtils.displayFragmentQuickMatch(((MainActivity) mContext).getSupportFragmentManager());
             }
         });
 
         btnLongHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.displayFragmentLongMatch(((MainActivity)mContext).getSupportFragmentManager());
+                NavigationUtils.displayFragmentLongMatch(((MainActivity) mContext).getSupportFragmentManager());
             }
         });
 
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                MapFragment mapFragment = new MapFragment();
-                ft.replace(R.id.flContainer, mapFragment)
-                        .addToBackStack("map")
-                        .commit();
-            }
-        });
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
-        Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
-        ft.add(R.id.hangoutDetail, hangoutDetailFragment);
+        FragmentManager fm = getParentFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.query_key_future), getString(R.string.query_key_current_user)));
+        ft.add(R.id.upcomingHangouts, HangoutsFragment.newInstance(conditions));
         ft.commit();
+
     }
 }

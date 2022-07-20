@@ -1,5 +1,6 @@
 package com.example.friendly.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -18,19 +22,22 @@ import com.parse.ParseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private EditText etUsername;
-    private EditText etPassword;
-    private Button btnLogin;
-    private Button btnSignup;
+    private Context mContext;
+    private TextInputEditText etUsername;
+    private TextInputEditText etPassword;
+    private MaterialButton btnLogin;
+    private MaterialButton btnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (ParseUser.getCurrentUser() != null){
+        if (ParseUser.getCurrentUser() != null) {
             NavigationUtils.goMainActivity(LoginActivity.this);
         }
+
+        mContext = LoginActivity.this;
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
@@ -40,9 +47,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick login button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(mContext, R.string.login_null_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 loginUser(username, password);
             }
         });
@@ -57,25 +67,24 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    //TODO: Add toast if login fails
     //TODO: Limit to only 1 login in case of glitch
     private void loginUser(String username, String password) {
-        Log.i(TAG, "Attempting to login user " + username);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if (e != null) {
+                if (e == null) {
+                    NavigationUtils.goMainActivity(LoginActivity.this);
+                    Toast.makeText(mContext, R.string.login_success, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, R.string.login_error, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Issue with login", e);
-                    return;
                 }
-                NavigationUtils.goMainActivity(LoginActivity.this);
-                Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT);
+
             }
         });
     }
 
     private void signupUser() {
-        Log.i(TAG, "Signing up user ");
         NavigationUtils.goSignupActivity(LoginActivity.this);
     }
 }
