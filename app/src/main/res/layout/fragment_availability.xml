@@ -19,10 +19,20 @@
         layout="@layout/item_week_tabs"/>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
+        android:id="@+id/pagerAvailability"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pager_availability_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weekTabs"
+        app:layout_constraintBottom_toTopOf="@id/saveButton"/>
+
+    <Button
+        android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@string/preferencesSaveBtn"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weekTabs" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

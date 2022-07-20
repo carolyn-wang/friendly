@@ -6,7 +6,7 @@
     app:layout_constraintTop_toBottomOf="@+id/availabilityTitle"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnM"
         style="@style/CircularButton"
         android:text="@string/btn_m"

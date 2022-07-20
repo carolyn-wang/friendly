@@ -17,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
-import com.example.friendly.activities.PreferencesActivity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +44,10 @@ public class AvailabilityFragment extends Fragment {
     private static final int NUM_PAGES = 7;
     private ViewPager mPager;
     private PagerAdapter pagerAdapter;
+    private Button saveButton;
+
+    private final static int activeButtonColor = Color.BLACK;
+    private final static int inactiveButtonColor = Color.WHITE;
 
 
     public AvailabilityFragment() {
@@ -72,26 +76,37 @@ public class AvailabilityFragment extends Fragment {
         btnF = view.findViewById(R.id.btnF);
         btnSa = view.findViewById(R.id.btnSa);
         btnSu = view.findViewById(R.id.btnSu);
+        saveButton = view.findViewById(R.id.saveButton);
 
-        mPager = (ViewPager) view.findViewById(R.id.pager);
+        mPager = (ViewPager) view.findViewById(R.id.pagerAvailability);
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
-        pagerAdapter = new ScreenSlidePagerAdapter(((MainActivity) mContext).getSupportFragmentManager());
+        pagerAdapter = new ScreenSlidePagerAdapter(getParentFragmentManager());
         mPager.setAdapter(pagerAdapter);
 
         List<Button> buttons = Arrays.asList(btnM, btnTu, btnW, btnTh, btnF, btnSa, btnSu);
+
+        buttons.get(pagerIndex).setBackgroundColor(activeButtonColor);
+        mPager.setCurrentItem(pagerIndex);
 
         for (Button btn : buttons) {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    buttons.get(pagerIndex).setBackgroundColor(Color.WHITE);
+                    buttons.get(pagerIndex).setBackgroundColor(inactiveButtonColor);
                     pagerIndex = buttons.indexOf(btn);
-                    btn.setBackgroundColor(Color.BLACK);
+                    btn.setBackgroundColor(activeButtonColor);
                     mPager.setCurrentItem(pagerIndex);
                 }
             });
         }
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.displayFragmentProfile(getParentFragmentManager());
+            }
+        });
     }
 
 
