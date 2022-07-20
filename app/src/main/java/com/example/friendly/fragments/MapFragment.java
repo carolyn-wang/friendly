@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
+import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -55,6 +56,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String KEY_HANGOUT_USER = "hangoutUser";
     private static final String KEY_HANGOUT_PLACE = "hangoutPlace";
     private static final float INITIAL_ZOOM = 14.0f;
+
+    private ParseUser hangoutUser;
+    private Place hangoutPlace;
 
     private Context mContext;
     private Activity mActivity;
@@ -93,7 +97,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mContext = getContext();
         mActivity = getActivity();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
+        if (getArguments() != null) {
+            hangoutUser = getArguments().getParcelable(KEY_HANGOUT_USER);
+            hangoutPlace = getArguments().getParcelable(KEY_HANGOUT_PLACE);
+        }
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -103,8 +112,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         if (getArguments() != null) {
             showCurrentUserInMap();
-            showUserInMap(getArguments().getParcelable(KEY_HANGOUT_USER));
-            showPlaceInMap(getArguments().getParcelable(KEY_HANGOUT_PLACE));
+            showUserInMap(hangoutUser);
+            showPlaceInMap(hangoutPlace);
         } else {
             showCurrentUserInMap();
             showClosestUser();
