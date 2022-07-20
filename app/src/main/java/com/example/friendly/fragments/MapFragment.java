@@ -1,14 +1,5 @@
 package com.example.friendly.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
-import com.example.friendly.HangoutQuery;
-import com.example.friendly.PlaceQuery;
-import com.example.friendly.R;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -25,12 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.friendly.NavigationUtils;
+import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
-import com.example.friendly.adapters.HangoutsAdapter;
-import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,7 +28,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -50,11 +38,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -297,11 +283,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void done(List<Place> nearStores, ParseException e) {
                 if (e == null) {
-                    Place closestPlace = nearStores.get(0);
-                    double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getLocation());
-                    Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestPlace), closestPlace.getName(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_SHORT).show();
-                    LatLng closestPlaceLocation = new LatLng(closestPlace.getLocation().getLatitude(), closestPlace.getLocation().getLongitude());
-                    setMarker(closestPlaceLocation, closestPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    if (!nearStores.isEmpty()) {
+                        Place closestPlace = nearStores.get(0);
+                        double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getLocation());
+                        Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestPlace), closestPlace.getName(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_SHORT).show();
+                        LatLng closestPlaceLocation = new LatLng(closestPlace.getLocation().getLatitude(), closestPlace.getLocation().getLongitude());
+                        setMarker(closestPlaceLocation, closestPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    }
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
