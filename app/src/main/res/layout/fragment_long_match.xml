@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/fragment_padding"
     tools:context=".fragments.match.QuickMatchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/longMatchTitle"
+        style="@style/TitleFont.Big"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="long term match" />
+        android:layout_height="wrap_content"
+        android:text="@string/long_match_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvMatchedUserLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matched_user_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longMatchTitle" />
+
+    <TextView
+        android:id="@+id/tvMatchedUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matched_user"
+        app:layout_constraintLeft_toRightOf="@+id/tvMatchedUserLabel"
+        app:layout_constraintTop_toBottomOf="@+id/longMatchTitle" />
+
+    <TextView
+        android:id="@+id/tvPlaceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matched_place_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchedUserLabel" />
+
+    <TextView
+        android:id="@+id/tvMatchedPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matched_place"
+        app:layout_constraintLeft_toRightOf="@+id/tvPlaceLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchedUserLabel" />
+
+    <TextView
+        android:id="@+id/tvDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matched_date_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlaceLabel" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

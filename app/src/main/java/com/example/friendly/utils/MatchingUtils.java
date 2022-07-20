@@ -258,4 +258,7 @@ public class MatchingUtils {
         adjustWeights(matchedUser, -1);
     }
 
+    public static void getMatchDetails(ParseUser matchedUser) {
+
+    }
 }

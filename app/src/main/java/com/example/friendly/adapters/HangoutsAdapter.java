@@ -78,7 +78,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHangoutUser1 = itemView.findViewById(R.id.tvHangoutUser1);
-            tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
+            tvHangoutUser2 = itemView.findViewById(R.id.tvMatchedUser);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
             tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
             cdHangout = itemView.findViewById(R.id.cdHangout);

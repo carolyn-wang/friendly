@@ -59,6 +59,12 @@
     <string name="question4">When are you generally avaliable?</string>
     <string name="join_quick_match_btn">Join Hangout</string>
     <string name="match_message_text">Message</string>
+    <string name="long_match_title">Your Selected Match</string>
+    <string name="matched_user_label">"Matched User: "</string>
+    <string name="matched_user">matched user here</string>
+    <string name="matched_place_label">"Place: "</string>
+    <string name="matched_place">place here</string>
+    <string name="matched_date_label">Recommended Times: </string>
 
     <string name="search_title">Search</string>
     <string name="map">Map</string>

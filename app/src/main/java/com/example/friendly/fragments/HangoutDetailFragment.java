@@ -69,7 +69,7 @@ public class HangoutDetailFragment extends Fragment {
 
         vHangoutDetail = view.findViewById(R.id.vHangoutDetail);
         tvHangoutUser1 = view.findViewById(R.id.tvHangoutUser1);
-        tvHangoutUser2 = view.findViewById(R.id.tvHangoutUser2);
+        tvHangoutUser2 = view.findViewById(R.id.tvMatchedUser);
         tvHangoutDate = view.findViewById(R.id.tvHangoutDate);
 
         vHangoutDetail.setBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
