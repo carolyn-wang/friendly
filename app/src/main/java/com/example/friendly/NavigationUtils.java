@@ -67,9 +67,10 @@ public class NavigationUtils {
      * @param hangout
      * @param fragmentManager
      */
-    public static void displayFragmentHangoutDetail(Hangout hangout, FragmentManager fragmentManager) {
+    public static void displayFragmentHangoutDetail(Context mContext, View view, Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = HangoutDetailFragment.newInstance(hangout);
+        setCardTransition(mContext, view, DisplayUtils.getCardColor(mContext, hangout), hangoutDetailFragment);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();
@@ -84,7 +85,6 @@ public class NavigationUtils {
     public static void displayFragmentQuickMatchDetail(Context mContext, View view, Hangout hangout, FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment hangoutDetailFragment = QuickMatchDetailFragment.newInstance(hangout);
-        setCardTransition(mContext, view, DisplayUtils.getCardColor(mContext, hangout), hangoutDetailFragment);
         ft.replace(R.id.flContainer, hangoutDetailFragment)
                 .addToBackStack(null)
                 .commit();

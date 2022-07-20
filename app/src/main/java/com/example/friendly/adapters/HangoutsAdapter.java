@@ -93,7 +93,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                     public void onClick(View v) {
                         int position = getAdapterPosition();
                         Hangout hangout = hangouts.get(position);
-                        NavigationUtils.displayFragmentHangoutDetail(hangout, ((MainActivity) mContext).getSupportFragmentManager());
+                        NavigationUtils.displayFragmentHangoutDetail(mContext, v, hangout, ((MainActivity) mContext).getSupportFragmentManager());
                     }
                 });
             } else { // click listener for if RV is showing upcoming quick hangouts
