@@ -4,11 +4,13 @@ import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +59,8 @@ public class AvailabilityAdapter extends BaseAdapter {
         TextView view;
         if (convertView == null) {
             view = new TextView(mContext);
+            Log.i(TAG, position + " ");
+            view.setActivated(false);
             view.setOnTouchListener(new GridTouchListener());
             view.setOnDragListener(new GridDragListener());
         } else {
@@ -65,6 +69,7 @@ public class AvailabilityAdapter extends BaseAdapter {
         view.setText(timeOptionsArray[position]);
         // set user's previous time preferences as highlighted
             if (availabilityPreferenceForDay.get(position)){
+                view.setActivated(true);
                 view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
             }
         return view;

@@ -13,16 +13,21 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,11 +48,11 @@ public class AvailabilityFragment extends Fragment {
     private Button btnSa;
     private Button btnSu;
     private int pagerIndex = 0;
-    private int nextIndex = 1;
     private static final int NUM_PAGES = 7;
     private ViewPager mPager;
     private PagerAdapter pagerAdapter;
     private Button saveButton;
+    private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
 
     private final static int activeButtonColor = R.color.blue;
     private final static int inactiveButtonColor = Color.WHITE;
@@ -107,9 +112,32 @@ public class AvailabilityFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateAvailabilityPreferences();
                 NavigationUtils.displayFragmentProfile(getParentFragmentManager());
             }
         });
+    }
+
+    private void updateAvailabilityPreferences() {
+        List<Boolean> userAvailabilityPreference = ParseUser.getCurrentUser().getList(KEY_AVAILABILITY_PREFERENCE);
+
+        int availability_options_len = getResources().getStringArray(R.array.time_options_array).length;
+        for (int page = 0; page < pagerAdapter.getCount(); page++) {
+            for (int row = 0; row < availability_options_len; row++) {
+                ListView listView = (ListView) mPager.getChildAt(page);
+                if (listView != null) {
+                    TextView textView = (TextView) (listView).getChildAt(row);
+                    if (textView != null) {
+                        userAvailabilityPreference.set((page * availability_options_len ) + row, textView.isActivated());
+                    }
+                }
+            }
+        }
+
+        for (Boolean b: userAvailabilityPreference){
+            Log.i(TAG, b.toString());
+        }
+        ParseUser.getCurrentUser().put(KEY_AVAILABILITY_PREFERENCE, userAvailabilityPreference);
     }
 
 
