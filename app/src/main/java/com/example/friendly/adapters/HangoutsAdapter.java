@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
         private TextView tvHangoutUser2;
         private TextView tvHangoutDate;
         private TextView tvHangoutLocation;
+        private ImageButton ibMessage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,7 +72,8 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
             tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
-            cdHangout = itemView.findViewById(R.id.cdHangout);
+            cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
+            ibMessage = itemView.findViewById(R.id.ibMessage);
         }
 
         public void bind(Hangout hangout) {
@@ -103,6 +106,13 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutDate.setText(formattedDate);
             tvHangoutLocation.setText(hangout.getLocation() != null ? DisplayUtils.getEmojiByPlace(mContext, hangout.getLocation()) + " " + hangout.getLocationName() : "");
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
+
+            ibMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavigationUtils.openMessagesIntent(mContext);
+                }
+            });
         }
     }
 

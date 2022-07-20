@@ -30,7 +30,6 @@ public class MatchFragment extends Fragment {
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
-
     private Button btnMessage;
     private Button btnMap;
 
@@ -53,7 +52,6 @@ public class MatchFragment extends Fragment {
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
-        btnMessage = view.findViewById(R.id.btnMessage);
         btnMap = view.findViewById(R.id.btnMap);
 
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
@@ -67,16 +65,6 @@ public class MatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavigationUtils.displayFragmentLongMatch(((MainActivity) mContext).getSupportFragmentManager());
-            }
-        });
-
-        btnMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.setData(Uri.parse("sms:"));
-                sendIntent.putExtra("sms_body", "hi");
-                startActivity(sendIntent);
             }
         });
 

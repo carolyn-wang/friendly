@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.net.Uri;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -125,4 +126,12 @@ public class NavigationUtils {
             fragmentManager.popBackStack();
         }
     }
+    public static void openMessagesIntent(Context mContext) {
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+        smsIntent.setData(Uri.parse("sms:"));
+        smsIntent.putExtra("address", "12125551212");
+        smsIntent.putExtra("sms_body", "hi");
+        ((MainActivity) mContext).startActivity(smsIntent);
+    }
+
 }

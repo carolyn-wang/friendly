@@ -26,4 +26,5 @@
     <dimen name="bottom_navigation_padding">75dp</dimen>
     <dimen name="availability_card_padding">4dp</dimen>
     <dimen name="pager_availability_height">500dp</dimen>
+    <dimen name="icon_size">25dp</dimen>
 </resources>
