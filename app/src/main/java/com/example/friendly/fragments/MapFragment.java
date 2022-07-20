@@ -55,6 +55,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String KEY_USER_NAME = "firstName";
     private static final String KEY_PLACE_NAME = "name";
     private static final String KEY_PLACE_LOCATION = "location";
+    private static final String KEY_HANGOUT_USER = "hangoutUser";
+    private static final String KEY_HANGOUT_PLACE = "hangoutPlace";
     private static final float INITIAL_ZOOM = 14.0f;
 
     private Context mContext;
@@ -62,6 +64,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int REQUEST_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
+
+    public static MapFragment newInstance(ParseUser hangoutUser, Place hangoutPlace) {
+
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_HANGOUT_USER, hangoutUser);
+        args.putParcelable(KEY_HANGOUT_PLACE, hangoutPlace);
+        MapFragment fragment = new MapFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
@@ -91,10 +103,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         this.mGoogleMap = googleMap;
 
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        showCurrentUserInMap();
-        showClosestUser();
-        showPlacesInMap();
-        showClosestPlace();
+
+        if (getArguments() != null){
+            showCurrentUserInMap();
+
+            ParseUser hangoutUser = getArguments().getParcelable(KEY_HANGOUT_USER);
+            LatLng hangoutUserLocation = new LatLng(hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
+            setMarker(hangoutUserLocation, hangoutUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+
+
+            Place hangoutPlace = getArguments().getParcelable(KEY_HANGOUT_PLACE);
+            ParseGeoPoint hangoutGeopoint = hangoutPlace.getLocation();
+            LatLng hangoutPlaceLocation = new LatLng(hangoutGeopoint.getLatitude(), hangoutGeopoint.getLongitude());
+            setMarker(hangoutPlaceLocation, hangoutPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        }
+        else{
+            showCurrentUserInMap();
+            showClosestUser();
+            showPlacesInMap();
+            showClosestPlace();
+        }
 
         //in old Api Needs to call MapsInitializer before doing any CameraUpdateFactory call
         MapsInitializer.initialize(mActivity);
