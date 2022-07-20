@@ -8,7 +8,7 @@ import com.parse.ParseUser;
 @ParseClassName("Place")
 public class Place extends ParseObject {
     public static final String KEY_NAME = "name";
-    public static final String KEY_LOCATION = "Location";
+    public static final String KEY_LOCATION = "location";
     public static final String KEY_CATEGORY = "category";
 
 

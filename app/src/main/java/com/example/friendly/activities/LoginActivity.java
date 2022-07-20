@@ -67,10 +67,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    //TODO: Add toast if login fails
     //TODO: Limit to only 1 login in case of glitch
     private void loginUser(String username, String password) {
-        Log.i(TAG, "Attempting to login user " + username);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -78,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     NavigationUtils.goMainActivity(LoginActivity.this);
                     Toast.makeText(mContext, R.string.login_success, Toast.LENGTH_SHORT).show();
                 } else {
+                    Toast.makeText(mContext, R.string.login_error, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Issue with login", e);
                 }
 
@@ -86,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signupUser() {
-        Log.i(TAG, "Signing up user ");
         NavigationUtils.goSignupActivity(LoginActivity.this);
     }
 }

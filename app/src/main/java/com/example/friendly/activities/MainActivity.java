@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new CreateQuickMatchFragment();
                         break;
                     default:
-                        Log.d(TAG, "Unable to create fragment");
+                        fragment = new MatchFragment();
                         return true;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();

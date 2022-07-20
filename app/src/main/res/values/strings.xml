@@ -69,5 +69,10 @@
     <string name="query_key_current_user">user</string>
     <string name="query_key_past">past</string>
     <string name="query_key_quick">quick</string>
+    <string name="sign_up_password_error">Passwords don\'t match</string>
+    <string name="sign_up_success">Successful Sign Up!</string>
+    <string name="quick_match_error">Error creating hangout</string>
+    <string name="quick_match_success">Hangout Created!</string>
+    <string name="login_error">Issue with login</string>
 
 </resources>

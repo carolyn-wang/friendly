@@ -162,10 +162,10 @@ public class CreateQuickMatchFragment extends Fragment {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
-                    Toast.makeText(mContext, "Error creating hangout", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, getResources().getString(R.string.quick_match_error), Toast.LENGTH_LONG).show();
                     Log.i(TAG, e.getMessage());
                 }
-                Toast.makeText(mContext, "Hangout Created!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, getResources().getString(R.string.quick_match_success), Toast.LENGTH_SHORT).show();
                 NavigationUtils.goMainActivity(mActivity);
             }
         });

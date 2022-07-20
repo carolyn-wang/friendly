@@ -33,7 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String KEY_HOBBY_PREFERENCE = "hobbyPreference";
     private static final String KEY_ACTIVITY_PREFERENCE = "activityPreference";
     private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
-    private static final String KEY_LOCATION = "Location";
+    private static final String KEY_LOCATION = "location";
     private static final String KEY_PREFERENCE_WEIGHTS = "preferenceWeights";
     private static final String KEY_AVERAGE_SIMILARITY_SCORES = "averageSimilarityScores";
 
@@ -81,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void signupUser(String firstName, String lastName, String email, String username, String password, String confirmPassword) throws JSONException {
        if (!password.equals(confirmPassword)){
-           Toast.makeText(mContext, "Passwords don't match", Toast.LENGTH_LONG).show();
+           Toast.makeText(mContext, R.string.sign_up_password_error, Toast.LENGTH_LONG).show();
        }
         ParseUser user = new ParseUser();
         // Set the user's username and password, which can be obtained by a forms
@@ -110,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(SignUpActivity.this, "Successful Sign Up!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.sign_up_success), Toast.LENGTH_SHORT).show();
                     NavigationUtils.goPreferencesActivity(SignUpActivity.this);
                 } else {
                     ParseUser.logOut();

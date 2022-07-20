@@ -71,7 +71,6 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO: move keys into final String
         queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
 
         if (queryConditions != null) {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PlaceQuery {
     private static final String TAG = "PlaceQuery";
-    private static final String KEY_USER_LOCATION = "Location";
+    private static final String KEY_USER_LOCATION = "location";
     private static final double MAX_DISTANCE_MILES = 15;
 
     public List<Place> queryNearbyPlaces() {

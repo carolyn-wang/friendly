@@ -29,10 +29,8 @@ public class DisplayUtils {
 
     public static String getEmojiByPlace(Context mContext, Place place) {
         String category = place.getCategory();
-        int emojiUnicode;
-        if (category == null) {
-            emojiUnicode = R.integer.pin_emoji;
-        } else {
+        int emojiUnicode = R.integer.pin_emoji;
+        if (category != null) {
             switch (category) {
                 case TYPE_BAR:
                     emojiUnicode = R.integer.bar_emoji;
