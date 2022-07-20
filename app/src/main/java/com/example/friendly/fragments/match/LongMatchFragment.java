@@ -3,26 +3,38 @@ package com.example.friendly.fragments.match;
 import android.content.Context;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.friendly.R;
-import com.example.friendly.objects.Hangout;
+import com.example.friendly.utils.DisplayUtils;
 import com.example.friendly.utils.MatchingUtils;
+import com.example.friendly.utils.NavigationUtils;
+import com.example.friendly.R;
+import com.example.friendly.activities.MainActivity;
+import com.example.friendly.objects.Hangout;
+import com.example.friendly.objects.Place;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class LongMatchFragment extends Fragment {
     private static final String TAG = "LongMatchFragment";
+    private static final int INDEX_PLACE = 0;
     private Context mContext;
 
     private static final String KEY_MATCHED_USER = "matchedUser";
@@ -36,7 +48,7 @@ public class LongMatchFragment extends Fragment {
     private TextView tvDate2;
     private TextView tvDate3;
     private CardView cdCoupon;
-
+    private Button btnCreateHangout;
 
     public LongMatchFragment() {
     }
@@ -63,24 +75,53 @@ public class LongMatchFragment extends Fragment {
         tvDate2 = view.findViewById(R.id.tvDate2);
         tvDate3 = view.findViewById(R.id.tvDate3);
         cdCoupon = view.findViewById(R.id.cdCoupon);
+        btnCreateHangout = view.findViewById(R.id.btnCreateHangout);
 
         while (matchedUser == null) {
             matchedUser = topMatchesIter.next();
         }
 
-        MatchingUtils.getMatchDetails(matchedUser);
-
         tvHangoutUser2.setText(matchedUser.getUsername());
-        tvMatchedPlace.setText("Place");
-        tvDate1.setText("date");
-        tvDate2.setText("date");
-        tvDate3.setText("date");
 
-//        cdCoupon.setBackgroundColor(DisplayUtils.getCardColor(mContext, place));
+        List<Place> placeList = ((MainActivity) mContext).getPlaceList();
+        List<Object> matchDetails = MatchingUtils.getMatchDetails(matchedUser, placeList);
+        Place matchPlace = (Place) matchDetails.get(INDEX_PLACE);
 
+        cdCoupon.setBackgroundColor(DisplayUtils.getCardColor(mContext, matchPlace));
+
+        tvMatchedPlace.setText(matchPlace.getName());
+        tvDate1.setText((String) matchDetails.get(1));
+        tvDate2.setText((String) matchDetails.get(2));
+        tvDate3.setText((String) matchDetails.get(3));
 
         setEnterTransition(TransitionInflater.from(getContext())
                 .inflateTransition(R.transition.slide_transition));
+
+        btnCreateHangout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createHangout(matchedUser, matchPlace);
+            }
+        });
     }
 
+    //TODO: add checks here (cannot create hangout in past)
+    private void createHangout(ParseUser user2, Place place) {
+        Hangout hangout = new Hangout();
+        hangout.setUser1(ParseUser.getCurrentUser());
+        hangout.setUser2(user2);
+        hangout.setLocation(place);
+        hangout.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Toast.makeText(mContext, ((MainActivity) mContext).getResources().getString(R.string.create_hangout_error), Toast.LENGTH_LONG).show();
+                    Log.i(TAG, e.getMessage());
+                } else {
+                    NavigationUtils.goMainActivity(getActivity());
+                }
+            }
+        });
+
+    }
 }

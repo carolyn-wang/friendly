@@ -87,7 +87,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate2" />
 
-    <include layout="@layout/item_coupon_card" />
+    <include
+        layout="@layout/item_coupon_card" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateHangout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_create_quick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cdCoupon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

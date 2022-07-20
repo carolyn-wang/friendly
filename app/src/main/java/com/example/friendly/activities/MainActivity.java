@@ -112,4 +112,8 @@ public class MainActivity extends AppCompatActivity {
     public List<Place> getPlaceList(){
         return placeQuery.getNearbyPlaces();
     }
+
+    public String[] getPlaceNames(){
+        return placeQuery.getNearbyPlaceNames();
+    }
 }

@@ -1,7 +1,12 @@
 package com.example.friendly.utils;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.friendly.activities.MainActivity;
+import com.example.friendly.objects.Hangout;
+import com.example.friendly.objects.Place;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
@@ -11,7 +16,10 @@ import com.parse.SaveCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -235,7 +243,6 @@ public class MatchingUtils {
                     updatedScores[i] = updatedScore;
                     double updatedWeight = preferenceWeights.getDouble(i) * (updatedScore / averageScore);
                     updatedWeights[i] = updatedWeight;
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -258,7 +265,17 @@ public class MatchingUtils {
         adjustWeights(matchedUser, -1);
     }
 
-    public static void getMatchDetails(ParseUser matchedUser) {
+    public static List<Object> getMatchDetails(ParseUser matchedUser, List<Place> placeList) {
+        List<Object> matchDetails = new ArrayList<Object>();
+        int randomPlaceInd = (int) Math.floor(Math.random() * placeList.size());
+        Object matchPlace = placeList.get(randomPlaceInd);
+        matchDetails.add(matchPlace);
+        matchDetails.add("Monday 4PM - 6PM");
+        matchDetails.add("Tuesday 12PM - 2:30PM");
+        matchDetails.add("Thursday 4PM - 6PM");
 
+        return matchDetails;
     }
+
+
 }

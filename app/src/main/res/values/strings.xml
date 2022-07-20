@@ -82,8 +82,8 @@
     <string name="KEY_QUERY_QUICK">quick</string>
     <string name="sign_up_password_error">Passwords don\'t match</string>
     <string name="sign_up_success">Successful Sign Up!</string>
-    <string name="quick_match_error">Error creating hangout</string>
-    <string name="quick_match_success">Hangout Created!</string>
+    <string name="create_hangout_error">Error creating hangout</string>
+    <string name="create_hangout_success">Hangout Created!</string>
     <string name="login_error">Issue with login</string>
 
     <string name="label_monday">M</string>

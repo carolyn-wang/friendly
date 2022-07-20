@@ -31,6 +31,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,7 +62,7 @@ public class CreateQuickMatchFragment extends Fragment {
     private static SimpleDateFormat timeFormat;
 
     private String[] placeNameArray;
-    private List<Place> placeList;
+    private List<Place> placeList = new ArrayList<>();
 
     public CreateQuickMatchFragment() {
 
@@ -80,10 +81,7 @@ public class CreateQuickMatchFragment extends Fragment {
         mActivity = getActivity();
 
         placeList = ((MainActivity) mContext).getPlaceList();
-        placeNameArray = new String[placeList.size()];
-        for (int i=0; i<placeList.size(); i++){
-            placeNameArray[i] = placeList.get(i).getName();
-        }
+        placeNameArray = ((MainActivity) mContext).getPlaceNames();
 
         autoCompletePlaces = view.findViewById(R.id.autoCompletePlaces);
         editTextDate = view.findViewById(R.id.editTextDate);
@@ -152,27 +150,27 @@ public class CreateQuickMatchFragment extends Fragment {
     //TODO: add checks here (cannot create hangout in past)
     private void createHangout(Date date, ParseUser user1, String place) {
         Hangout hangout = new Hangout();
-        List <String> placeNameList = Arrays.asList(placeNameArray);
-        if (placeNameList.contains(place)){ // if location is one of autocomplete options
+        List<String> placeNameList = Arrays.asList(placeNameArray);
+        if (placeNameList.contains(place)) { // if location is one of autocomplete options
             int index = placeNameList.indexOf(place);
             hangout.setLocation(placeList.get(index));
         }
         // TODO: else create some way to store location that's not preexisting
-
         hangout.setDate(date);
         hangout.setUser1(user1);
         hangout.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
-                    Toast.makeText(mContext, getResources().getString(R.string.quick_match_error), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, ((MainActivity) mContext).getResources().getString(R.string.create_hangout_error), Toast.LENGTH_LONG).show();
                     Log.i(TAG, e.getMessage());
                 }
-                Toast.makeText(mContext, getResources().getString(R.string.quick_match_success), Toast.LENGTH_SHORT).show();
-                NavigationUtils.displayFragmentQuickMatch(getParentFragmentManager());
+                Toast.makeText(mContext, ((MainActivity) mContext).getResources().getString(R.string.create_hangout_success), Toast.LENGTH_SHORT).show();
+                NavigationUtils.goMainActivity(getActivity());
             }
         });
     }
+
 
     /**
      * Sets the spinner hour and minutes to current time
