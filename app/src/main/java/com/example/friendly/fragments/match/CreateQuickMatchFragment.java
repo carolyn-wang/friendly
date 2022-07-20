@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -22,8 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.friendly.NavigationUtils;
-import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
+import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 import com.google.android.material.textfield.TextInputEditText;
@@ -76,9 +75,7 @@ public class CreateQuickMatchFragment extends Fragment {
         mContext = getContext();
         mActivity = getActivity();
 
-//        Query Place list for locations and make String[] with only location names
-        PlaceQuery placeQuery = new PlaceQuery();
-        placeList = placeQuery.queryNearbyPlaces();
+        placeList = ((MainActivity) mContext).getPlaceList();
         placeNameArray = new String[placeList.size()];
         for (int i=0; i<placeList.size(); i++){
             placeNameArray[i] = placeList.get(i).getName();

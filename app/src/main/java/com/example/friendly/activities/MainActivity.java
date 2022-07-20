@@ -13,14 +13,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.friendly.NavigationUtils;
+import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
 import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.fragments.ProfileFragment;
 import com.example.friendly.fragments.SearchFragment;
 import com.example.friendly.fragments.match.CreateQuickMatchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
+import com.example.friendly.objects.Place;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,12 +35,16 @@ public class MainActivity extends AppCompatActivity {
     private MaterialToolbar topAppBar;
     private BottomNavigationView bottomNavigationView;
     private Fragment fragment;
+    private PlaceQuery placeQuery = new PlaceQuery();
+    private List<Place> placeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = getBaseContext();
+
+        placeQuery.queryNearbyPlaces();
 
         topAppBar = findViewById(R.id.topAppBar);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -91,5 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default fragment
         bottomNavigationView.setSelectedItemId(R.id.action_match);
+    }
+
+    public List<Place> getPlaceList(){
+        return placeQuery.getNearbyPlaces();
     }
 }
