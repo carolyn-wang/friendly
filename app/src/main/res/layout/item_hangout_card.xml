@@ -48,16 +48,17 @@
             android:id="@+id/ibMessage"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
+            android:layout_marginEnd="@dimen/icon_margin"
             android:background="@drawable/sms"
-            card_view:layout_constraintLeft_toLeftOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/tvHangoutLocation" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintRight_toLeftOf="@+id/ibMap" />
 
         <ImageButton
             android:id="@+id/ibMap"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:background="@drawable/location"
-            card_view:layout_constraintLeft_toRightOf="@id/ibMessage"
-            card_view:layout_constraintTop_toBottomOf="@+id/tvHangoutLocation" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintRight_toRightOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

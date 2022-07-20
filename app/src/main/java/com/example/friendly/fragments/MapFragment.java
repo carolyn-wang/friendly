@@ -48,13 +48,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mGoogleMap;
     private MapView mapView;
-    private PlaceQuery placeQuery;
 
     private static final String TAG = "MapsActivity";
     private static final String KEY_USER_LOCATION = "location";
-    private static final String KEY_USER_NAME = "firstName";
-    private static final String KEY_PLACE_NAME = "name";
-    private static final String KEY_PLACE_LOCATION = "location";
+    private static final String KEY_PLACE_LOCATION = "Location";
     private static final String KEY_HANGOUT_USER = "hangoutUser";
     private static final String KEY_HANGOUT_PLACE = "hangoutPlace";
     private static final float INITIAL_ZOOM = 14.0f;
@@ -104,20 +101,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-        if (getArguments() != null){
+        if (getArguments() != null) {
             showCurrentUserInMap();
-
-            ParseUser hangoutUser = getArguments().getParcelable(KEY_HANGOUT_USER);
-            LatLng hangoutUserLocation = new LatLng(hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-            setMarker(hangoutUserLocation, hangoutUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
-
-            Place hangoutPlace = getArguments().getParcelable(KEY_HANGOUT_PLACE);
-            ParseGeoPoint hangoutGeopoint = hangoutPlace.getLocation();
-            LatLng hangoutPlaceLocation = new LatLng(hangoutGeopoint.getLatitude(), hangoutGeopoint.getLongitude());
-            setMarker(hangoutPlaceLocation, hangoutPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        }
-        else{
+            showUserInMap(getArguments().getParcelable(KEY_HANGOUT_USER));
+            showPlaceInMap(getArguments().getParcelable(KEY_HANGOUT_PLACE));
+        } else {
             showCurrentUserInMap();
             showClosestUser();
             showPlacesInMap();
@@ -127,7 +115,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //in old Api Needs to call MapsInitializer before doing any CameraUpdateFactory call
         MapsInitializer.initialize(mActivity);
     }
-
 
     /**
      * Function that saves user's current location to database then returns it.
@@ -281,15 +268,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public void showPlacesInMap() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
-        query.whereExists(KEY_USER_LOCATION);
+        query.whereExists(KEY_PLACE_LOCATION);
         query.findInBackground(new FindCallback<Place>() {
             @Override
             public void done(List<Place> places, ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < places.size(); i++) {
-                        LatLng storeLocation = new LatLng(places.get(i).getLocation().getLatitude(), places.get(i).getLocation().getLongitude());
-                        setMarker(storeLocation, places.get(i).getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                    }
+                    for (Place place : places) {
+                        showPlaceInMap(place);
+                      }
                 } else {
                     Log.i(TAG, "Error: " + e.getMessage());
                 }
@@ -305,7 +291,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      */
     public void showClosestPlace() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
-        query.whereNear(KEY_USER_LOCATION, getCurrentUserParseLocation());
+        query.whereNear(KEY_PLACE_LOCATION, getCurrentUserParseLocation());
         query.setLimit(1);
         query.findInBackground(new FindCallback<Place>() {
             @Override
@@ -327,6 +313,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         ParseQuery.clearAllCachedResults();
 
     }
+
+
+    /**
+     * Retrieves User location from database and places marker.
+     * @param hangoutUser ParseUser to create marker for.
+     */
+    private void showUserInMap(ParseUser hangoutUser) {
+        LatLng hangoutUserLocation = new LatLng(hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
+        setMarker(hangoutUserLocation, hangoutUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+    }
+
+    /**
+     * Retrieves Place location from database and places marker.
+     * @param hangoutPlace Place to create marker for.
+     */
+    private void showPlaceInMap(Place hangoutPlace) {
+        ParseGeoPoint hangoutGeopoint = hangoutPlace.getLocation();
+        LatLng hangoutPlaceLocation = new LatLng(hangoutGeopoint.getLatitude(), hangoutGeopoint.getLongitude());
+        setMarker(hangoutPlaceLocation, hangoutPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+    }
+
 
     /**
      * Zoom camera to location
