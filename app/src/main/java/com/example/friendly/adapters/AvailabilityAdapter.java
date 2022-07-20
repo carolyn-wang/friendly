@@ -72,8 +72,7 @@ public class AvailabilityAdapter extends BaseAdapter {
         if (availabilityPreferenceForDay.get(position)) {
             view.setActivated(true);
             view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
-        }
-        else{
+        } else {
             view.setActivated(false);
             view.setBackgroundColor(view.getResources().getColor(R.color.white));
         }
@@ -98,7 +97,6 @@ public class AvailabilityAdapter extends BaseAdapter {
     }
 
     private static final class GridDragListener implements View.OnDragListener {
-
         @Override
         public boolean onDrag(View view, DragEvent event) {
 
@@ -134,6 +132,5 @@ public class AvailabilityAdapter extends BaseAdapter {
             }
             return false;
         }
-
     }
 }
