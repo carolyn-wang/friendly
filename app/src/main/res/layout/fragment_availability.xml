@@ -18,7 +18,7 @@
         android:id="@+id/weekTabs"
         layout="@layout/item_week_tabs"/>
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pagerAvailability"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pager_availability_height"

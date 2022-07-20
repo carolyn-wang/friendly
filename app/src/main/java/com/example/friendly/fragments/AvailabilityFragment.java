@@ -11,23 +11,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class AvailabilityFragment extends Fragment {
     private Button btnSu;
     private int pagerIndex = 0;
     private static final int NUM_PAGES = 7;
-    private ViewPager mPager;
-    private PagerAdapter pagerAdapter;
+    private ViewPager2 mPager;
+    private ScreenSlidePagerAdapter pagerAdapter;
     private Button saveButton;
     private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
 
@@ -86,8 +87,8 @@ public class AvailabilityFragment extends Fragment {
         btnSu = view.findViewById(R.id.btnSu);
         saveButton = view.findViewById(R.id.saveButton);
 
-        mPager = (ViewPager) view.findViewById(R.id.pagerAvailability);
-        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        mPager = (ViewPager2) view.findViewById(R.id.pagerAvailability);
+        mPager.setPageTransformer(new ZoomOutPageTransformer());
 
         pagerAdapter = new ScreenSlidePagerAdapter(getParentFragmentManager());
         mPager.setAdapter(pagerAdapter);
@@ -102,9 +103,10 @@ public class AvailabilityFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     buttons.get(pagerIndex).setBackgroundColor(inactiveButtonColor);
-                    pagerIndex = buttons.indexOf(btn);
                     btn.setBackgroundColor(getResources().getColor(activeButtonColor));
-                    mPager.setCurrentItem(pagerIndex);
+                    updateAvailabilityPreferences(pagerIndex, v); // save changes from previous page
+                    mPager.setCurrentItem(buttons.indexOf(btn));
+                    pagerIndex = buttons.indexOf(btn);
                 }
             });
         }
@@ -112,57 +114,61 @@ public class AvailabilityFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateAvailabilityPreferences();
+                updateAvailabilityPreferences(pagerIndex, v);
                 NavigationUtils.displayFragmentProfile(getParentFragmentManager());
             }
         });
     }
 
-    private void updateAvailabilityPreferences() {
+    /**
+     * Updates availability preferences Boolean List and saves new list to database.
+     * Called upon switching fragment in Pageviewer.
+     * @param pageIndex Index of page to update
+     */
+    private void updateAvailabilityPreferences(int pageIndex, View textview) {
         List<Boolean> userAvailabilityPreference = ParseUser.getCurrentUser().getList(KEY_AVAILABILITY_PREFERENCE);
-
         int availability_options_len = getResources().getStringArray(R.array.time_options_array).length;
-        for (int page = 0; page < pagerAdapter.getCount(); page++) {
-            for (int row = 0; row < availability_options_len; row++) {
-                ListView listView = (ListView) mPager.getChildAt(page);
+        ListView listView = (ListView)(this.getChildFragmentManager().findFragmentByTag("f" + mPager.getCurrentItem()).getView());
+        for (int row = 0; row < availability_options_len; row++) {
                 if (listView != null) {
                     TextView textView = (TextView) (listView).getChildAt(row);
                     if (textView != null) {
-                        userAvailabilityPreference.set((page * availability_options_len ) + row, textView.isActivated());
+                        userAvailabilityPreference.set((pageIndex * availability_options_len ) + row, textView.isActivated());
                     }
                 }
-            }
-        }
-
-        for (Boolean b: userAvailabilityPreference){
-            Log.i(TAG, b.toString());
         }
         ParseUser.getCurrentUser().put(KEY_AVAILABILITY_PREFERENCE, userAvailabilityPreference);
+        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+            }
+        });
     }
 
 
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * A simple pager adapter that represents 7 ScreenSlidePageFragment objects, in
      * sequence.
      */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(AvailabilityFragment.this);
         }
 
+        @NonNull
         @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             return new AvailabilityList(getContext(), position);
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return NUM_PAGES;
         }
     }
 
 
-    private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+    private class ZoomOutPageTransformer implements ViewPager2.PageTransformer {
         private static final float MIN_SCALE = 1.0f;
         private static final float MIN_ALPHA = 0.6f;
 

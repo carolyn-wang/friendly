@@ -43,6 +43,7 @@ public class AvailabilityAdapter extends BaseAdapter {
         availabilityPreferenceForDay = availabilityPreference.subList(startIndex, endIndex);
     }
 
+    @Override
     public int getCount() {
         return timeOptionsArray.length;
     }
@@ -55,12 +56,12 @@ public class AvailabilityAdapter extends BaseAdapter {
         return 0;
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view;
         if (convertView == null) {
             view = new TextView(mContext);
             Log.i(TAG, position + " ");
-            view.setActivated(false);
             view.setOnTouchListener(new GridTouchListener());
             view.setOnDragListener(new GridDragListener());
         } else {
@@ -68,10 +69,14 @@ public class AvailabilityAdapter extends BaseAdapter {
         }
         view.setText(timeOptionsArray[position]);
         // set user's previous time preferences as highlighted
-            if (availabilityPreferenceForDay.get(position)){
-                view.setActivated(true);
-                view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
-            }
+        if (availabilityPreferenceForDay.get(position)) {
+            view.setActivated(true);
+            view.setBackgroundColor(view.getResources().getColor(R.color.light_tan));
+        }
+        else{
+            view.setActivated(false);
+            view.setBackgroundColor(view.getResources().getColor(R.color.white));
+        }
         return view;
     }
 
@@ -87,8 +92,8 @@ public class AvailabilityAdapter extends BaseAdapter {
     public static class EmptyDragShadowBuilder extends View.DragShadowBuilder {
         @Override
         public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
-            outShadowSize.set(1,1);
-            outShadowTouchPoint.set(0,0);
+            outShadowSize.set(1, 1);
+            outShadowTouchPoint.set(0, 0);
         }
     }
 
