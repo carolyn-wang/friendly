@@ -12,10 +12,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
@@ -31,6 +33,7 @@ import java.util.List;
  */
 public class AvailabilityFragment extends Fragment {
 
+    private static final String TAG = "AvailabilityFragment";
     private static Context mContext;
     private Button btnM;
     private Button btnTu;

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
