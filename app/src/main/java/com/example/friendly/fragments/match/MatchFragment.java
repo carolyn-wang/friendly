@@ -71,18 +71,18 @@ public class MatchFragment extends Fragment {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
+                FragmentManager fragmentManager = ((MainActivity) mContext).getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 MapFragment mapFragment = new MapFragment();
                 ft.replace(R.id.flContainer, mapFragment)
-                        .addToBackStack("map")
+                        .addToBackStack(null)
                         .commit();
             }
         });
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
         Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
-        ft.add(R.id.upcomingHangouts, hangoutDetailFragment).commit();
+        ft.add(R.id.upcomingHangouts, hangoutDetailFragment).addToBackStack(null).commit();
 
     }
 }

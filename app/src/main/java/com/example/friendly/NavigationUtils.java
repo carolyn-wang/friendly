@@ -27,6 +27,10 @@ import com.google.android.material.transition.MaterialContainerTransform;
 
 public class NavigationUtils {
 
+    private static final String KEY_SMS = "sms:";
+    private static final String KEY_SMS_ADDRESS = "address";
+    private static final String KEY_SMS_BODY = "sms_body";
+
     public static void goActivity(Activity activity, Class targetClass) {
         Context context = activity.getBaseContext();
         Intent i = new Intent(context, targetClass);
@@ -128,9 +132,9 @@ public class NavigationUtils {
     }
     public static void openMessagesIntent(Context mContext) {
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-        smsIntent.setData(Uri.parse("sms:"));
-        smsIntent.putExtra("address", "12125551212");
-        smsIntent.putExtra("sms_body", "hi");
+        smsIntent.setData(Uri.parse(KEY_SMS));
+        smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.default_number));
+        smsIntent.putExtra(KEY_SMS_BODY, mContext.getResources().getString(R.string.default_text));
         ((MainActivity) mContext).startActivity(smsIntent);
     }
 
