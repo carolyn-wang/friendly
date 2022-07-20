@@ -89,4 +89,7 @@
     <string name="availability_next_btn">Next</string>
     <string name="default_text">hi</string>
     <string name="default_number">12125551212</string>
+
+    <string name="template_messaging_text">hi</string>
+    <string name="template_messaging_number">12125551212</string>
 </resources>

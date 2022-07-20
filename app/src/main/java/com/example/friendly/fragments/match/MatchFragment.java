@@ -79,7 +79,7 @@ public class MatchFragment extends Fragment {
                         .commit();
             }
         });
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
         Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.upcomingHangouts, hangoutDetailFragment).addToBackStack(null).commit();

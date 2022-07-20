@@ -133,8 +133,8 @@ public class NavigationUtils {
     public static void openMessagesIntent(Context mContext) {
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
         smsIntent.setData(Uri.parse(KEY_SMS));
-        smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.default_number));
-        smsIntent.putExtra(KEY_SMS_BODY, mContext.getResources().getString(R.string.default_text));
+        smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.template_messaging_number));
+        smsIntent.putExtra(KEY_SMS_BODY, mContext.getResources().getString(R.string.template_messaging_text));
         ((MainActivity) mContext).startActivity(smsIntent);
     }
 
