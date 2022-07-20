@@ -65,10 +65,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private PlaceQuery placeQuery;
 
     private static final String TAG = "MapsActivity";
-    private static final String KEY_USER_LOCATION = "Location";
+    private static final String KEY_USER_LOCATION = "location";
     private static final String KEY_USER_NAME = "firstName";
     private static final String KEY_PLACE_NAME = "name";
-    private static final String KEY_PLACE_LOCATION = "Location";
+    private static final String KEY_PLACE_LOCATION = "location";
     private static final float INITIAL_ZOOM = 14.0f;
 
     private Context mContext;
