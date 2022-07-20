@@ -25,6 +25,7 @@ public class MatchingUtils {
     private static final String KEY_HOBBY_PREFERENCE = "hobbyPreference";
     private static final String KEY_YEAR_PREFERENCE = "yearPreference";
     private static final String KEY_ACTIVITY_PREFERENCE = "activityPreference";
+    private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
     private static final int USER_QUERY_LIMIT = 13;
     private static final double MAX_DISTANCE_MILES = 3.0;
     private static final int YEAR_OPTIONS_LENGTH = 5;
@@ -34,7 +35,8 @@ public class MatchingUtils {
     private static final int KEY_ACTIVITY_WEIGHT_INDEX = 1;
     private static final int KEY_HOBBY_WEIGHT_INDEX = 2;
     private static final int KEY_YEAR_WEIGHT_INDEX = 3;
-    private static final int NUM_WEIGHTS = 4;
+    private static final int KEY_AVAILABILITY_WEIGHT_INDEX = 4;
+    private static final int NUM_WEIGHTS = 5;
 
     /**
      * Matching algorithm that retrieves best user matches for current user based on:
@@ -102,19 +104,24 @@ public class MatchingUtils {
         double activityWeight = (double) preferenceWeights.getDouble(KEY_ACTIVITY_WEIGHT_INDEX);
         double hobbyWeight = (double) preferenceWeights.getDouble(KEY_HOBBY_WEIGHT_INDEX);
         double yearWeight = (double) preferenceWeights.getDouble(KEY_YEAR_WEIGHT_INDEX);
+        double availabilityWeight = (double) preferenceWeights.getDouble(KEY_AVAILABILITY_WEIGHT_INDEX);
         double distanceScore = MAX_DISTANCE_MILES - currentLocation.distanceInMilesTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
         double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
-        Log.d(TAG, "distance: " + distanceScore
+        double availabilityScore = getArraySimilarityScore(nearbyUser, KEY_AVAILABILITY_PREFERENCE);
+
+        Log.i(TAG, "distance: " + distanceScore
                 + "; hobby: " + hobbyScore
                 + "; year: " + yearScore
-                + "; activity: " + activityScore);
+                + "; activity: " + activityScore
+                + "; availability: " + availabilityScore);
 
         double[] scoresArray = {distanceWeight * distanceScore,
                 activityWeight * activityScore,
                 hobbyWeight * hobbyScore,
-                yearWeight * yearScore};
+                yearWeight * yearScore,
+                availabilityWeight * availabilityScore};
         return scoresArray;
     }
 

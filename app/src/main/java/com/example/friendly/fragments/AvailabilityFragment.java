@@ -46,7 +46,7 @@ public class AvailabilityFragment extends Fragment {
     private PagerAdapter pagerAdapter;
     private Button saveButton;
 
-    private final static int activeButtonColor = Color.BLACK;
+    private final static int activeButtonColor = R.color.blue;
     private final static int inactiveButtonColor = Color.WHITE;
 
 
@@ -86,7 +86,7 @@ public class AvailabilityFragment extends Fragment {
 
         List<Button> buttons = Arrays.asList(btnM, btnTu, btnW, btnTh, btnF, btnSa, btnSu);
 
-        buttons.get(pagerIndex).setBackgroundColor(activeButtonColor);
+        buttons.get(pagerIndex).setBackgroundColor(getResources().getColor(activeButtonColor));
         mPager.setCurrentItem(pagerIndex);
 
         for (Button btn : buttons) {
@@ -95,7 +95,7 @@ public class AvailabilityFragment extends Fragment {
                 public void onClick(View v) {
                     buttons.get(pagerIndex).setBackgroundColor(inactiveButtonColor);
                     pagerIndex = buttons.indexOf(btn);
-                    btn.setBackgroundColor(activeButtonColor);
+                    btn.setBackgroundColor(getResources().getColor(activeButtonColor));
                     mPager.setCurrentItem(pagerIndex);
                 }
             });
