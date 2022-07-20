@@ -19,6 +19,7 @@ import android.widget.Button;
 
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.activities.PreferencesActivity;
 
 import java.util.Arrays;
 import java.util.List;

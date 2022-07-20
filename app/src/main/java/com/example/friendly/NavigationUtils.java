@@ -14,6 +14,7 @@ import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.activities.PreferencesActivity;
 import com.example.friendly.activities.SignUpActivity;
+import com.example.friendly.fragments.AvailabilityFragment;
 import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.match.QuickMatchDetailFragment;
@@ -59,6 +60,11 @@ public class NavigationUtils {
         ft.replace(R.id.flContainer, new LongMatchFragment())
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static void displayFragmentAvailability(FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.flContainer, new AvailabilityFragment()).commit();
     }
 
     /**

@@ -6,12 +6,17 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.adapters.PreferencesAdapter;
+import com.example.friendly.fragments.AvailabilityFragment;
+import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.objects.Preference;
 
 import java.util.ArrayList;

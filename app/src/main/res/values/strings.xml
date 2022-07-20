@@ -82,5 +82,7 @@
     <string name="btn_m">M</string>
     <string name="btn_tu">Tu</string>
     <string name="btn_w">W</string>
+    <string name="change_availability_btn">Change Availability</string>
+    <string name="availability_title">Availability Preference</string>
 
 </resources>

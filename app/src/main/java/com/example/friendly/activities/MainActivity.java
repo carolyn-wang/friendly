@@ -15,7 +15,7 @@ import com.example.friendly.NavigationUtils;
 import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
 import com.example.friendly.fragments.MapFragment;
-import com.example.friendly.fragments.AvailabilityFragment;
+import com.example.friendly.fragments.ProfileFragment;
 import com.example.friendly.fragments.SearchFragment;
 import com.example.friendly.fragments.match.CreateQuickMatchFragment;
 import com.example.friendly.fragments.match.MatchFragment;
@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new MatchFragment();
                         break;
                     case R.id.action_profile:
-//                        fragment = new ProfileFragment();
-                        fragment = new AvailabilityFragment();
+                        fragment = new ProfileFragment();
+//                        fragment = new AvailabilityFragment();
                         break;
                     default: return true;
                 }

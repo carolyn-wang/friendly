@@ -64,12 +64,20 @@
         android:text="@string/change_preferences_btn" />
 
     <Button
+        android:id="@+id/btnChangeAvailability"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChangePreferences"
+        android:text="@string/change_availability_btn" />
+
+    <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/log_out_btn"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChangePreferences" />
+        app:layout_constraintTop_toBottomOf="@+id/btnChangeAvailability" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/checkBox"

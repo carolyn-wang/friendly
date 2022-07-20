@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.activities.PreferencesActivity;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
