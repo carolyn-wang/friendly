@@ -11,7 +11,6 @@ public class Place extends ParseObject {
     public static final String KEY_LOCATION = "location";
     public static final String KEY_CATEGORY = "category";
 
-
     public String getName() {
         return getString(KEY_NAME);
     }
