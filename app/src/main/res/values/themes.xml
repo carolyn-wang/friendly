@@ -22,7 +22,7 @@
     <style name="TitleFont">
         <item name="android:fontFamily">@font/nunito_sans_semibold</item>
         <item name="android:textColor">@android:color/darker_gray</item>
-        <item name="android:paddingBottom">@dimen/paddingMedium</item>
+        <item name="android:paddingBottom">@dimen/padding_medium</item>
     </style>
 
     <style name="TitleFont.Big">
@@ -34,10 +34,13 @@
     </style>
 
     <dimen name="fontSizeExtraSmall">15sp</dimen>
-    <dimen name="fontSizeSmall">18sp</dimen>
-    <dimen name="fontSizeMedium">20sp</dimen>
-    <dimen name="fontSizeBig">25sp</dimen>
-    <dimen name="paddingMedium">16dp</dimen>
+    <dimen name="fontSizeSmall">18dp</dimen>
+    <dimen name="fontSizeMedium">20dp</dimen>
+    <dimen name="fontSizeBig">25dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">32dp</dimen>
+
 
     <style name="CardView.Poll" parent="CardView">
         <item name="android:layout_margin">@dimen/poll_card_margin</item>

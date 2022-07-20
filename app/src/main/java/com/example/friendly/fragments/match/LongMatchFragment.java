@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import com.example.friendly.utils.MatchingUtils;
+
 import com.example.friendly.R;
 import com.example.friendly.objects.Hangout;
+import com.example.friendly.utils.MatchingUtils;
 import com.parse.ParseUser;
 
 import java.util.Collection;
@@ -30,6 +32,10 @@ public class LongMatchFragment extends Fragment {
     private TextView tvHangoutUser2;
     private TextView tvMatchedPlace;
     private TextView tvHangoutDate;
+    private TextView tvDate1;
+    private TextView tvDate2;
+    private TextView tvDate3;
+    private CardView cdCoupon;
 
 
     public LongMatchFragment() {
@@ -53,6 +59,10 @@ public class LongMatchFragment extends Fragment {
         tvHangoutUser2 = view.findViewById(R.id.tvMatchedUser);
         tvMatchedPlace = view.findViewById(R.id.tvMatchedPlace);
         tvHangoutDate = view.findViewById(R.id.tvHangoutDate);
+        tvDate1 = view.findViewById(R.id.tvDate1);
+        tvDate2 = view.findViewById(R.id.tvDate2);
+        tvDate3 = view.findViewById(R.id.tvDate3);
+        cdCoupon = view.findViewById(R.id.cdCoupon);
 
         while (matchedUser == null) {
             matchedUser = topMatchesIter.next();
@@ -62,6 +72,12 @@ public class LongMatchFragment extends Fragment {
 
         tvHangoutUser2.setText(matchedUser.getUsername());
         tvMatchedPlace.setText("Place");
+        tvDate1.setText("date");
+        tvDate2.setText("date");
+        tvDate3.setText("date");
+
+//        cdCoupon.setBackgroundColor(DisplayUtils.getCardColor(mContext, place));
+
 
         setEnterTransition(TransitionInflater.from(getContext())
                 .inflateTransition(R.transition.slide_transition));

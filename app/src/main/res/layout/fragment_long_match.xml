@@ -18,6 +18,7 @@
 
     <TextView
         android:id="@+id/tvMatchedUserLabel"
+        style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/matched_user_label"
@@ -26,6 +27,7 @@
 
     <TextView
         android:id="@+id/tvMatchedUser"
+        style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/matched_user"
@@ -34,6 +36,7 @@
 
     <TextView
         android:id="@+id/tvPlaceLabel"
+        style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/matched_place_label"
@@ -42,6 +45,7 @@
 
     <TextView
         android:id="@+id/tvMatchedPlace"
+        style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/matched_place"
@@ -56,6 +60,34 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPlaceLabel" />
 
+    <TextView
+        android:id="@+id/tvDate1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_large"
+        android:text="@string/date1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDateLabel" />
+
+    <TextView
+        android:id="@+id/tvDate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_large"
+        android:text="@string/date2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate1" />
+
+    <TextView
+        android:id="@+id/tvDate3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_large"
+        android:text="@string/date3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate2" />
+
+    <include layout="@layout/item_coupon_card" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
