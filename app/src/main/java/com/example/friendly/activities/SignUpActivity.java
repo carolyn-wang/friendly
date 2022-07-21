@@ -3,11 +3,8 @@ package com.example.friendly.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
@@ -21,8 +18,8 @@ import com.parse.SignUpCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -36,6 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String KEY_LOCATION = "location";
     private static final String KEY_PREFERENCE_WEIGHTS = "preferenceWeights";
     private static final String KEY_AVERAGE_SIMILARITY_SCORES = "averageSimilarityScores";
+    private static final int DAYS_IN_WEEK = 7;
 
     private static Context mContext;
     private TextInputEditText etFirstName;
@@ -94,13 +92,14 @@ public class SignUpActivity extends AppCompatActivity {
         // setting default values for database
         int hobby_options_len = getResources().getStringArray(R.array.option2).length;
         int activity_options_len = getResources().getStringArray(R.array.option3).length;
-        int availability_options_len = getResources().getStringArray(R.array.option4).length;
+        int availability_options_len = getResources().getStringArray(R.array.time_options_array).length * DAYS_IN_WEEK;
         boolean[] hobbyArr = new boolean[hobby_options_len];
         boolean[] activityArr = new boolean[activity_options_len];
-        boolean[] availabilityArr = new boolean[availability_options_len];
+        List<Boolean> availabilityArr = Arrays.asList(new Boolean[availability_options_len]);
+        Collections.fill(availabilityArr, Boolean.FALSE);
         user.put(KEY_HOBBY_PREFERENCE, new JSONArray(hobbyArr));
         user.put(KEY_ACTIVITY_PREFERENCE, new JSONArray(activityArr));
-        user.put(KEY_AVAILABILITY_PREFERENCE, new JSONArray(availabilityArr));
+        user.put(KEY_AVAILABILITY_PREFERENCE, availabilityArr);
         user.put(KEY_PREFERENCE_WEIGHTS, new JSONArray(getResources().getIntArray(R.array.default_weights)));
         user.put(KEY_AVERAGE_SIMILARITY_SCORES, new JSONArray(getResources().getIntArray(R.array.default_average_similarity)));
         user.put(KEY_LOCATION, new ParseGeoPoint());

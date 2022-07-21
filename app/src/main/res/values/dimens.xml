@@ -24,4 +24,6 @@
     <dimen name="action_bar_height">45dp</dimen>
     <dimen name="nav_icon_size">20dp</dimen>
     <dimen name="bottom_navigation_padding">75dp</dimen>
+    <dimen name="availability_card_padding">4dp</dimen>
+    <dimen name="pager_availability_height">500dp</dimen>
 </resources>

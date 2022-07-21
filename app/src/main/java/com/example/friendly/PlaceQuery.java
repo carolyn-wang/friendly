@@ -16,7 +16,8 @@ public class PlaceQuery {
     private static final String TAG = "PlaceQuery";
     private static final String KEY_LOCATION = "location";
     private static final double MAX_DISTANCE_MILES = 25;
-    private List<Place> nearbyPlaces = new ArrayList<Place>();
+    private List<Place> nearbyPlaces = new ArrayList<>();
+
 
     public void queryNearbyPlaces() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
@@ -24,13 +25,11 @@ public class PlaceQuery {
         query.whereNear(KEY_LOCATION, currentLocation);
         query.whereWithinMiles(KEY_LOCATION, currentLocation, MAX_DISTANCE_MILES);
 
-        List<Place> queryResults = null;
-        query.findInBackground(new FindCallback<Place>() {
+        query.findInBackground(new FindCallback<>() {
             @Override
             public void done(List<Place> places, ParseException e) {
-                nearbyPlaces.addAll(places);
-                for (Place p: places){
-                    Log.i(TAG, p.getName());
+                if (places != null){
+                    nearbyPlaces.addAll(places);
                 }
             }
         });

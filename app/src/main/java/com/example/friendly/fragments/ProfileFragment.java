@@ -36,6 +36,7 @@ public class ProfileFragment extends Fragment {
     private Button btnLogout;
     private Button btnHangoutHistory;
     private Button btnChangePreferences;
+    private Button btnChangeAvailability;
     private TextView tvUsername;
     private TextView tvName;
 
@@ -56,6 +57,7 @@ public class ProfileFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         btnHangoutHistory = view.findViewById(R.id.btnHangoutHistory);
         btnChangePreferences = view.findViewById(R.id.btnChangePreferences);
+        btnChangeAvailability = view.findViewById(R.id.btnChangeAvailability);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
 
@@ -75,6 +77,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavigationUtils.goPreferencesActivity(mActivity);
+            }
+        });
+
+        btnChangeAvailability.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.displayFragmentAvailability(mActivity.getSupportFragmentManager());
             }
         });
 
