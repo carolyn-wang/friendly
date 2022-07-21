@@ -1,14 +1,5 @@
 package com.example.friendly.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
-import com.example.friendly.HangoutQuery;
-import com.example.friendly.PlaceQuery;
-import com.example.friendly.R;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -25,11 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.friendly.NavigationUtils;
+import com.example.friendly.PlaceQuery;
 import com.example.friendly.R;
-import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -39,7 +29,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -50,11 +39,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,20 +49,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mGoogleMap;
     private MapView mapView;
-    private PlaceQuery placeQuery;
 
     private static final String TAG = "MapsActivity";
     private static final String KEY_USER_LOCATION = "location";
-    private static final String KEY_USER_NAME = "firstName";
-    private static final String KEY_PLACE_NAME = "name";
     private static final String KEY_PLACE_LOCATION = "location";
+    private static final String KEY_HANGOUT_USER = "hangoutUser";
+    private static final String KEY_HANGOUT_PLACE = "hangoutPlace";
     private static final float INITIAL_ZOOM = 14.0f;
+
+    private ParseUser hangoutUser;
+    private Place hangoutPlace;
 
     private Context mContext;
     private Activity mActivity;
 
     private static final int REQUEST_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
+
+    public static MapFragment newInstance(ParseUser hangoutUser, Place hangoutPlace) {
+
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_HANGOUT_USER, hangoutUser);
+        args.putParcelable(KEY_HANGOUT_PLACE, hangoutPlace);
+        MapFragment fragment = new MapFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
@@ -98,22 +97,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mContext = getContext();
         mActivity = getActivity();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
+        if (getArguments() != null) {
+            hangoutUser = getArguments().getParcelable(KEY_HANGOUT_USER);
+            hangoutPlace = getArguments().getParcelable(KEY_HANGOUT_PLACE);
+        }
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mGoogleMap = googleMap;
 
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        showCurrentUserInMap();
-        showClosestUser();
-        showPlacesInMap();
-        showClosestPlace();
+
+        if (getArguments() != null) {
+            showCurrentUserInMap();
+            showUserInMap(hangoutUser);
+            showPlaceInMap(hangoutPlace);
+        } else {
+            showCurrentUserInMap();
+            showClosestUser();
+            showPlacesInMap();
+            showClosestPlace();
+        }
 
         //in old Api Needs to call MapsInitializer before doing any CameraUpdateFactory call
         MapsInitializer.initialize(mActivity);
     }
-
 
     /**
      * Function that saves user's current location to database then returns it.
@@ -267,15 +277,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public void showPlacesInMap() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
-        query.whereExists(KEY_USER_LOCATION);
+        query.whereExists(KEY_PLACE_LOCATION);
         query.findInBackground(new FindCallback<Place>() {
             @Override
             public void done(List<Place> places, ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < places.size(); i++) {
-                        LatLng storeLocation = new LatLng(places.get(i).getLocation().getLatitude(), places.get(i).getLocation().getLongitude());
-                        setMarker(storeLocation, places.get(i).getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                    }
+                    for (Place place : places) {
+                        showPlaceInMap(place);
+                      }
                 } else {
                     Log.i(TAG, "Error: " + e.getMessage());
                 }
@@ -291,17 +300,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      */
     public void showClosestPlace() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
-        query.whereNear(KEY_USER_LOCATION, getCurrentUserParseLocation());
+        query.whereNear(KEY_PLACE_LOCATION, getCurrentUserParseLocation());
         query.setLimit(1);
         query.findInBackground(new FindCallback<Place>() {
             @Override
             public void done(List<Place> nearStores, ParseException e) {
                 if (e == null) {
-                    Place closestPlace = nearStores.get(0);
-                    double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getLocation());
-                    Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestPlace), closestPlace.getName(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_SHORT).show();
-                    LatLng closestPlaceLocation = new LatLng(closestPlace.getLocation().getLatitude(), closestPlace.getLocation().getLongitude());
-                    setMarker(closestPlaceLocation, closestPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    if (!nearStores.isEmpty()) {
+                        Place closestPlace = nearStores.get(0);
+                        double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getLocation());
+                        Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestPlace), closestPlace.getName(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_SHORT).show();
+                        LatLng closestPlaceLocation = new LatLng(closestPlace.getLocation().getLatitude(), closestPlace.getLocation().getLongitude());
+                        setMarker(closestPlaceLocation, closestPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    }
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -311,6 +322,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         ParseQuery.clearAllCachedResults();
 
     }
+
+
+    /**
+     * Retrieves User location from database and places marker.
+     * @param hangoutUser ParseUser to create marker for.
+     */
+    private void showUserInMap(ParseUser hangoutUser) {
+        LatLng hangoutUserLocation = new LatLng(hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), hangoutUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
+        setMarker(hangoutUserLocation, hangoutUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+    }
+
+    /**
+     * Retrieves Place location from database and places marker.
+     * @param hangoutPlace Place to create marker for.
+     */
+    private void showPlaceInMap(Place hangoutPlace) {
+        ParseGeoPoint hangoutGeopoint = hangoutPlace.getLocation();
+        LatLng hangoutPlaceLocation = new LatLng(hangoutGeopoint.getLatitude(), hangoutGeopoint.getLongitude());
+        setMarker(hangoutPlaceLocation, hangoutPlace.getName(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+    }
+
 
     /**
      * Zoom camera to location

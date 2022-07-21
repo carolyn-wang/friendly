@@ -1,18 +1,10 @@
 package com.example.friendly.objects;
 
-import android.util.Log;
-
 import com.parse.ParseClassName;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 @ParseClassName("Hangout")
 public class Hangout extends ParseObject {
@@ -48,12 +40,12 @@ public class Hangout extends ParseObject {
         put(KEY_DATE, date);
     }
 
-    public Place getLocation() {
+    public Place getPlace() {
         return (Place) getParseObject(KEY_LOCATION);
     }
 
     public String getLocationName() {
-        return getLocation().getName();
+        return getPlace().getName();
     }
 
     public void setLocation(Place location) {

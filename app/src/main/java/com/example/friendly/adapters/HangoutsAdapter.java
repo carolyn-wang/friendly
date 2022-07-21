@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendly.DisplayUtils;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
@@ -63,6 +67,8 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
         private TextView tvHangoutUser2;
         private TextView tvHangoutDate;
         private TextView tvHangoutLocation;
+        private ImageButton ibMessage;
+        private ImageButton ibMap;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,7 +76,9 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
             tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
-            cdHangout = itemView.findViewById(R.id.cdHangout);
+            cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
+            ibMessage = itemView.findViewById(R.id.ibMessage);
+            ibMap = itemView.findViewById(R.id.ibMap);
         }
 
         public void bind(Hangout hangout) {
@@ -101,8 +109,36 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             }
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
-            tvHangoutLocation.setText(hangout.getLocation() != null ? DisplayUtils.getEmojiByPlace(mContext, hangout.getLocation()) + " " + hangout.getLocationName() : "");
+            if (hangout.getPlace() != null) {
+                tvHangoutLocation.setText(hangout.getLocationName());
+            }
+            // TODO: move into child classes
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
+
+            ibMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavigationUtils.openMessagesIntent(mContext);
+                }
+            });
+
+            if (hangout.getUser2() != null && hangout.getPlace() != null) {
+                ibMap.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FragmentManager fragmentManager = ((MainActivity) mContext).getSupportFragmentManager();
+                        FragmentTransaction ft = fragmentManager.beginTransaction();
+                        MapFragment mapFragment = MapFragment.newInstance(hangout.getUser2(), hangout.getPlace());
+                        ft.replace(R.id.flContainer, mapFragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
+                ibMap.setVisibility(View.VISIBLE);
+            }
+            else{
+                ibMap.setVisibility(View.INVISIBLE);
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.net.Uri;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +26,10 @@ import com.example.friendly.objects.Hangout;
 import com.google.android.material.transition.MaterialContainerTransform;
 
 public class NavigationUtils {
+
+    private static final String KEY_SMS = "sms:";
+    private static final String KEY_SMS_ADDRESS = "address";
+    private static final String KEY_SMS_BODY = "sms_body";
 
     public static void goActivity(Activity activity, Class targetClass) {
         Context context = activity.getBaseContext();
@@ -125,4 +130,12 @@ public class NavigationUtils {
             fragmentManager.popBackStack();
         }
     }
+    public static void openMessagesIntent(Context mContext) {
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+        smsIntent.setData(Uri.parse(KEY_SMS));
+        smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.template_messaging_number));
+        smsIntent.putExtra(KEY_SMS_BODY, mContext.getResources().getString(R.string.template_messaging_text));
+        ((MainActivity) mContext).startActivity(smsIntent);
+    }
+
 }
