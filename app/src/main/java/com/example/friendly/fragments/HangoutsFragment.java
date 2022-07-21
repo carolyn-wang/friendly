@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.friendly.HangoutQuery;
+import com.example.friendly.query.HangoutQuery;
 import com.example.friendly.R;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.objects.Hangout;

@@ -75,6 +75,7 @@
     <string name="quick_match_error">Error creating hangout</string>
     <string name="quick_match_success">Hangout Created!</string>
     <string name="login_error">Issue with login</string>
+    <string name="KEY_USER_FIRST_NAME">firstName</string>
 
     <string name="label_monday">M</string>
     <string name="label_tuesday">Tu</string>

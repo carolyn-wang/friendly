@@ -15,6 +15,7 @@ import com.example.friendly.DisplayUtils;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.friendly.fragments.MapFragment;
+
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.friendly.NavigationUtils;
-import com.example.friendly.PlaceQuery;
+import com.example.friendly.query.PlaceQuery;
 import com.example.friendly.R;
 import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.fragments.SearchFragment;

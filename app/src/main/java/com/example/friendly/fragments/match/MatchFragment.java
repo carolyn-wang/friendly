@@ -1,16 +1,19 @@
 package com.example.friendly.fragments.match;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,6 +22,7 @@ import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.objects.Hangout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
@@ -66,34 +70,63 @@ public class MatchFragment extends Fragment {
             }
         });
 
-        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(mContext);
-        dialogBuilder.setTitle("User 1 <> User 2 @ Place")
-                .setMessage("How did this hangout go?");
-        dialogBuilder.setPositiveButtonIcon(getResources().getDrawable(R.drawable.sentiment_satisfied))
-                .setPositiveButton(null, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Log.i(TAG, "positive");
-                    }
-                });
-//        dialogBuilder.setNeutralButtonIcon(getResources().getDrawable(R.drawable.sentiment_neutral))
-//                .setNeutralButton(null, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        Log.i(TAG, "neutral");
-//                    }
-//                });
-        dialogBuilder.setNegativeButtonIcon(getResources().getDrawable(R.drawable.sentiment_dissatisfied))
-                .setNegativeButton(null, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Log.i(TAG, "negative");
-                    }
-                });
-        dialogBuilder.show();
-
         FragmentManager fm = getParentFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.query_key_future), getString(R.string.query_key_current_user)));
         ft.add(R.id.upcomingHangouts, HangoutsFragment.newInstance(conditions));
         ft.commit();
 
+    }
+
+    private void showFeedbackDialog(Hangout hangout) {
+        LayoutInflater inflater = ((MainActivity) mContext).getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.item_dialog_feedback,
+                null);
+
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(mContext);
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.setView(dialogLayout);
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.setCancelable(true);
+
+        TextView tvDialogUser1 = dialogLayout.findViewById(R.id.tvDialogUser1);
+        TextView tvDialogUser2 = dialogLayout.findViewById(R.id.tvDialogUser2);
+        TextView tvDialogPlace = dialogLayout.findViewById(R.id.tvDialogPlace);
+        ImageButton ibClose = (ImageButton) dialogLayout.findViewById(R.id.ibClose);
+        ImageButton ibPositive = (ImageButton) dialogLayout.findViewById(R.id.ibPositive);
+        ImageButton ibNeutral = (ImageButton) dialogLayout.findViewById(R.id.ibNegative);
+
+        tvDialogUser1.setText(hangout.getUser1().getString(getString(R.string.KEY_USER_FIRST_NAME)));
+        tvDialogUser2.setText(hangout.getUser2().getString(getString(R.string.KEY_USER_FIRST_NAME)));
+        tvDialogPlace.setText(hangout.getLocationName());
+
+
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        ibPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+            }
+        });
+
+
+        ibNeutral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+            }
+        });
+
+        ibClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+            }
+        });
     }
 }
