@@ -52,4 +52,7 @@ public class Hangout extends ParseObject {
         put(KEY_LOCATION, location);
     }
 
+    public boolean equals(Hangout hangout){
+        return hangout.getObjectId().equals(this.getObjectId());
+    }
 }

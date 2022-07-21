@@ -163,7 +163,7 @@ public class CreateQuickMatchFragment extends Fragment {
                     Log.i(TAG, e.getMessage());
                 }
                 Toast.makeText(mContext, getResources().getString(R.string.quick_match_success), Toast.LENGTH_SHORT).show();
-                NavigationUtils.goMainActivity(mActivity);
+                NavigationUtils.displayFragmentQuickMatch(getParentFragmentManager());
             }
         });
     }

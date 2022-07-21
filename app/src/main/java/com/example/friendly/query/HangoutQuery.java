@@ -7,6 +7,7 @@ import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.fragments.HangoutsFragment;
+import com.example.friendly.fragments.match.MatchFragment;
 import com.example.friendly.objects.Hangout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -72,24 +73,31 @@ public class HangoutQuery{
                 allHangouts.addAll(hangouts);
                 adapter.notifyDataSetChanged();
                 HangoutsFragment.hideProgressBar();
-                if (queryConditions.contains(mContext.getResources().getString(R.string.query_key_future))) { //TODO: CHANGE KEYS
-                    checkMostRecentHangout(allHangouts.get(0));
+                if (!allHangouts.isEmpty() && queryConditions.contains(mContext.getResources().getString(R.string.query_key_future))) { //TODO: CHANGE KEYS
+                    updateNextUpcomingHangout(allHangouts.get(0));
                 }
             }
         });
         scrollCounter = scrollCounter + POSTS_TO_LOAD;
     }
 
-    private void checkMostRecentHangout(Hangout hangout) {
-        Hangout mostRecentHangout = (Hangout) ParseUser.getCurrentUser().getParseObject("mostRecentHangout");
-        if (mostRecentHangout == null){
-            ParseUser.getCurrentUser().put("mostRecentHangout", hangout);
+    private void updateNextUpcomingHangout(Hangout newestHangout) {
+        Hangout nextUpcomingHangout = (Hangout) ParseUser.getCurrentUser().get("nextUpcomingHangout");
+        if (nextUpcomingHangout == null){
+            ParseUser.getCurrentUser().put("nextUpcomingHangout", newestHangout);
             ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    Log.d(TAG, "updated hangout");
                 }
             });
+        } else if (!nextUpcomingHangout.equals(newestHangout)){
+            // if previously stored hangout has already passed
+            if (nextUpcomingHangout.getDate().compareTo(new Date()) < 0){
+                Log.i(TAG, "old hangout");
+                MatchFragment.showFeedbackDialog(newestHangout);
+            }
+            Log.i(TAG, "need to update hangout & notify change");
+            ParseUser.getCurrentUser().put("nextUpcomingHangout", newestHangout);
         }
     }
 

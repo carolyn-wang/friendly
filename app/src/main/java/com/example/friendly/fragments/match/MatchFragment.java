@@ -30,7 +30,8 @@ import java.util.Arrays;
 
 public class MatchFragment extends Fragment {
     private static final String TAG = "MatchFragment";
-    private Context mContext;
+    private static final String KEY_USER_FIRST_NAME = "String";
+    private static Context mContext;
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
@@ -78,7 +79,7 @@ public class MatchFragment extends Fragment {
 
     }
 
-    private void showFeedbackDialog(Hangout hangout) {
+    public static void showFeedbackDialog(Hangout hangout) {
         LayoutInflater inflater = ((MainActivity) mContext).getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.item_dialog_feedback,
                 null);
@@ -99,8 +100,8 @@ public class MatchFragment extends Fragment {
         ImageButton ibPositive = (ImageButton) dialogLayout.findViewById(R.id.ibPositive);
         ImageButton ibNeutral = (ImageButton) dialogLayout.findViewById(R.id.ibNegative);
 
-        tvDialogUser1.setText(hangout.getUser1().getString(getString(R.string.KEY_USER_FIRST_NAME)));
-        tvDialogUser2.setText(hangout.getUser2().getString(getString(R.string.KEY_USER_FIRST_NAME)));
+        tvDialogUser1.setText(hangout.getUser1().getString(KEY_USER_FIRST_NAME));
+        tvDialogUser2.setText(hangout.getUser2().getString(KEY_USER_FIRST_NAME));
         tvDialogPlace.setText(hangout.getLocationName());
 
 
