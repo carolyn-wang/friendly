@@ -9,11 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/mapDetail"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_gravity="bottom" />
+    <include layout="@layout/bottom_sheet_map"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

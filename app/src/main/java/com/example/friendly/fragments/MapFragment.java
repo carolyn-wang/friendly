@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -89,7 +90,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
-
         mapView.getMapAsync(this);
         return view;
     }
@@ -141,17 +141,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull final Marker marker) {
-        if(marker.equals(currentUserMarker)){
-            FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            Fragment mapDetailFragment = new MapDetailFragment();
-            ft.replace(R.id.mapDetail, mapDetailFragment);
-            ft.commit();
-        }
-
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
+//        if(marker.equals(currentUserMarker)){
+//            FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
+//            FragmentTransaction ft = fragmentManager.beginTransaction();
+//            Fragment mapDetailFragment = new MapDetailFragment();
+//            ft.replace(R.id.mapDetail, mapDetailFragment);
+//            ft.commit();
+//        }
+//
+//        // Return false to indicate that we have not consumed the event and that we wish
+//        // for the default behavior to occur (which is for the camera to move such that the
+//        // marker is centered and for the marker's info window to open, if it has one).
         return false;
     }
 

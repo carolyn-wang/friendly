@@ -37,4 +37,6 @@
     <dimen name="hangout_history_height">500dp</dimen>
     <dimen name="hangout_quick_height">600dp</dimen>
     <dimen name="detail_corner_radius">60dp</dimen>
+    <dimen name="bottom_sheet_peek_height">100dp</dimen>
+    <dimen name="bottom_sheet_max_height">300dp</dimen>
 </resources>
