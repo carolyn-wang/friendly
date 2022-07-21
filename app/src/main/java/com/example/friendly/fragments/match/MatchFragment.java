@@ -1,9 +1,9 @@
 package com.example.friendly.fragments.match;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +16,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.friendly.fragments.HangoutsFragment;
-import com.example.friendly.fragments.MapFragment;
 import com.example.friendly.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,10 +66,34 @@ public class MatchFragment extends Fragment {
             }
         });
 
-        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
-        Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
-        ft.add(R.id.upcomingHangouts, hangoutDetailFragment).addToBackStack(null).commit();
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(mContext);
+        dialogBuilder.setTitle("User 1 <> User 2 @ Place")
+                .setMessage("How did this hangout go?");
+        dialogBuilder.setPositiveButtonIcon(getResources().getDrawable(R.drawable.sentiment_satisfied))
+                .setPositiveButton(null, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.i(TAG, "positive");
+                    }
+                });
+//        dialogBuilder.setNeutralButtonIcon(getResources().getDrawable(R.drawable.sentiment_neutral))
+//                .setNeutralButton(null, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        Log.i(TAG, "neutral");
+//                    }
+//                });
+        dialogBuilder.setNegativeButtonIcon(getResources().getDrawable(R.drawable.sentiment_dissatisfied))
+                .setNegativeButton(null, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.i(TAG, "negative");
+                    }
+                });
+        dialogBuilder.show();
+
+        FragmentManager fm = getParentFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.query_key_future), getString(R.string.query_key_current_user)));
+        ft.add(R.id.upcomingHangouts, HangoutsFragment.newInstance(conditions));
+        ft.commit();
 
     }
 }

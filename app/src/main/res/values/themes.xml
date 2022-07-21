@@ -15,13 +15,14 @@
         <!--        Default font-->
         <item name="android:fontFamily">@font/nunito_sans</item>
         <item name="android:textSize">@dimen/fontSizeSmall</item>
-
+        <!--        Dialog-->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
     </style>
 
     <style name="TitleFont">
         <item name="android:fontFamily">@font/nunito_sans_semibold</item>
         <item name="android:textColor">@android:color/darker_gray</item>
-=        <item name="android:paddingBottom">@dimen/paddingMedium</item>
+        <item name="android:paddingBottom">@dimen/paddingMedium</item>
     </style>
 
     <style name="TitleFont.Big">
@@ -55,4 +56,16 @@
     <dimen name="poll_card_margin">10dp</dimen>
     <dimen name="poll_card_radius">16dp</dimen>
     <dimen name="poll_card_elevation">8dp</dimen>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorSecondary">@color/purple_200</item>
+        <item name="colorSurface">@color/light_tan</item>
+        <item name="colorOnSurface">@color/pink</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
 </resources>
