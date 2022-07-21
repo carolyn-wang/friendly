@@ -33,14 +33,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnQuickHangout" />
 
-    <Button
-        android:id="@+id/btnMap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/match_map_text"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLongHangout" />
-
     <TextView
         android:id="@+id/matchUpcomingTitle"
         style="@style/TitleFont.Medium"
@@ -48,7 +40,7 @@
         android:layout_height="wrap_content"
         android:text="@string/match_btn_upcoming"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMap" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLongHangout" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/upcomingHangouts"

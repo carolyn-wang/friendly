@@ -31,7 +31,6 @@ public class MatchFragment extends Fragment {
     private Button btnQuickHangout;
     private Button btnLongHangout;
     private Button btnMessage;
-    private Button btnMap;
 
     public MatchFragment() {
 
@@ -52,7 +51,6 @@ public class MatchFragment extends Fragment {
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
-        btnMap = view.findViewById(R.id.btnMap);
 
         btnQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,17 +66,6 @@ public class MatchFragment extends Fragment {
             }
         });
 
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = ((MainActivity) mContext).getSupportFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                MapFragment mapFragment = new MapFragment();
-                ft.replace(R.id.flContainer, mapFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ArrayList<String> conditions = new ArrayList<>(Arrays.asList("future", "user"));
         Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
