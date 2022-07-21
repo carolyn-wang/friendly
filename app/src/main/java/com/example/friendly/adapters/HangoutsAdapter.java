@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.friendly.DisplayUtils;
+import com.example.friendly.utils.DisplayUtils;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.friendly.fragments.MapFragment;
 
 import com.example.friendly.objects.Hangout;
-import com.example.friendly.NavigationUtils;
+import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 

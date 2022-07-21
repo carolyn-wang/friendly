@@ -1,7 +1,6 @@
 package com.example.friendly.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.transition.Slide;
-import androidx.transition.TransitionInflater;
 
-import com.example.friendly.DisplayUtils;
+import com.example.friendly.utils.DisplayUtils;
 import com.example.friendly.R;
 import com.example.friendly.objects.Hangout;
-import com.google.android.material.transition.MaterialContainerTransform;
 
 /**
  * A simple {@link Fragment} subclass.

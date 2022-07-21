@@ -14,8 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.friendly.MatchingUtils;
-import com.example.friendly.NavigationUtils;
+import com.example.friendly.utils.MatchingUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.fragments.HangoutDetailFragment;

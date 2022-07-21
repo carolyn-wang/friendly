@@ -1,4 +1,4 @@
-package com.example.friendly;
+package com.example.friendly.utils;
 
 import android.util.Log;
 

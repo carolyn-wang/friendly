@@ -2,6 +2,7 @@ package com.example.friendly.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,17 +81,16 @@ public class HangoutsFragment extends Fragment {
         pb = view.findViewById(R.id.pbLoading);
         rvHangouts = view.findViewById(R.id.rvHangouts);
         swipeContainer = view.findViewById(R.id.swipeContainer);
-        query = new HangoutQuery();
+        query = new HangoutQuery(mContext);
         List<Hangout> allHangouts = query.getAllHangouts();
-        if (allHangouts.size() == 0) {
-            showProgressBar();
-        }
+        showProgressBar();
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter, queryConditions);
 
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
+
         setPullToRefresh();
         setScrollListener();
     }

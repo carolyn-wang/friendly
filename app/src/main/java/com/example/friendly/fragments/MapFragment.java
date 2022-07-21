@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.friendly.NavigationUtils;
+import com.example.friendly.utils.NavigationUtils;
 
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;

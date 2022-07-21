@@ -1,7 +1,10 @@
 package com.example.friendly.query;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.example.friendly.R;
+import com.example.friendly.activities.MainActivity;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.objects.Hangout;
@@ -9,6 +12,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +23,13 @@ public class HangoutQuery{
     private static final int POSTS_TO_LOAD = 10;
     private int scrollCounter = 0;
     protected List<Hangout> allHangouts =  new ArrayList<>();
+    private Context mContext;
+
+    public HangoutQuery(){
+    }
+    public HangoutQuery(Context mContext) {
+        this.mContext = mContext;
+    }
 
     // TODO: maybe change queryConditions into separate booleans
     public void queryHangouts(HangoutsAdapter adapter, ArrayList<String> queryConditions) {
@@ -29,23 +40,23 @@ public class HangoutQuery{
         query.include(Hangout.KEY_LOCATION);
         query.setLimit(POSTS_TO_LOAD);
         // display past hangouts
-        if (queryConditions.contains("past")){
+        if (queryConditions.contains(mContext.getResources().getString(R.string.query_key_quick))){
             query.whereLessThan(Hangout.KEY_DATE, new Date());
             query.addDescendingOrder(Hangout.KEY_DATE);
         }
         // display future hangouts
-        if (queryConditions.contains("future")){
+        if (queryConditions.contains(mContext.getResources().getString(R.string.query_key_future))){
             query.whereGreaterThanOrEqualTo(Hangout.KEY_DATE, new Date());
             query.addAscendingOrder(Hangout.KEY_DATE);
         }
         // display only current User's hangouts
-        if (queryConditions.contains("user")) {
+        if (queryConditions.contains(mContext.getResources().getString(R.string.query_key_current_user))) {
             // TODO: add "or" condition where KEY_USER2 equals current user; check first that user2 not null
             query.whereEqualTo(Hangout.KEY_USER1, ParseUser.getCurrentUser());
         }
 
-        // display only hangouts with null User2
-        if (queryConditions.contains("quick")) {
+        // display quick hangouts (only hangouts with null User2)
+        if (queryConditions.contains(mContext.getResources().getString(R.string.query_key_quick))) {
             query.whereEqualTo(Hangout.KEY_USER2, null);
         }
 
@@ -61,9 +72,25 @@ public class HangoutQuery{
                 allHangouts.addAll(hangouts);
                 adapter.notifyDataSetChanged();
                 HangoutsFragment.hideProgressBar();
+                if (queryConditions.contains(mContext.getResources().getString(R.string.query_key_future))) { //TODO: CHANGE KEYS
+                    checkMostRecentHangout(allHangouts.get(0));
+                }
             }
         });
         scrollCounter = scrollCounter + POSTS_TO_LOAD;
+    }
+
+    private void checkMostRecentHangout(Hangout hangout) {
+        Hangout mostRecentHangout = (Hangout) ParseUser.getCurrentUser().getParseObject("mostRecentHangout");
+        if (mostRecentHangout == null){
+            ParseUser.getCurrentUser().put("mostRecentHangout", hangout);
+            ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Log.d(TAG, "updated hangout");
+                }
+            });
+        }
     }
 
     public List<Hangout> getAllHangouts(){
