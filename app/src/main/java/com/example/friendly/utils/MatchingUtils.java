@@ -214,7 +214,7 @@ public class MatchingUtils {
      *
      * @param matchedUser ParseUser that current user chose to hangout with.
      */
-    public static void adjustWeights(ParseUser matchedUser) throws JSONException {
+    private static void adjustWeights(ParseUser matchedUser, int direction) throws JSONException {
         double[] similarityScores = new double[NUM_WEIGHTS];
         try {
             similarityScores = calculateSimilarityArray(matchedUser);
@@ -230,7 +230,7 @@ public class MatchingUtils {
             for (int i = 0; i < averageSimilarityScore.length(); i++) {
                 try {
                     double averageScore = averageSimilarityScore.getDouble(i);
-                    double differenceScore = similarityScores[i] - averageScore;
+                    double differenceScore = similarityScores[i] - (direction * averageScore);
                     double updatedScore = averageScore + (differenceScore / averageScore);
                     updatedScores[i] = updatedScore;
                     double updatedWeight = preferenceWeights.getDouble(i) * (updatedScore / averageScore);
@@ -249,4 +249,13 @@ public class MatchingUtils {
             });
         }
     }
+
+    public static void adjustWeightsPositive(ParseUser matchedUser) throws JSONException {
+        adjustWeights(matchedUser, 1);
+    }
+
+    public static void adjustWeightsNegative(ParseUser matchedUser) throws JSONException {
+        adjustWeights(matchedUser, -1);
+    }
+
 }

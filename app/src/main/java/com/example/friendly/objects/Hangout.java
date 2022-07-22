@@ -59,7 +59,10 @@ public class Hangout extends ParseObject {
     }
 
     public String getLocationName() {
-        return getPlace().getName();
+        if (getPlace() != null){
+            return getPlace().getName();
+        }
+        else return "";
     }
 
     public void setLocation(Place location) {

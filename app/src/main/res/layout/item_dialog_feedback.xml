@@ -1,57 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialogFeedback"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="bottom">
 
     <TextView
-        android:id="@+id/tvDialogUser1"
+        android:id="@+id/tvDialogUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dialog_padding"
         android:paddingTop="@dimen/dialog_padding"
-        android:text="@string/template_user1"
+        android:text="@string/template_user"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDialogSpacer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dialog_padding"
-        android:text="@string/dialog_user_spacer"
-        app:layout_constraintLeft_toRightOf="@+id/tvDialogUser1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDialogUser2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dialog_padding"
-        android:text="@string/template_user2"
-        app:layout_constraintLeft_toRightOf="@+id/tvDialogSpacer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvDialogAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dialog_padding"
+        android:paddingTop="@dimen/dialog_padding"
         android:text="@string/dialog_at_symbol"
-        android:textSize="@dimen/fontSizeExtraSmall"
-        app:layout_constraintLeft_toLeftOf="@id/tvDialogUser1"
-        app:layout_constraintTop_toBottomOf="@id/tvDialogUser1" />
+        app:layout_constraintLeft_toRightOf="@+id/tvDialogUser"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvDialogPlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dialog_padding"
         android:text="@string/template_place"
-        android:textSize="@dimen/fontSizeExtraSmall"
         app:layout_constraintLeft_toRightOf="@+id/tvDialogAt"
-        app:layout_constraintTop_toBottomOf="@id/tvDialogUser1" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvDialogQuestion"
@@ -74,7 +56,7 @@
         android:backgroundTint="@android:color/holo_green_dark"
         android:contentDescription="@string/positive_feedback"
         app:layout_constraintHeight_max="@dimen/dialog_image_button_size"
-        app:layout_constraintLeft_toRightOf="@id/tvDialogQuestion"
+        app:layout_constraintLeft_toRightOf="@id/tvDialogPlace"
         app:layout_constraintRight_toLeftOf="@id/ibNegative"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="@dimen/dialog_image_button_size" />

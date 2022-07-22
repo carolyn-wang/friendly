@@ -77,7 +77,7 @@ public class QuickMatchDetailFragment extends Fragment {
                         // TODO: move to navUtils
                         ((MainActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new MatchFragment()).commit();
                         try {
-                            MatchingUtils.adjustWeights(hangout.getUser1());
+                            MatchingUtils.adjustWeightsPositive(hangout.getUser1());
                         } catch (JSONException ex) {
                             ex.printStackTrace();
                         }
