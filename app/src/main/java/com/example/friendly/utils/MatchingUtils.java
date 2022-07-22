@@ -93,7 +93,10 @@ public class MatchingUtils {
             topMatches.put(overallScore, nearbyUser);
         }
 
-        int[][] arr = findConsecutiveRanges(new boolean[]{true, true, true, true, true, true, false, false, false, false, false, false, true, true, true, true, false});
+        int[][] arr = findConsecutiveRanges(
+                new boolean[]{true, true, false, true, true, true, false, false, false, false, false, false, true, true, true, true, false},
+                new boolean[]{true, true, true, true, true, false, false, false, false, false, false, true, true, true, true, false, false});
+
         for (int[] ints : arr) {
             Log.i(TAG, ints[0] + " " + ints[1]);
         }
@@ -183,10 +186,10 @@ public class MatchingUtils {
         return overlapHours;
     }
 
-
     /**
-     * Finds intersection between user availabilities and returns number of overlapping hours
+     * Finds indicies ranges where both array values are true.
      *
+<<<<<<< HEAD
      * @param arr1 int[][] - first User's time availability
      * @param arr2 int[][] - second User's time availability
      * @return - int number of overlapping hours in availabilities
@@ -220,41 +223,44 @@ public class MatchingUtils {
     }
 
     /**
-     * @param a boolean [] User availability (boolean for each 30 minute slot)
-     * @return
+     * @param arr1 boolean [] User1 availability (boolean for each 30 minute slot)
+     * @param arr2 boolean [] User2 availability (boolean for each 30 minute slot)
+     * @return int[][] containing ranges for overlapping truth values
      */
-    private static int[][] findConsecutiveRanges(boolean[] a) {
-        int[][] availabilityRanges = new int[a.length][2];
-        int aIndex = 0;
+    private static int[][] findConsecutiveRanges(boolean[] arr1, boolean[] arr2) {
+        int[][] availabilityRanges = new int[arr1.length][2];
+        int rangeIndex = 0;
         int rangeLength = 0;
-        if (a[0]) {
+        if (arr1[0]) {
             rangeLength = 1;
         }
         // Traverse the array from first position
-        for (int i = 0; i < a.length - 1; i++) {
+        for (int i = 0; i < arr1.length - 1; i++) {
             // If current bool true and next bool is false
-            if (a[i] && !a[i + 1]) {
-                // If the range contains only one true element, add to array.
-                if (rangeLength == 1) {
-                    availabilityRanges[aIndex][0] = i + 1;
-                    availabilityRanges[aIndex][1] = i;
+            if (arr1[i] == arr2[i]) {
+                if (arr1[i] && arr2[i] && !(arr1[i + 1] && arr2[i + 1])) {
+                    // If the range contains only one true element, add to array.
+                    if (rangeLength == 1) {
+                        availabilityRanges[rangeIndex][0] = i + 1;
+                        availabilityRanges[rangeIndex][1] = i;
+                    } else {
+                        // Build range between the first element of the range and the
+                        // current previous element as the end range.
+                        availabilityRanges[rangeIndex][0] = i + 1 - rangeLength;
+                        availabilityRanges[rangeIndex][1] = i;
+                    }
+                    rangeIndex++;
+                    rangeLength = 1;
+                } else if (!arr1[i] && !arr2[i] && !arr1[i + 1] & !arr2[i]) {
+                    rangeLength = 1;
+                    // singular true element at end of list
+                } else if (i == arr1.length - 1 && arr1[i] && arr2[i]) {
+                    availabilityRanges[rangeIndex][0] = i + 1;
+                    availabilityRanges[rangeIndex][1] = i + 1;
+                    rangeIndex++;
                 } else {
-                    // Build range between the first element of the range and the
-                    // current previous element as the end range.
-                    availabilityRanges[aIndex][0] = i + 1 - rangeLength;
-                    availabilityRanges[aIndex][1] = i ;
+                    rangeLength++;
                 }
-                aIndex++;
-                rangeLength = 0;
-            } else if (!a[i] && !a[i + 1]) {
-                rangeLength = 0;
-                // singular true element at end of list
-            } else if (i == a.length - 1 && a[i]) {
-                availabilityRanges[aIndex][0] = i + 1;
-                availabilityRanges[aIndex][1] = i + 1;
-                aIndex++;
-            } else {
-                rangeLength++;
             }
         }
 
