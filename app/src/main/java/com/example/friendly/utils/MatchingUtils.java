@@ -181,7 +181,8 @@ public class MatchingUtils {
     }
 
     /**
-     * Finds indicies ranges where both array values are true.
+     * Finds indicies ranges where both array values are true
+     * and returns sorted ArrayList<int[]> with longer ranges towards the beginning of the list.
      * rangeIndex tracks the index for adding ranges to availabilityRanges.
      *
 <<<<<<< HEAD
@@ -220,7 +221,7 @@ public class MatchingUtils {
     /**
      * @param arr1 boolean [] User1 availability (boolean for each 30 minute slot)
      * @param arr2 boolean [] User2 availability (boolean for each 30 minute slot)
-     * @return availabilityRanges int[][] containing ranges for overlapping truth values
+     * @return availabilityRanges ArrayList<int[]> containing ranges for overlapping truth values
      */
     private static ArrayList<int[]> findConsecutiveRanges(boolean[] arr1, boolean[] arr2) {
         ArrayList<int[]> availabilityRanges = new ArrayList<>();
@@ -235,7 +236,7 @@ public class MatchingUtils {
                 if (arr1[i] && arr2[i] && !(arr1[i + 1] && arr2[i + 1])) {
                     // If the range contains only one true element, add to array.
                     if (rangeLength == 1) {
-                        availabilityRanges.add(new int[]{i+1, i});
+                        availabilityRanges.add(new int[]{i + 1, i});
                     } else {
                         // Build range between the first element of the range and the
                         // current previous element as the end range.
@@ -252,6 +253,8 @@ public class MatchingUtils {
                 }
             }
         }
+
+        availabilityRanges.sort((array1, array2) -> (array2[1] - array2[0]) - ((array1[1] - array1[0])));
         return availabilityRanges;
     }
 
@@ -318,6 +321,5 @@ public class MatchingUtils {
 
         return matchDetails;
     }
-
-
 }
+
