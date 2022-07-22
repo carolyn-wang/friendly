@@ -18,11 +18,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HangoutQuery{
+public class HangoutQuery {
     private static final String TAG = "HangoutQuery";
     private static final int POSTS_TO_LOAD = 10;
     private int scrollCounter = 0;
-    protected List<Hangout> allHangouts =  new ArrayList<>();
+    protected List<Hangout> allHangouts = new ArrayList<>();
     private Context mContext;
     private static String KEY_QUERY_PAST;
     private static String KEY_QUERY_FUTURE;
@@ -31,13 +31,14 @@ public class HangoutQuery{
     private static String KEY_QUERY_QUICK;
     private static String KEY_QUERY_CURRENT_USER;
 
-    public HangoutQuery(){
+    public HangoutQuery() {
     }
+
     public HangoutQuery(Context mContext) {
         this.mContext = mContext;
         KEY_QUERY_PAST = mContext.getResources().getString(R.string.KEY_QUERY_PAST);
         KEY_QUERY_FUTURE = mContext.getResources().getString(R.string.KEY_QUERY_FUTURE);
-        KEY_QUERY_CURRENT_USER =  mContext.getResources().getString(R.string.KEY_QUERY_CURRENT_USER);
+        KEY_QUERY_CURRENT_USER = mContext.getResources().getString(R.string.KEY_QUERY_CURRENT_USER);
         KEY_QUERY_QUICK = mContext.getResources().getString(R.string.KEY_QUERY_QUICK);
         KEY_USER_NEXT_HANGOUT = mContext.getString(R.string.KEY_USER_NEXT_HANGOUT);
         KEY_HANGOUT_DATE = mContext.getString(R.string.KEY_HANGOUT_DATE);
@@ -52,12 +53,12 @@ public class HangoutQuery{
         query.include(Hangout.KEY_LOCATION);
         query.setLimit(POSTS_TO_LOAD);
         // display past hangouts
-        if (queryConditions.contains(KEY_QUERY_PAST)){
+        if (queryConditions.contains(KEY_QUERY_PAST)) {
             query.whereLessThan(Hangout.KEY_DATE, new Date());
             query.addDescendingOrder(Hangout.KEY_DATE);
         }
         // display future hangouts
-        if (queryConditions.contains(KEY_QUERY_FUTURE)){
+        if (queryConditions.contains(KEY_QUERY_FUTURE)) {
             query.whereGreaterThanOrEqualTo(Hangout.KEY_DATE, new Date());
             query.addAscendingOrder(Hangout.KEY_DATE);
         }
@@ -98,17 +99,16 @@ public class HangoutQuery{
 
     private void updateNextUpcomingHangout(Hangout newestHangout) throws ParseException {
         Hangout nextUpcomingHangout = (Hangout) ParseUser.getCurrentUser().getParseObject("nextUpcomingHangout");
-        Log.i(TAG, String.valueOf(newestHangout.getDate()));
-        if (nextUpcomingHangout == null){
+        if (nextUpcomingHangout == null) {
             ParseUser.getCurrentUser().put(KEY_USER_NEXT_HANGOUT, newestHangout);
             ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                 }
             });
-        } else if (!nextUpcomingHangout.equals(newestHangout)){
+        } else if (!nextUpcomingHangout.equals(newestHangout)) {
             // if previously stored hangout has already happened
-            if (nextUpcomingHangout.fetchIfNeeded().getDate(KEY_HANGOUT_DATE).compareTo(new Date()) < 0){
+            if (nextUpcomingHangout.fetchIfNeeded().getDate(KEY_HANGOUT_DATE).compareTo(new Date()) < 0) {
                 MatchFragment.showFeedbackDialog(newestHangout);
             }
             ParseUser.getCurrentUser().put(KEY_USER_NEXT_HANGOUT, newestHangout);
@@ -120,15 +120,15 @@ public class HangoutQuery{
         }
     }
 
-    public List<Hangout> getAllHangouts(){
+    public List<Hangout> getAllHangouts() {
         return allHangouts;
     }
 
-    public int getScrollCounter(){
+    public int getScrollCounter() {
         return scrollCounter;
     }
 
-    public void setScrollCounter(int i){
+    public void setScrollCounter(int i) {
         scrollCounter = i;
     }
 

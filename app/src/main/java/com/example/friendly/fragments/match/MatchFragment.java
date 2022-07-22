@@ -18,11 +18,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.friendly.fragments.HangoutsFragment;
-import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.objects.Hangout;
+import com.example.friendly.utils.NavigationUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.parse.ParseException;
 

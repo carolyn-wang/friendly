@@ -15,8 +15,9 @@
     <string name="signupUsernameHint">Username</string>
     <string name="signupPasswordHint">Password</string>
     <string name="signupConfirmPasswordHint">Confirm Password</string>
-    <string name="hangoutUser1">User 1</string>
-    <string name="hangoutUser2">User 2</string>
+    <string name="template_user1">User 1</string>
+    <string name="template_user2">User 2</string>
+    <string name="template_place">Place</string>
     <string name="hangoutDate">Hangout date</string>
 
     <string name="match_btn_quick">Quick Match</string>
@@ -94,4 +95,10 @@
     <string name="template_messaging_number">12125551212</string>
     <string name="KEY_USER_NEXT_HANGOUT">nextUpcomingHangout</string>
     <string name="KEY_HANGOUT_DATE">date</string>
+    <string name="dialog_user_spacer">:</string>
+    <string name="dialog_at_symbol">\@</string>
+    <string name="dialog_question">How was this hangout?</string>
+    <string name="negative_feedback">Negative feedback</string>
+    <string name="positive_feedback">Positive feedback</string>
+    <string name="close_dialog">Close dialog</string>
 </resources>

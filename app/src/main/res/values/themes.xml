@@ -33,9 +33,10 @@
         <item name="android:textSize">@dimen/fontSizeMedium</item>
     </style>
 
-    <dimen name="fontSizeSmall">18dp</dimen>
-    <dimen name="fontSizeMedium">20dp</dimen>
-    <dimen name="fontSizeBig">25dp</dimen>
+    <dimen name="fontSizeExtraSmall">15sp</dimen>
+    <dimen name="fontSizeSmall">18sp</dimen>
+    <dimen name="fontSizeMedium">20sp</dimen>
+    <dimen name="fontSizeBig">25sp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
 
     <style name="CardView.Poll" parent="CardView">
@@ -63,7 +64,8 @@
         <item name="colorSurface">@color/light_tan</item>
         <item name="colorOnSurface">@color/pink</item>
         <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text
+        </item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
         <item name="android:backgroundDimEnabled">false</item>
