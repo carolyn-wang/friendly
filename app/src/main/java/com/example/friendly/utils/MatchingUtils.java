@@ -93,6 +93,11 @@ public class MatchingUtils {
             topMatches.put(overallScore, nearbyUser);
         }
 
+        int[][] arr = findConsecutiveRanges(new boolean[]{true, true, true, true, true, true, false, false, false, false, false, false, true, true, true, true, false});
+        for (int[] ints : arr) {
+            Log.i(TAG, ints[0] + " " + ints[1]);
+        }
+
         ParseQuery.clearAllCachedResults();
         return topMatches;
     }
@@ -215,6 +220,48 @@ public class MatchingUtils {
     }
 
     /**
+     * @param a boolean [] User availability (boolean for each 30 minute slot)
+     * @return
+     */
+    private static int[][] findConsecutiveRanges(boolean[] a) {
+        int[][] availabilityRanges = new int[a.length][2];
+        int aIndex = 0;
+        int rangeLength = 0;
+        if (a[0]) {
+            rangeLength = 1;
+        }
+        // Traverse the array from first position
+        for (int i = 0; i < a.length - 1; i++) {
+            // If current bool true and next bool is false
+            if (a[i] && !a[i + 1]) {
+                // If the range contains only one true element, add to array.
+                if (rangeLength == 1) {
+                    availabilityRanges[aIndex][0] = i + 1;
+                    availabilityRanges[aIndex][1] = i;
+                } else {
+                    // Build range between the first element of the range and the
+                    // current previous element as the end range.
+                    availabilityRanges[aIndex][0] = i + 1 - rangeLength;
+                    availabilityRanges[aIndex][1] = i ;
+                }
+                aIndex++;
+                rangeLength = 0;
+            } else if (!a[i] && !a[i + 1]) {
+                rangeLength = 0;
+                // singular true element at end of list
+            } else if (i == a.length - 1 && a[i]) {
+                availabilityRanges[aIndex][0] = i + 1;
+                availabilityRanges[aIndex][1] = i + 1;
+                aIndex++;
+            } else {
+                rangeLength++;
+            }
+        }
+
+        return availabilityRanges;
+    }
+
+    /**
      * Dynamically adjust weights after current user matches with a new user using Quick Match.
      * Compares scores between current and matched User, then adjusts current user's weights
      * and updates current user's average hangout similarity scores dependent on
@@ -270,6 +317,7 @@ public class MatchingUtils {
         int randomPlaceInd = (int) Math.floor(Math.random() * placeList.size());
         Object matchPlace = placeList.get(randomPlaceInd);
         matchDetails.add(matchPlace);
+
         matchDetails.add("Monday 4PM - 6PM");
         matchDetails.add("Tuesday 12PM - 2:30PM");
         matchDetails.add("Thursday 4PM - 6PM");
