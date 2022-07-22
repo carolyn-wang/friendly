@@ -37,7 +37,6 @@ public class HangoutsFragment extends Fragment {
     private static final String KEY_CONDITION = "condition";
     private Context mContext;
 
-    protected static final int POSTS_TO_LOAD = 5;
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;

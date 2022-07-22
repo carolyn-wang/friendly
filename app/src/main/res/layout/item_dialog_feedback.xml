@@ -43,7 +43,7 @@
         android:paddingBottom="@dimen/dialog_padding"
         android:text="@string/dialog_question"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toLeftOf="@+id/tvDialogUser1"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDialogUser"
         app:layout_constraintTop_toBottomOf="@+id/tvDialogAt" />
 
     <ImageButton
@@ -56,7 +56,7 @@
         android:backgroundTint="@android:color/holo_green_dark"
         android:contentDescription="@string/positive_feedback"
         app:layout_constraintHeight_max="@dimen/dialog_image_button_size"
-        app:layout_constraintLeft_toRightOf="@id/tvDialogPlace"
+        app:layout_constraintLeft_toRightOf="@id/tvDialogQuestion"
         app:layout_constraintRight_toLeftOf="@id/ibNegative"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="@dimen/dialog_image_button_size" />

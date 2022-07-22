@@ -104,7 +104,7 @@ public class HangoutQuery {
     }
 
     private void updateNextUpcomingHangout(Hangout newestHangout) throws ParseException {
-        Hangout nextUpcomingHangout = (Hangout) ParseUser.getCurrentUser().getParseObject("nextUpcomingHangout");
+        Hangout nextUpcomingHangout = (Hangout) ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("nextUpcomingHangout");
         if (nextUpcomingHangout == null) {
             ParseUser.getCurrentUser().put(KEY_USER_NEXT_HANGOUT, newestHangout);
             ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
@@ -113,6 +113,7 @@ public class HangoutQuery {
                 }
             });
         } else if (!nextUpcomingHangout.equals(newestHangout)) {
+            Log.d(TAG, "updating previous " + nextUpcomingHangout.getObjectId() + " to " + newestHangout.getObjectId());
             // if previously stored hangout has already happened
             if (nextUpcomingHangout.fetchIfNeeded().getDate(KEY_HANGOUT_DATE).compareTo(new Date()) < 0) {
                 // get other User that's not current user

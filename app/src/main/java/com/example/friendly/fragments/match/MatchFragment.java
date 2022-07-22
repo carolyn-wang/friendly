@@ -119,16 +119,11 @@ public class MatchFragment extends Fragment {
 
         ParseUser matchedUser = getOtherUser(hangout);
         tvDialogUser.setText(matchedUser.fetchIfNeeded().getString("firstName"));
-        Place location = ((Place) hangout.fetchIfNeeded().getParseObject("location"));
+        Place location = ((Place) hangout.fetchIfNeeded().getParseObject("place"));
         if (location != null) {
             String locationName = location.fetchIfNeeded().getString("name");
             if (locationName != null) {
                 tvDialogPlace.setText(locationName);
-            }
-        }
-        else{
-            if (!hangout.getLocationName().isEmpty()){
-                tvDialogPlace.setText(hangout.getLocationName());
             }
         }
 
