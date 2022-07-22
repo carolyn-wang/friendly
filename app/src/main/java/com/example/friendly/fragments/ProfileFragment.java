@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
 
         if (ParseUser.getCurrentUser() != null){
             tvUsername.setText(ParseUser.getCurrentUser().getUsername());
-            tvName.setText(ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME));
+            tvName.setText((ParseUser.getCurrentUser()).getString(KEY_USER_FIRST_NAME));
         }
         
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {

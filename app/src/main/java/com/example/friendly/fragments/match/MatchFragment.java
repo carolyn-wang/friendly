@@ -24,6 +24,7 @@ import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Hangout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,13 +74,13 @@ public class MatchFragment extends Fragment {
 
         FragmentManager fm = getParentFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.query_key_future), getString(R.string.query_key_current_user)));
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.KEY_QUERY_FUTURE), getString(R.string.KEY_QUERY_CURRENT_USER)));
         ft.add(R.id.upcomingHangouts, HangoutsFragment.newInstance(conditions));
         ft.commit();
 
     }
 
-    public static void showFeedbackDialog(Hangout hangout) {
+    public static void showFeedbackDialog(Hangout hangout) throws ParseException {
         LayoutInflater inflater = ((MainActivity) mContext).getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.item_dialog_feedback,
                 null);
@@ -100,8 +101,9 @@ public class MatchFragment extends Fragment {
         ImageButton ibPositive = (ImageButton) dialogLayout.findViewById(R.id.ibPositive);
         ImageButton ibNeutral = (ImageButton) dialogLayout.findViewById(R.id.ibNegative);
 
-        tvDialogUser1.setText(hangout.getUser1().getString(KEY_USER_FIRST_NAME));
-        tvDialogUser2.setText(hangout.getUser2().getString(KEY_USER_FIRST_NAME));
+
+        tvDialogUser1.setText(hangout.getUser1Name());
+        tvDialogUser2.setText(hangout.getUser2Name());
         tvDialogPlace.setText(hangout.getLocationName());
 
 

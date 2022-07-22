@@ -18,7 +18,6 @@ public class PlaceQuery {
     private static final double MAX_DISTANCE_MILES = 25;
     private List<Place> nearbyPlaces = new ArrayList<>();
 
-
     public void queryNearbyPlaces() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);
         ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_LOCATION);

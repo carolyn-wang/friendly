@@ -66,10 +66,10 @@
     <string name="login_success">Login Success</string>
     <string name="map_error_location">Can\'t access user\'s current location from database</string>
     <string name="map_error_save">Can\'t save user\'s current location</string>
-    <string name="query_key_future">future</string>
-    <string name="query_key_current_user">user</string>
-    <string name="query_key_past">past</string>
-    <string name="query_key_quick">quick</string>
+    <string name="KEY_QUERY_PAST">past</string>
+    <string name="KEY_QUERY_FUTURE">future</string>
+    <string name="KEY_QUERY_CURRENT_USER">user</string>
+    <string name="KEY_QUERY_QUICK">quick</string>
     <string name="sign_up_password_error">Passwords don\'t match</string>
     <string name="sign_up_success">Successful Sign Up!</string>
     <string name="quick_match_error">Error creating hangout</string>
@@ -92,4 +92,6 @@
 
     <string name="template_messaging_text">hi</string>
     <string name="template_messaging_number">12125551212</string>
+    <string name="KEY_USER_NEXT_HANGOUT">nextUpcomingHangout</string>
+    <string name="KEY_HANGOUT_DATE">date</string>
 </resources>

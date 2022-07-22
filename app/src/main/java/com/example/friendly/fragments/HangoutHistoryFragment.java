@@ -40,7 +40,7 @@ public class HangoutHistoryFragment extends Fragment {
 
         FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.query_key_past), getString(R.string.query_key_current_user)));
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getString(R.string.KEY_QUERY_PAST), getString(R.string.KEY_QUERY_CURRENT_USER)));
         ft.replace(R.id.rvHangoutHistory, HangoutsFragment.newInstance(conditions))
                 .addToBackStack(null)
                 .commit();

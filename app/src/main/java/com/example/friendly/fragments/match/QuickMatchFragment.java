@@ -41,7 +41,7 @@ public class QuickMatchFragment extends Fragment {
 
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
 
-        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getResources().getString(R.string.query_key_future), getString(R.string.query_key_quick)));
+        ArrayList<String> conditions = new ArrayList<>(Arrays.asList(getResources().getString(R.string.KEY_QUERY_FUTURE), getString(R.string.KEY_QUERY_QUICK)));
         Fragment hangoutDetailFragment = HangoutsFragment.newInstance(conditions);
         ft.add(R.id.quickMatchHangouts, hangoutDetailFragment);
         ft.commit();
