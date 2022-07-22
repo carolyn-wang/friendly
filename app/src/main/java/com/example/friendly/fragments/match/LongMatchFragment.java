@@ -84,7 +84,7 @@ public class LongMatchFragment extends Fragment {
         tvHangoutUser2.setText(matchedUser.getUsername());
 
         List<Place> placeList = ((MainActivity) mContext).getPlaceList();
-        List<Object> matchDetails = MatchingUtils.getMatchDetails(matchedUser, placeList);
+        List<Object> matchDetails = MatchingUtils.getMatchDetails(mContext, matchedUser, placeList);
         Place matchPlace = (Place) matchDetails.get(INDEX_PLACE);
 
         cdCoupon.setBackgroundColor(DisplayUtils.getCardColor(mContext, matchPlace));
