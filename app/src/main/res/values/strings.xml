@@ -100,4 +100,8 @@
     <string name="positive_feedback">Positive feedback</string>
     <string name="close_dialog">Close dialog</string>
     <string name="template_user">User</string>
+    <string name="KEY_USER_FIRST_NAME">firstName</string>
+    <string name="KEY_HANGOUT_PLACE">\"place\"</string>
+    <string name="KEY_HANGOUT_USER2">user2</string>
+    <string name="KEY_PLACE_NAME">name</string>
 </resources>

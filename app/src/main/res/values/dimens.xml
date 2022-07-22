@@ -33,4 +33,5 @@
     <dimen name="dialog_padding">18dp</dimen>
     <dimen name="dialog_padding_big">30dp</dimen>
     <dimen name="dialog_padding_small">8dp</dimen>
+    <dimen name="close_button_margin">5dp</dimen>
 </resources>

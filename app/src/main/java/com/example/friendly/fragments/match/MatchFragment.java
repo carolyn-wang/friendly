@@ -45,7 +45,11 @@ import java.util.Arrays;
 
 public class MatchFragment extends Fragment {
     private static final String TAG = "MatchFragment";
-    private static final String KEY_USER_FIRST_NAME = "String";
+    private static final long DIALOG_DISPLAY_DURATION = 10000;
+    private static String KEY_PLACE_NAME;
+    private static String KEY_HANGOUT_USER2;
+    private static String KEY_HANGOUT_PLACE;
+    private static String KEY_USER_FIRST_NAME;
     private static Context mContext;
 
     private static Handler mHandler = new Handler();
@@ -56,7 +60,6 @@ public class MatchFragment extends Fragment {
     private View dialogFeedback;
 
     public MatchFragment() {
-
     }
 
     @Override
@@ -71,6 +74,10 @@ public class MatchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mContext = view.getContext();
+        KEY_USER_FIRST_NAME = mContext.getResources().getString(R.string.KEY_USER_FIRST_NAME);
+        KEY_HANGOUT_PLACE = mContext.getResources().getString(R.string.KEY_HANGOUT_PLACE);
+        KEY_HANGOUT_USER2 = mContext.getResources().getString(R.string.KEY_HANGOUT_USER2);
+        KEY_PLACE_NAME = mContext.getResources().getString(R.string.KEY_PLACE_NAME);
 
         btnQuickHangout = view.findViewById(R.id.btnQuickHangout);
         btnLongHangout = view.findViewById(R.id.btnLongHangout);
@@ -118,10 +125,10 @@ public class MatchFragment extends Fragment {
         ImageButton ibNegative = (ImageButton) dialogLayout.findViewById(R.id.ibNegative);
 
         ParseUser matchedUser = getOtherUser(hangout);
-        tvDialogUser.setText(matchedUser.fetchIfNeeded().getString("firstName"));
-        Place location = ((Place) hangout.fetchIfNeeded().getParseObject("place"));
+        tvDialogUser.setText(matchedUser.fetchIfNeeded().getString(KEY_USER_FIRST_NAME));
+        Place location = ((Place) hangout.fetchIfNeeded().getParseObject(KEY_HANGOUT_PLACE));
         if (location != null) {
-            String locationName = location.fetchIfNeeded().getString("name");
+            String locationName = location.fetchIfNeeded().getString(KEY_PLACE_NAME);
             if (locationName != null) {
                 tvDialogPlace.setText(locationName);
             }
@@ -166,13 +173,13 @@ public class MatchFragment extends Fragment {
             @Override
             public void run() {
                 alertDialog.cancel();
-            }}, 10000);
+            }}, DIALOG_DISPLAY_DURATION);
     }
 
     private static ParseUser getOtherUser(Hangout hangout) throws ParseException {
         // Set text to other user (not current user)
         if (hangout.getUser1().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-            return hangout.fetchIfNeeded().getParseUser("user2");
+            return hangout.fetchIfNeeded().getParseUser(KEY_HANGOUT_USER2);
         }
         return hangout.getUser1();
     }
