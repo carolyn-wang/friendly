@@ -2,7 +2,11 @@ package com.example.friendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,11 +26,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements android.text.TextWatcher{
 
     private static final String TAG = "SignUpActivity";
     private static final String KEY_FIRST_NAME = "firstName";
     private static final String KEY_LAST_NAME = "lastName";
+    private static final String KEY_PHONE = "phone";
     private static final String KEY_HOBBY_PREFERENCE = "hobbyPreference";
     private static final String KEY_ACTIVITY_PREFERENCE = "activityPreference";
     private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
@@ -39,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputEditText etFirstName;
     private TextInputEditText etLastName;
     private TextInputEditText etEmail;
+    private TextInputEditText etPhone;
     private TextInputEditText etUsername;
     private TextInputEditText etPassword;
     private TextInputEditText etConfirmPassword;
@@ -54,10 +60,14 @@ public class SignUpActivity extends AppCompatActivity {
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
         etEmail = findViewById(R.id.etEmail);
+        etPhone = findViewById(R.id.etPhone);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnSignupNext = findViewById(R.id.btnSignupNext);
+
+        etPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        etPhone.addTextChangedListener(this);
 
         btnSignupNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,11 +75,12 @@ public class SignUpActivity extends AppCompatActivity {
                 String firstName = etFirstName.getText().toString();
                 String lastName = etLastName.getText().toString();
                 String email = etEmail.getText().toString();
+                String phone = etPhone.getText().toString().replaceAll(getString(R.string.phone_formatting_regex),"");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 String confirmPassword = etConfirmPassword.getText().toString();
                 try {
-                    signupUser(firstName, lastName, email, username, password, confirmPassword);
+                    signupUser(firstName, lastName, email, phone, username, password, confirmPassword);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -77,15 +88,13 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void signupUser(String firstName, String lastName, String email, String username, String password, String confirmPassword) throws JSONException {
-       if (!password.equals(confirmPassword)){
-           Toast.makeText(mContext, R.string.sign_up_password_error, Toast.LENGTH_LONG).show();
-       }
+    private void signupUser(String firstName, String lastName, String email, String phone, String username, String password, String confirmPassword) throws JSONException {
         ParseUser user = new ParseUser();
         // Set the user's username and password, which can be obtained by a forms
         user.put(KEY_FIRST_NAME, firstName);
         user.put(KEY_LAST_NAME, lastName);
         user.setEmail(email);
+        user.put(KEY_PHONE, phone);
         user.setUsername(username);
         user.setPassword(password);
 
@@ -117,5 +126,23 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (etPhone.getText().toString().replaceAll(getString(R.string.phone_formatting_regex),"").length() > 11){
+            etPhone.setTextColor(Color.RED);
+            Toast.makeText(mContext, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+        }else{
+            etPhone.setTextColor(Color.BLACK);
+        }
     }
 }

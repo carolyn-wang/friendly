@@ -104,4 +104,6 @@
     <string name="KEY_HANGOUT_PLACE">\"place\"</string>
     <string name="KEY_HANGOUT_USER2">user2</string>
     <string name="KEY_PLACE_NAME">name</string>
+    <string name="signupPhoneHint">Phone Number</string>
+    <string name="phone_formatting_regex">\\D</string>
 </resources>
