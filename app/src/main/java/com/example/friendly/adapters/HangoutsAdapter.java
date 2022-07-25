@@ -119,12 +119,18 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             }
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
 
-            ibMessage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NavigationUtils.openMessagesIntent(mContext, hangout.getUser2().getString(KEY_USER_PHONE));
-                }
-            });
+            if (hangout.getUser2() != null && hangout.getUser2().get(KEY_USER_PHONE) != null) {
+                ibMessage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NavigationUtils.openMessagesIntent(mContext, hangout.getUser2().getString(KEY_USER_PHONE));
+                    }
+                });
+                ibMessage.setVisibility(View.VISIBLE);
+            }
+            else{
+                ibMessage.setVisibility(View.INVISIBLE);
+            }
 
             if (hangout.getUser2() != null && hangout.getPlace() != null) {
                 ibMap.setOnClickListener(new View.OnClickListener() {
