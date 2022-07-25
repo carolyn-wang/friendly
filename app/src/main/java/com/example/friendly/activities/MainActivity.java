@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialToolbar topAppBar;
     private BottomNavigationView bottomNavigationView;
     private Fragment fragment;
-    private PlaceQuery placeQuery = new PlaceQuery();
+    private final PlaceQuery placeQuery = new PlaceQuery();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

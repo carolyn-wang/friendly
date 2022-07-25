@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,11 +57,14 @@ public class CreateQuickMatchFragment extends Fragment {
     private static final boolean is24HView = false;
     private int lastSelectedHour = 0;
     private int lastSelectedMinute = 0;
+    private static SimpleDateFormat dateFormat;
+    private static SimpleDateFormat timeFormat;
 
     private String[] placeNameArray;
     private List<Place> placeList;
 
     public CreateQuickMatchFragment() {
+
     }
 
     @Override
@@ -85,6 +89,8 @@ public class CreateQuickMatchFragment extends Fragment {
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextTime = view.findViewById(R.id.editTextTime);
         btnCreateHangout = view.findViewById(R.id.btnCreateHangout);
+        dateFormat = new SimpleDateFormat(mContext.getString(R.string.dateFormat), Locale.US);
+        timeFormat = new SimpleDateFormat(mContext.getString(R.string.timeFormat), Locale.US);
 
 //        Places Autocomplete
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
@@ -100,7 +106,7 @@ public class CreateQuickMatchFragment extends Fragment {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String formattedDate = SimpleDateFormat.getDateInstance().format(calendar.getTime());
+                String formattedDate = dateFormat.format(calendar.getTime());
                 editTextDate.setText(formattedDate);
             }
         };
@@ -116,9 +122,9 @@ public class CreateQuickMatchFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hour, int minute) {
-                calendar.set(Calendar.HOUR, hour);
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
-                String formattedTime = SimpleDateFormat.getTimeInstance().format(calendar.getTime());
+                String formattedTime = timeFormat.format(calendar.getTime());
                 editTextTime.setText(formattedTime);
                 lastSelectedHour = hour;
                 lastSelectedMinute = minute;

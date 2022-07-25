@@ -77,7 +77,7 @@ public class NavigationUtils {
 
     public static void displayFragmentAvailability(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.flContainer, new AvailabilityFragment()).commit();
+        ft.replace(R.id.flContainer, new AvailabilityFragment()).addToBackStack(null).commit();
     }
 
     /**
@@ -128,7 +128,7 @@ public class NavigationUtils {
     }
 
     public static void onBackPressed(FragmentManager fragmentManager) {
-        if (fragmentManager.getBackStackEntryCount() > 0) {
+        if (fragmentManager.getBackStackEntryCount() > 1) {
             fragmentManager.popBackStack();
         }
     }

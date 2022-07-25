@@ -52,7 +52,7 @@ public class MatchFragment extends Fragment {
     private static String KEY_USER_FIRST_NAME;
     private static Context mContext;
 
-    private static Handler mHandler = new Handler();
+    private static final Handler mHandler = new Handler();
 
     private Button btnQuickHangout;
     private Button btnLongHangout;
@@ -120,9 +120,9 @@ public class MatchFragment extends Fragment {
 
         TextView tvDialogUser = dialogLayout.findViewById(R.id.tvDialogUser);
         TextView tvDialogPlace = dialogLayout.findViewById(R.id.tvDialogPlace);
-        ImageButton ibClose = (ImageButton) dialogLayout.findViewById(R.id.ibClose);
-        ImageButton ibPositive = (ImageButton) dialogLayout.findViewById(R.id.ibPositive);
-        ImageButton ibNegative = (ImageButton) dialogLayout.findViewById(R.id.ibNegative);
+        ImageButton ibClose = dialogLayout.findViewById(R.id.ibClose);
+        ImageButton ibPositive = dialogLayout.findViewById(R.id.ibPositive);
+        ImageButton ibNegative = dialogLayout.findViewById(R.id.ibNegative);
 
         ParseUser matchedUser = getOtherUser(hangout);
         tvDialogUser.setText(matchedUser.fetchIfNeeded().getString(KEY_USER_FIRST_NAME));
