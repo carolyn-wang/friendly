@@ -20,10 +20,10 @@ import com.example.friendly.objects.Hangout;
 import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
-import com.parse.ParseException;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHolder> {
 
@@ -31,9 +31,10 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
     protected List<Hangout> hangouts;
     private static final String TAG = "HangoutsAdapter";
     private static final String KEY_USER_PHONE = "phone";
+    private static SimpleDateFormat dateTimeFormat;
 
     public HangoutsAdapter(Context context, List<Hangout> hangouts) {
-        this.mContext = context; // MainActivity
+        this.mContext = context;
         this.hangouts = hangouts;
     }
 
@@ -82,6 +83,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             cdHangout = itemView.findViewById(R.id.cdHangout);
             ibMessage = itemView.findViewById(R.id.ibMessage);
             ibMap = itemView.findViewById(R.id.ibMap);
+            dateTimeFormat = new SimpleDateFormat(mContext.getString(R.string.dateTimeFormat), Locale.US);
         }
 
         public void bind(Hangout hangout) {
@@ -112,7 +114,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
                 });
                 tvHangoutUser2.setText("");
             }
-            String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
+            String formattedDate = dateTimeFormat.format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
             if (hangout.getPlace() != null) {
                 tvHangoutLocation.setText(DisplayUtils.getEmojiByPlace(mContext, hangout.getPlace()) + " " + hangout.getLocationName());

@@ -106,4 +106,8 @@
     <string name="KEY_PLACE_NAME">name</string>
     <string name="signupPhoneHint">Phone Number</string>
     <string name="phone_formatting_regex">\\D</string>
+=    <string name="dateTimeFormat">"EEEE M/dd, hh:mm a"</string>
+    <string name="dateFormat">"EEE M/dd/yy"</string>
+    <string name="timeFormat">"hh:mm a"</string>
+>>>>>>> 2b6b155 (reformatted time on hangout cards and create quick hangout)
 </resources>
