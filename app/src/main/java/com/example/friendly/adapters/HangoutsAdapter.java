@@ -114,7 +114,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             String formattedDate = SimpleDateFormat.getDateTimeInstance().format(hangout.getDate());
             tvHangoutDate.setText(formattedDate);
             if (hangout.getPlace() != null) {
-                tvHangoutLocation.setText(hangout.getLocationName());
+                tvHangoutLocation.setText(DisplayUtils.getEmojiByPlace(mContext, hangout.getPlace()) + " " + hangout.getLocationName());
             }
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
 
