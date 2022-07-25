@@ -26,10 +26,10 @@ public class AvailabilityList extends Fragment {
 
     private static final String TAG = "AvailabilityList";
     private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
-    private Context mContext;
+    private final Context mContext;
     private List<Boolean> userAvailabilityPreference;
     private ListView availabilityList;
-    private int dayOfWeek;
+    private final int dayOfWeek;
 
     public AvailabilityList(Context mContext, int dayOfWeek) {
         this.mContext = mContext;

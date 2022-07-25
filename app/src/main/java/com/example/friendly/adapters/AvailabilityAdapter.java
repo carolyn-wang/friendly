@@ -26,17 +26,17 @@ import org.json.JSONException;
 import java.util.List;
 
 public class AvailabilityAdapter extends BaseAdapter {
-    private Context mContext;
+    private final Context mContext;
     private static final String TAG = "AvailabilityAdapter";
-    private List<Boolean> availabilityPreference;
-    private String[] timeOptionsArray;
-    private int startIndex;
-    private int endIndex;
-    private List<Boolean> availabilityPreferenceForDay;
+    private final List<Boolean> availabilityPreference;
+    private final String[] timeOptionsArray;
+    private final int startIndex;
+    private final int endIndex;
+    private final List<Boolean> availabilityPreferenceForDay;
 
     public AvailabilityAdapter(Context context, List<Boolean> availabilityPreference, int dayOfWeek) {
         this.mContext = context;
-        this.timeOptionsArray = ((MainActivity) mContext).getResources().getStringArray(R.array.time_options_array);
+        this.timeOptionsArray = mContext.getResources().getStringArray(R.array.time_options_array);
         this.availabilityPreference = availabilityPreference;
         startIndex = timeOptionsArray.length * dayOfWeek;
         endIndex = startIndex + timeOptionsArray.length;
@@ -121,11 +121,7 @@ public class AvailabilityAdapter extends BaseAdapter {
                     }
                     return true;
                 case DragEvent.ACTION_DROP:
-                    if (view.isActivated()) {
-                        view.setActivated(false);
-                    } else {
-                        view.setActivated(true);
-                    }
+                    view.setActivated(!view.isActivated());
                     return true;
                 default:
                     break;

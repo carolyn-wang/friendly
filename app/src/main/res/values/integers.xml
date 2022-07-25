@@ -19,4 +19,5 @@
     <integer name="query_max_distance_mi">3</integer>
     <integer name="query_max_users">13</integer>
     <integer name="year_options_len">5</integer>
+    <integer name="username_max_length">20</integer>
 </resources>

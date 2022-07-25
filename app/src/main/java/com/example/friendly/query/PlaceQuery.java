@@ -16,7 +16,7 @@ public class PlaceQuery {
     private static final String TAG = "PlaceQuery";
     private static final String KEY_LOCATION = "location";
     private static final double MAX_DISTANCE_MILES = 25;
-    private List<Place> nearbyPlaces = new ArrayList<>();
+    private final List<Place> nearbyPlaces = new ArrayList<>();
 
     public void queryNearbyPlaces() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);

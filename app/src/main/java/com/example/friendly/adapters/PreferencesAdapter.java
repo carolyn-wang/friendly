@@ -30,8 +30,8 @@ import org.json.JSONException;
 import java.util.List;
 
 public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
-    private Context mContext;
-    private List<Preference> preferences;
+    private final Context mContext;
+    private final List<Preference> preferences;
     private static final String TAG = "PreferencesAdapter";
     private static List<String> allPreferenceKeys;
 
@@ -84,9 +84,9 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvQuestion;
-        private RadioGroup rgOptions;
-        private LinearLayout lvOptions;
+        private final TextView tvQuestion;
+        private final RadioGroup rgOptions;
+        private final LinearLayout lvOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

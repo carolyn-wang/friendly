@@ -82,7 +82,7 @@ public class AvailabilityFragment extends Fragment {
         btnSu = view.findViewById(R.id.btnSu);
         saveButton = view.findViewById(R.id.saveButton);
 
-        mPager = (ViewPager2) view.findViewById(R.id.pagerAvailability);
+        mPager = view.findViewById(R.id.pagerAvailability);
         mPager.setPageTransformer(new ZoomOutPageTransformer());
 
         pagerAdapter = new ScreenSlidePagerAdapter(getParentFragmentManager());

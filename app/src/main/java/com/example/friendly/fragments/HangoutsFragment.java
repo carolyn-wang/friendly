@@ -73,10 +73,10 @@ public class HangoutsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
+        queryConditions = getArguments().getStringArrayList(KEY_CONDITION);
 
         if (queryConditions != null) {
-            queryConditions = (ArrayList<String>) getArguments().getStringArrayList(KEY_CONDITION);
+            queryConditions = getArguments().getStringArrayList(KEY_CONDITION);
         }
         mContext = view.getContext();
         pb = view.findViewById(R.id.pbLoading);

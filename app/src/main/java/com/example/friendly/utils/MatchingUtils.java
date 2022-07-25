@@ -100,11 +100,11 @@ public class MatchingUtils {
     private static double[] calculateSimilarityArray(ParseUser nearbyUser) throws JSONException {// if number of overlapping hours is 0, deduct score by a lot; and vice versa
         JSONArray preferenceWeights = ParseUser.getCurrentUser().getJSONArray(KEY_PREFERENCE_WEIGHTS);
         ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_LOCATION);
-        double distanceWeight = (double) preferenceWeights.getDouble(KEY_DISTANCE_WEIGHT_INDEX);
-        double activityWeight = (double) preferenceWeights.getDouble(KEY_ACTIVITY_WEIGHT_INDEX);
-        double hobbyWeight = (double) preferenceWeights.getDouble(KEY_HOBBY_WEIGHT_INDEX);
-        double yearWeight = (double) preferenceWeights.getDouble(KEY_YEAR_WEIGHT_INDEX);
-        double availabilityWeight = (double) preferenceWeights.getDouble(KEY_AVAILABILITY_WEIGHT_INDEX);
+        double distanceWeight = preferenceWeights.getDouble(KEY_DISTANCE_WEIGHT_INDEX);
+        double activityWeight = preferenceWeights.getDouble(KEY_ACTIVITY_WEIGHT_INDEX);
+        double hobbyWeight = preferenceWeights.getDouble(KEY_HOBBY_WEIGHT_INDEX);
+        double yearWeight = preferenceWeights.getDouble(KEY_YEAR_WEIGHT_INDEX);
+        double availabilityWeight = preferenceWeights.getDouble(KEY_AVAILABILITY_WEIGHT_INDEX);
         double distanceScore = MAX_DISTANCE_MILES - currentLocation.distanceInMilesTo(nearbyUser.getParseGeoPoint(KEY_LOCATION));
         double hobbyScore = getArraySimilarityScore(nearbyUser, KEY_HOBBY_PREFERENCE);
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
@@ -147,7 +147,7 @@ public class MatchingUtils {
                 e.printStackTrace();
             }
         }
-        return (double) score;
+        return score;
     }
 
     /**
@@ -165,9 +165,9 @@ public class MatchingUtils {
     }
 
 
-    private static double getAvailabilitySimilarityScore(int user1Availability[][], int user2Availability[][]) {
+    private static double getAvailabilitySimilarityScore(int[][] user1Availability, int[][] user2Availability) {
         int overlapHours = findIntersection(user1Availability, user2Availability);
-        return (double) overlapHours;
+        return overlapHours;
     }
 
 
@@ -178,8 +178,8 @@ public class MatchingUtils {
      * @param arr2 int[][] - second User's time availability
      * @return - int number of overlapping hours in availabilities
      */
-    static int findIntersection(int arr1[][],
-                                int arr2[][]) {
+    static int findIntersection(int[][] arr1,
+                                int[][] arr2) {
         int totalHoursOverlap = 0;
 
         // index1 and index2 pointers for arr1 and arr2 respectively

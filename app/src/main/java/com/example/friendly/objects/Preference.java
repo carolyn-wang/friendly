@@ -1,9 +1,9 @@
 package com.example.friendly.objects;
 
 public class Preference {
-    private String parseKey;
-    private String question;
-    private String[] options;
+    private final String parseKey;
+    private final String question;
+    private final String[] options;
 
     public Preference(String userKey, String question, String[] options) {
         this.parseKey = userKey;
