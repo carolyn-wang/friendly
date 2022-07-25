@@ -95,14 +95,6 @@ public class MatchingUtils {
             topMatches.put(overallScore, nearbyUser);
         }
 
-        ArrayList<int[]> arr = findConsecutiveRanges(
-                Arrays.asList(true, true, false, true, true, true, false, false, false, false, false, false, true, true, true, true, false),
-                Arrays.asList(true, true, true, true, true, false, false, false, false, false, false, true, true, true, true, false, false));
-
-        for (int[] ints : arr) {
-            Log.i(TAG, ints[0] + " " + ints[1]);
-        }
-
         ParseQuery.clearAllCachedResults();
         return topMatches;
     }
@@ -128,12 +120,6 @@ public class MatchingUtils {
         double activityScore = getArraySimilarityScore(nearbyUser, KEY_ACTIVITY_PREFERENCE);
         double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
         double availabilityScore = getArraySimilarityScore(nearbyUser, KEY_AVAILABILITY_PREFERENCE);
-
-        Log.d(TAG, "distance: " + distanceScore
-                + "; hobby: " + hobbyScore
-                + "; year: " + yearScore
-                + "; activity: " + activityScore
-                + "; availability: " + availabilityScore);
 
         double[] scoresArray = {distanceWeight * distanceScore,
                 activityWeight * activityScore,

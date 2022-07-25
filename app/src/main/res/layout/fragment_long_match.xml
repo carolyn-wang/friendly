@@ -22,7 +22,7 @@
         style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matched_user_label"
+        android:text="@string/long_match_matched_user_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/longMatchTitle" />
 
@@ -31,7 +31,7 @@
         style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matched_user"
+        android:text="@string/long_match_matched_user"
         app:layout_constraintLeft_toRightOf="@+id/tvMatchedUserLabel"
         app:layout_constraintTop_toBottomOf="@+id/longMatchTitle" />
 
@@ -40,7 +40,7 @@
         style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matched_place_label"
+        android:text="@string/long_match_matched_place_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMatchedUserLabel" />
 
@@ -49,7 +49,7 @@
         style="@style/TitleFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matched_place"
+        android:text="@string/long_match_matched_place"
         app:layout_constraintLeft_toRightOf="@+id/tvPlaceLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvMatchedUserLabel" />
 
@@ -57,7 +57,7 @@
         android:id="@+id/tvDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matched_date_label"
+        android:text="@string/long_match_matched_date_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPlaceLabel" />
 
@@ -66,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_large"
-        android:text="@string/date1"
+        android:text="@string/long_match_date1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDateLabel" />
 
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_large"
-        android:text="@string/date2"
+        android:text="@string/long_match_date2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate1" />
 
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_large"
-        android:text="@string/date3"
+        android:text="@string/long_match_date3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate2" />
 

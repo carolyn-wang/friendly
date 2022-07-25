@@ -14,6 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/card_padding"
-        android:text="@string/coupon_default" />
+        android:text="@string/long_match_coupon_default" />
 
 </com.google.android.material.card.MaterialCardView>
