@@ -141,7 +141,7 @@ public class NavigationUtils {
             smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.template_messaging_number));
         }
         smsIntent.putExtra(KEY_SMS_BODY, mContext.getResources().getString(R.string.template_messaging_text));
-        ((MainActivity) mContext).startActivity(smsIntent);
+        mContext.startActivity(smsIntent);
     }
 
 }

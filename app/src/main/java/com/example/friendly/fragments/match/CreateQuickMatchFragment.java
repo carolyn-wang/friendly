@@ -81,7 +81,7 @@ public class CreateQuickMatchFragment extends Fragment {
             placeNameArray[i] = placeList.get(i).getName();
         }
 
-        autoCompletePlaces = (AutoCompleteTextView) view.findViewById(R.id.autoCompletePlaces);
+        autoCompletePlaces = view.findViewById(R.id.autoCompletePlaces);
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextTime = view.findViewById(R.id.editTextTime);
         btnCreateHangout = view.findViewById(R.id.btnCreateHangout);

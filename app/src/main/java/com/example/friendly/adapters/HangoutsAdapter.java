@@ -27,7 +27,7 @@ import java.util.List;
 
 public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
     protected List<Hangout> hangouts;
     private static final String TAG = "HangoutsAdapter";
     private static final String KEY_USER_PHONE = "phone";
@@ -65,13 +65,13 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView cdHangout;
-        private TextView tvHangoutUser1;
-        private TextView tvHangoutUser2;
-        private TextView tvHangoutDate;
-        private TextView tvHangoutLocation;
-        private ImageButton ibMessage;
-        private ImageButton ibMap;
+        private final CardView cdHangout;
+        private final TextView tvHangoutUser1;
+        private final TextView tvHangoutUser2;
+        private final TextView tvHangoutDate;
+        private final TextView tvHangoutLocation;
+        private final ImageButton ibMessage;
+        private final ImageButton ibMap;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,7 +79,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             tvHangoutUser2 = itemView.findViewById(R.id.tvHangoutUser2);
             tvHangoutDate = itemView.findViewById(R.id.tvHangoutDate);
             tvHangoutLocation = itemView.findViewById(R.id.tvHangoutLocation);
-            cdHangout = (CardView) itemView.findViewById(R.id.cdHangout);
+            cdHangout = itemView.findViewById(R.id.cdHangout);
             ibMessage = itemView.findViewById(R.id.ibMessage);
             ibMap = itemView.findViewById(R.id.ibMap);
         }
