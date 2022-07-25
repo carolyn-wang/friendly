@@ -15,6 +15,9 @@ import com.example.friendly.utils.DisplayUtils;
 import com.example.friendly.R;
 import com.example.friendly.objects.Hangout;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HangoutDetailFragment#newInstance} factory method to
@@ -30,6 +33,7 @@ public class HangoutDetailFragment extends Fragment {
     private TextView tvHangoutUser1;
     private TextView tvHangoutUser2;
     private TextView tvHangoutDate;
+    private static SimpleDateFormat dateTimeFormat;
 
     public HangoutDetailFragment() {
     }
@@ -61,6 +65,8 @@ public class HangoutDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
+        dateTimeFormat = new SimpleDateFormat(mContext.getString(R.string.dateTimeFormatDetail), Locale.US);
+
         vHangoutDetail = view.findViewById(R.id.vHangoutDetail);
         tvHangoutUser1 = view.findViewById(R.id.tvHangoutUser1);
         tvHangoutUser2 = view.findViewById(R.id.tvHangoutUser2);
@@ -74,7 +80,7 @@ public class HangoutDetailFragment extends Fragment {
         } else {
             tvHangoutUser2.setText("");
         }
-        tvHangoutDate.setText(hangout.getDate().toString());
+        tvHangoutDate.setText(dateTimeFormat.format(hangout.getDate()));
 
     }
 }

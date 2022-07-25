@@ -36,6 +36,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
     public HangoutsAdapter(Context context, List<Hangout> hangouts) {
         this.mContext = context;
         this.hangouts = hangouts;
+        dateTimeFormat = new SimpleDateFormat(mContext.getString(R.string.dateTimeFormat), Locale.US);
     }
 
     /**
@@ -83,7 +84,6 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             cdHangout = itemView.findViewById(R.id.cdHangout);
             ibMessage = itemView.findViewById(R.id.ibMessage);
             ibMap = itemView.findViewById(R.id.ibMap);
-            dateTimeFormat = new SimpleDateFormat(mContext.getString(R.string.dateTimeFormat), Locale.US);
         }
 
         public void bind(Hangout hangout) {
