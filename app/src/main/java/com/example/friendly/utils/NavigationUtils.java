@@ -31,6 +31,7 @@ public class NavigationUtils {
     private static final String KEY_SMS = "sms:";
     private static final String KEY_SMS_ADDRESS = "address";
     private static final String KEY_SMS_BODY = "sms_body";
+    private static final long TRANSITION_DURATION = 700;
 
     public static void goActivity(Activity activity, Class targetClass) {
         Context context = activity.getBaseContext();
@@ -112,7 +113,7 @@ public class NavigationUtils {
         MaterialContainerTransform enterTransition = new MaterialContainerTransform();
         enterTransition.setStartView(view);
         enterTransition.setEndView(((MainActivity) mContext).findViewById(R.id.vHangoutDetail));
-        enterTransition.setDuration(700);
+        enterTransition.setDuration(TRANSITION_DURATION);
         enterTransition.setScrimColor(Color.TRANSPARENT);
         enterTransition.setContainerColor(containerColor);
         fragment.setEnterTransition(enterTransition);
@@ -131,13 +132,13 @@ public class NavigationUtils {
             fragmentManager.popBackStack();
         }
     }
+
     public static void openMessagesIntent(Context mContext, String phoneNumber) {
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
         smsIntent.setData(Uri.parse(KEY_SMS));
-        if (!phoneNumber.isEmpty()){
-            smsIntent.putExtra(KEY_SMS_ADDRESS,phoneNumber);
-        }
-        else{
+        if (!phoneNumber.isEmpty()) {
+            smsIntent.putExtra(KEY_SMS_ADDRESS, phoneNumber);
+        } else {
             smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.template_messaging_number));
         }
         smsIntent.putExtra(KEY_SMS_BODY, mContext.getResources().getString(R.string.template_messaging_text));
