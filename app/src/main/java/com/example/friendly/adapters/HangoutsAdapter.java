@@ -30,6 +30,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
     private Context mContext;
     protected List<Hangout> hangouts;
     private static final String TAG = "HangoutsAdapter";
+    private static final String KEY_USER_PHONE = "phone";
 
     public HangoutsAdapter(Context context, List<Hangout> hangouts) {
         this.mContext = context; // MainActivity
@@ -121,7 +122,7 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             ibMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NavigationUtils.openMessagesIntent(mContext);
+                    NavigationUtils.openMessagesIntent(mContext, hangout.getUser2().getString(KEY_USER_PHONE));
                 }
             });
 

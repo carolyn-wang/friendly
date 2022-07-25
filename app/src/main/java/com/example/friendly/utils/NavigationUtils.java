@@ -131,10 +131,15 @@ public class NavigationUtils {
             fragmentManager.popBackStack();
         }
     }
-    public static void openMessagesIntent(Context mContext) {
+    public static void openMessagesIntent(Context mContext, String phoneNumber) {
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
         smsIntent.setData(Uri.parse(KEY_SMS));
-        smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.template_messaging_number));
+        if (!phoneNumber.isEmpty()){
+            smsIntent.putExtra(KEY_SMS_ADDRESS,phoneNumber);
+        }
+        else{
+            smsIntent.putExtra(KEY_SMS_ADDRESS, mContext.getResources().getString(R.string.template_messaging_number));
+        }
         smsIntent.putExtra(KEY_SMS_BODY, mContext.getResources().getString(R.string.template_messaging_text));
         ((MainActivity) mContext).startActivity(smsIntent);
     }
