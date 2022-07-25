@@ -1,7 +1,6 @@
 package com.example.friendly.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,11 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.friendly.activities.LoginActivity;
 import com.example.friendly.activities.MainActivity;
-import com.example.friendly.NavigationUtils;
+import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
-import com.example.friendly.adapters.PreferencesAdapter;
 import com.parse.ParseUser;
 
 /**
@@ -63,7 +60,7 @@ public class ProfileFragment extends Fragment {
 
         if (ParseUser.getCurrentUser() != null){
             tvUsername.setText(ParseUser.getCurrentUser().getUsername());
-            tvName.setText(ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME));
+            tvName.setText((ParseUser.getCurrentUser()).getString(KEY_USER_FIRST_NAME));
         }
         
         btnHangoutHistory.setOnClickListener(new View.OnClickListener() {

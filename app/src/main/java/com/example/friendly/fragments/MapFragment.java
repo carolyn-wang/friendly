@@ -1,5 +1,12 @@
 package com.example.friendly.fragments;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
+import com.example.friendly.R;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -12,15 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
+import com.example.friendly.utils.NavigationUtils;
 
-import com.example.friendly.NavigationUtils;
-import com.example.friendly.PlaceQuery;
-import com.example.friendly.R;
-import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;

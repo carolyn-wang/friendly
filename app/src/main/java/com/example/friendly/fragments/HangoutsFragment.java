@@ -2,6 +2,7 @@ package com.example.friendly.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.friendly.HangoutQuery;
+import com.example.friendly.fragments.match.MatchFragment;
+import com.example.friendly.query.HangoutQuery;
 import com.example.friendly.R;
 import com.example.friendly.adapters.HangoutsAdapter;
 import com.example.friendly.objects.Hangout;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,6 @@ public class HangoutsFragment extends Fragment {
     private static final String KEY_CONDITION = "condition";
     private Context mContext;
 
-    protected static final int POSTS_TO_LOAD = 5;
     private RecyclerView rvHangouts;
     protected HangoutsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
@@ -80,17 +82,16 @@ public class HangoutsFragment extends Fragment {
         pb = view.findViewById(R.id.pbLoading);
         rvHangouts = view.findViewById(R.id.rvHangouts);
         swipeContainer = view.findViewById(R.id.swipeContainer);
-        query = new HangoutQuery();
+        query = new HangoutQuery(mContext);
         List<Hangout> allHangouts = query.getAllHangouts();
-        if (allHangouts.size() == 0) {
-            showProgressBar();
-        }
+        showProgressBar();
 
         adapter = new HangoutsAdapter(mContext, allHangouts);
         rvHangouts.setAdapter(adapter);
         query.queryHangouts(adapter, queryConditions);
 
         rvHangouts.setLayoutManager(new LinearLayoutManager(mContext));
+
         setPullToRefresh();
         setScrollListener();
     }

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.friendly.MatchingUtils;
+import com.example.friendly.utils.MatchingUtils;
 import com.example.friendly.R;
 import com.parse.ParseUser;
 

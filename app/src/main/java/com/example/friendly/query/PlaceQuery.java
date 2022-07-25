@@ -1,4 +1,4 @@
-package com.example.friendly;
+package com.example.friendly.query;
 
 import android.util.Log;
 
@@ -17,7 +17,6 @@ public class PlaceQuery {
     private static final String KEY_LOCATION = "location";
     private static final double MAX_DISTANCE_MILES = 25;
     private List<Place> nearbyPlaces = new ArrayList<>();
-
 
     public void queryNearbyPlaces() {
         ParseQuery<Place> query = ParseQuery.getQuery(Place.class);

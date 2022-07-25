@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.friendly.NavigationUtils;
+import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Hangout;
@@ -163,7 +163,7 @@ public class CreateQuickMatchFragment extends Fragment {
                     Log.i(TAG, e.getMessage());
                 }
                 Toast.makeText(mContext, getResources().getString(R.string.quick_match_success), Toast.LENGTH_SHORT).show();
-                NavigationUtils.goMainActivity(mActivity);
+                NavigationUtils.displayFragmentQuickMatch(getParentFragmentManager());
             }
         });
     }

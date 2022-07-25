@@ -17,12 +17,12 @@
             android:id="@+id/tvHangoutUser1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hangoutUser1"/>
+            android:text="@string/template_user1"/>
         <TextView
             android:id="@+id/tvHangoutUser2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hangoutUser2"/>
+            android:text="@string/template_user2"/>
         <TextView
             android:id="@+id/tvHangoutDate"
             android:layout_width="wrap_content"

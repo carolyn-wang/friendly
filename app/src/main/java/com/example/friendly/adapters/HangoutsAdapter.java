@@ -11,14 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.friendly.DisplayUtils;
+import com.example.friendly.utils.DisplayUtils;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.friendly.fragments.MapFragment;
+
 import com.example.friendly.objects.Hangout;
-import com.example.friendly.NavigationUtils;
+import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
 import com.example.friendly.activities.MainActivity;
+import com.parse.ParseException;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -82,9 +84,11 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
         }
 
         public void bind(Hangout hangout) {
-            tvHangoutUser1.setText(hangout.getUser1().getUsername());
+            if (hangout.getUser1() != null) {
+                    tvHangoutUser1.setText(hangout.getUser1Name());
+            }
             if (hangout.getUser2() != null) {
-                tvHangoutUser2.setText(hangout.getUser2().getUsername());
+                tvHangoutUser2.setText(hangout.getUser2Name());
                 // click listener to open DetailFragment for hangout, only if no User 2 (is quick match)
                 cdHangout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -112,7 +116,6 @@ public class HangoutsAdapter extends RecyclerView.Adapter<HangoutsAdapter.ViewHo
             if (hangout.getPlace() != null) {
                 tvHangoutLocation.setText(hangout.getLocationName());
             }
-            // TODO: move into child classes
             cdHangout.setCardBackgroundColor(DisplayUtils.getCardColor(mContext, hangout));
 
             ibMessage.setOnClickListener(new View.OnClickListener() {

@@ -1,8 +1,9 @@
-package com.example.friendly;
+package com.example.friendly.utils;
 
 import android.content.Context;
 import android.graphics.Color;
 
+import com.example.friendly.R;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 

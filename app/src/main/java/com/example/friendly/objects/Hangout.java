@@ -14,11 +14,18 @@ public class Hangout extends ParseObject {
     public static final String KEY_USER2 = "user2";
     public static final String KEY_DATE = "date";
     public static final String KEY_LOCATION = "place";
+    public static final String KEY_USER_FIRST_NAME = "firstName";
 
 
     public ParseUser getUser1() {
         return getParseUser(KEY_USER1);
     }
+
+    public String getUser1Name() {
+        if (getParseUser(KEY_USER1) != null){
+            return getParseUser(KEY_USER1).getString(KEY_USER_FIRST_NAME);
+        }
+        return "";    }
 
     public void setUser1(ParseUser user) {
         put(KEY_USER1, user);
@@ -26,6 +33,13 @@ public class Hangout extends ParseObject {
 
     public ParseUser getUser2() {
         return getParseUser(KEY_USER2);
+    }
+
+    public String getUser2Name() {
+        if (getParseUser(KEY_USER2) != null){
+            return getParseUser(KEY_USER2).getString(KEY_USER_FIRST_NAME);
+        }
+        return "";
     }
 
     public void setUser2(ParseUser user) {
@@ -45,11 +59,17 @@ public class Hangout extends ParseObject {
     }
 
     public String getLocationName() {
-        return getPlace().getName();
+        if (getPlace() != null){
+            return getPlace().getName();
+        }
+        else return "";
     }
 
     public void setLocation(Place location) {
         put(KEY_LOCATION, location);
     }
 
+    public boolean equals(Hangout hangout) {
+        return hangout.getObjectId().equals(this.getObjectId());
+    }
 }

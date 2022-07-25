@@ -28,4 +28,10 @@
     <dimen name="pager_availability_height">500dp</dimen>
     <dimen name="icon_size">25dp</dimen>
     <dimen name="icon_margin">2dp</dimen>
+    <dimen name="close_button_size">20dp</dimen>
+    <dimen name="dialog_image_button_size">40dp</dimen>
+    <dimen name="dialog_padding">18dp</dimen>
+    <dimen name="dialog_padding_big">30dp</dimen>
+    <dimen name="dialog_padding_small">8dp</dimen>
+    <dimen name="close_button_margin">5dp</dimen>
 </resources>

@@ -15,8 +15,9 @@
     <string name="signupUsernameHint">Username</string>
     <string name="signupPasswordHint">Password</string>
     <string name="signupConfirmPasswordHint">Confirm Password</string>
-    <string name="hangoutUser1">User 1</string>
-    <string name="hangoutUser2">User 2</string>
+    <string name="template_user1">User 1</string>
+    <string name="template_user2">User 2</string>
+    <string name="template_place">Place</string>
     <string name="hangoutDate">Hangout date</string>
 
     <string name="match_btn_quick">Quick Match</string>
@@ -66,10 +67,9 @@
     <string name="login_success">Login Success</string>
     <string name="map_error_location">Can\'t access user\'s current location from database</string>
     <string name="map_error_save">Can\'t save user\'s current location</string>
-    <string name="query_key_future">future</string>
-    <string name="query_key_current_user">user</string>
-    <string name="query_key_past">past</string>
-    <string name="query_key_quick">quick</string>
+    <string name="KEY_QUERY_PAST">past</string>
+    <string name="KEY_QUERY_FUTURE">future</string>
+    <string name="KEY_QUERY_QUICK">quick</string>
     <string name="sign_up_password_error">Passwords don\'t match</string>
     <string name="sign_up_success">Successful Sign Up!</string>
     <string name="quick_match_error">Error creating hangout</string>
@@ -92,4 +92,16 @@
 
     <string name="template_messaging_text">hi</string>
     <string name="template_messaging_number">12125551212</string>
+    <string name="KEY_USER_NEXT_HANGOUT">nextUpcomingHangout</string>
+    <string name="KEY_HANGOUT_DATE">date</string>
+    <string name="dialog_at_symbol">" @ "</string>
+    <string name="dialog_question">How was this hangout?</string>
+    <string name="negative_feedback">Negative feedback</string>
+    <string name="positive_feedback">Positive feedback</string>
+    <string name="close_dialog">Close dialog</string>
+    <string name="template_user">User</string>
+    <string name="KEY_USER_FIRST_NAME">firstName</string>
+    <string name="KEY_HANGOUT_PLACE">\"place\"</string>
+    <string name="KEY_HANGOUT_USER2">user2</string>
+    <string name="KEY_PLACE_NAME">name</string>
 </resources>
