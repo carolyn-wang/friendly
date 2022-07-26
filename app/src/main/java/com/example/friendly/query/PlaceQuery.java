@@ -23,11 +23,10 @@ public class PlaceQuery {
         ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint(KEY_LOCATION);
         query.whereNear(KEY_LOCATION, currentLocation);
         query.whereWithinMiles(KEY_LOCATION, currentLocation, MAX_DISTANCE_MILES);
-
         query.findInBackground(new FindCallback<>() {
             @Override
             public void done(List<Place> places, ParseException e) {
-                if (places != null){
+                if (places != null) {
                     nearbyPlaces.addAll(places);
                 }
             }
@@ -36,7 +35,7 @@ public class PlaceQuery {
         ParseQuery.clearAllCachedResults();
     }
 
-    public List<Place> getNearbyPlaces(){
+    public List<Place> getNearbyPlaces() {
         return nearbyPlaces;
     }
 
