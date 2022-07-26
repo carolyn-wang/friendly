@@ -255,7 +255,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void showClosestUser() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNear(KEY_USER_LOCATION, getCurrentUserParseLocation());
-        // setting the limit of near users to find to 2, you'll have in the nearUsers list only two users: the current user and the closest user from the current
         query.setLimit(2);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
@@ -267,7 +266,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             closestUser = nearbyUser;
                         }
                     }
-                    double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestUser.getParseGeoPoint(KEY_USER_LOCATION));
+                    double distance = getCurrentUserParseLocation().distanceInMilesTo(closestUser.getParseGeoPoint(KEY_USER_LOCATION));
                     Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestUser), closestUser.getUsername(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_LONG).show();
                     LatLng closestUserLocation = new LatLng(closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
                     showUserInMap(closestUser);
@@ -285,7 +284,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         for (Place place : nearbyPlaces) {
             showPlaceInMap(place);
         }
-        ParseQuery.clearAllCachedResults();
     }
 
 
@@ -297,11 +295,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         List<Place> nearbyPlaces = ((MainActivity) mContext).getPlaceList();
         Place closestPlace = nearbyPlaces.get(0);
         showPlaceInMap(closestPlace);
-        double distance = getCurrentUserParseLocation().distanceInKilometersTo(closestPlace.getLocation());
+        double distance = getCurrentUserParseLocation().distanceInMilesTo(closestPlace.getLocation());
         Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestPlace), closestPlace.getName(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_SHORT).show();
-
-        ParseQuery.clearAllCachedResults();
-
     }
 
 
