@@ -173,7 +173,6 @@ public class MatchingUtils {
      * and returns sorted ArrayList<int[]> with longer ranges towards the beginning of the list.
      * rangeIndex tracks the index for adding ranges to availabilityRanges.
      *
-<<<<<<< HEAD
      * @param arr1 int[][] - first User's time availability
      * @param arr2 int[][] - second User's time availability
      * @return - int number of overlapping hours in availabilities
