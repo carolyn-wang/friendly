@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.utils.NavigationUtils;
@@ -50,6 +51,7 @@ import java.util.Locale;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
+    private static String KEY_USER_FIRST_NAME;
     private GoogleMap mGoogleMap;
     private MapView mapView;
 
@@ -74,6 +76,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private FusedLocationProviderClient fusedLocationClient;
 
     private Marker currentUserMarker;
+    private TextView tvPlaceName;
 
     public static MapFragment newInstance(ParseUser hangoutUser, Place hangoutPlace) {
 
@@ -91,6 +94,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        tvPlaceName = view.findViewById(R.id.tvPlaceName);
         return view;
     }
 
@@ -105,6 +110,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         super.onCreate(savedInstanceState);
         mContext = getContext();
         mActivity = getActivity();
+        KEY_USER_FIRST_NAME = getString(R.string.KEY_USER_FIRST_NAME);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
         if (getArguments() != null) {
             hangoutUser = getArguments().getParcelable(KEY_HANGOUT_USER);
@@ -141,17 +147,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull final Marker marker) {
-//        if(marker.equals(currentUserMarker)){
-//            FragmentManager fragmentManager = ((MainActivity)mContext).getSupportFragmentManager();
-//            FragmentTransaction ft = fragmentManager.beginTransaction();
-//            Fragment mapDetailFragment = new MapDetailFragment();
-//            ft.replace(R.id.mapDetail, mapDetailFragment);
-//            ft.commit();
-//        }
-//
-//        // Return false to indicate that we have not consumed the event and that we wish
-//        // for the default behavior to occur (which is for the camera to move such that the
-//        // marker is centered and for the marker's info window to open, if it has one).
+        if(marker.equals(currentUserMarker)){
+            tvPlaceName.setText(ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME));
+        }
+
+        // Return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
         return false;
     }
 
