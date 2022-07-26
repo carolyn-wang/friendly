@@ -1,17 +1,26 @@
 package com.example.friendly.utils;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.friendly.activities.MainActivity;
+import com.example.friendly.objects.Hangout;
+import com.example.friendly.objects.Place;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.example.friendly.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,6 +46,7 @@ public class MatchingUtils {
     private static final int KEY_YEAR_WEIGHT_INDEX = 3;
     private static final int KEY_AVAILABILITY_WEIGHT_INDEX = 4;
     private static final int NUM_WEIGHTS = 5;
+    private static final int NUM_TIME_MATCHES = 3;
 
     /**
      * Matching algorithm that retrieves best user matches for current user based on:
@@ -111,12 +121,6 @@ public class MatchingUtils {
         double yearScore = getIntSimilarityScore(nearbyUser, KEY_YEAR_PREFERENCE, YEAR_OPTIONS_LENGTH);
         double availabilityScore = getArraySimilarityScore(nearbyUser, KEY_AVAILABILITY_PREFERENCE);
 
-        Log.d(TAG, "distance: " + distanceScore
-                + "; hobby: " + hobbyScore
-                + "; year: " + yearScore
-                + "; activity: " + activityScore
-                + "; availability: " + availabilityScore);
-
         double[] scoresArray = {distanceWeight * distanceScore,
                 activityWeight * activityScore,
                 hobbyWeight * hobbyScore,
@@ -164,15 +168,10 @@ public class MatchingUtils {
         return (double) (lenArray - Math.abs(currentUserInt - nearbyUserInt)) / lenArray;
     }
 
-
-    private static double getAvailabilitySimilarityScore(int[][] user1Availability, int[][] user2Availability) {
-        int overlapHours = findIntersection(user1Availability, user2Availability);
-        return overlapHours;
-    }
-
-
     /**
-     * Finds intersection between user availabilities and returns number of overlapping hours
+     * Finds indicies ranges where both array values are true
+     * and returns sorted ArrayList<int[]> with longer ranges towards the beginning of the list.
+     * rangeIndex tracks the index for adding ranges to availabilityRanges.
      *
      * @param arr1 int[][] - first User's time availability
      * @param arr2 int[][] - second User's time availability
@@ -207,6 +206,80 @@ public class MatchingUtils {
     }
 
     /**
+     * @param arr1 boolean [] User1 availability (boolean for each 30 minute slot)
+     * @param arr2 boolean [] User2 availability (boolean for each 30 minute slot)
+     * @return availabilityRanges ArrayList<int[]> containing ranges for overlapping truth values
+     */
+    private static ArrayList<int[]> findConsecutiveRanges(List<Boolean> arr1, List<Boolean> arr2) {
+        ArrayList<int[]> availabilityRanges = new ArrayList<>();
+        int rangeLength = 0;
+        if (arr1.get(0)) {
+            rangeLength = 1;
+        }
+        // Traverse the array from first position
+        for (int i = 0; i < arr1.size() - 1; i++) {
+            // If current bool true and next bool is false
+            if (arr1.get(i) == arr2.get(i)) {
+                if (arr1.get(i) && arr2.get(i) && !(arr1.get(i + 1) && arr2.get(i + 1))) {
+                    // If the range contains only one true element, add to array.
+                    if (rangeLength == 1) {
+                        availabilityRanges.add(new int[]{i + 1, i});
+                    } else {
+                        // Build range between the first element of the range and the
+                        // current previous element as the end range.
+                        availabilityRanges.add(new int[]{i + 1 - rangeLength, i});
+                    }
+                    rangeLength = 1;
+                } else if (!arr1.get(i) && !arr2.get(i) && !arr1.get(i + 1) & !arr2.get(i)) {
+                    rangeLength = 1;
+                    // singular true element at end of list
+                } else if (i == arr1.size() - 1 && arr1.get(i) && arr2.get(i)) {
+                    availabilityRanges.add(new int[]{i + 1, i + 1});
+                } else {
+                    rangeLength++;
+                }
+            }
+        }
+        availabilityRanges.sort((array1, array2) -> (array2[1] - array2[0]) - ((array1[1] - array1[0])));
+        return availabilityRanges;
+    }
+
+    /**
+     * Converts Arraylist of int[] (ranges) into array of Strings
+     * @param mContext Context to retrieve string arrays from Resources.
+     * @param availabilityRanges ArrayList<int[]> from findConsecutiveRanges() with int[] ranges.
+     * @return String[] with NUM_TIME_MATCHES String availabilities.
+     */
+
+    private static String[] getMatchTimes(Context mContext, ArrayList<int[]> availabilityRanges) {
+        String[] bestTimes = new String[NUM_TIME_MATCHES];
+        for (int i = 0; i < NUM_TIME_MATCHES; i++) {
+            bestTimes[i] = convertRangeToTime(mContext, availabilityRanges.get(i));
+        }
+        return bestTimes;
+    }
+
+    /**
+     * Converts given int[] into a String that display day of week, start time, and end time.
+     * @param mContext Context to retrieve string arrays from Resources.
+     * @param range Singular range (from  ArrayList<int[]> availabilityRanges) to convert
+     * @return String with format "DayOfWeek 00:00 - 00:00"
+     */
+    private static String convertRangeToTime(Context mContext, int[] range) {
+        String[] timeOptionsArray = ((MainActivity) mContext).getResources().getStringArray(R.array.time_options_array);
+        int timeOptionsArrayLength = timeOptionsArray.length;
+        String[] daysOfWeekArray = ((MainActivity) mContext).getResources().getStringArray(R.array.days_of_week_array);
+
+        int dayIndex = Math.floorDiv(range[0], timeOptionsArrayLength);
+        int startTimeIndex = Math.floorMod(range[0], timeOptionsArrayLength);
+        int endTimeIndex = Math.floorMod(range[1], timeOptionsArrayLength);
+        String timeRange = daysOfWeekArray[dayIndex] + " " + timeOptionsArray[startTimeIndex].split("-")[0] + "-" + timeOptionsArray[endTimeIndex].split("-")[1];
+
+        return timeRange;
+    }
+
+
+    /**
      * Dynamically adjust weights after current user matches with a new user using Quick Match.
      * Compares scores between current and matched User, then adjusts current user's weights
      * and updates current user's average hangout similarity scores dependent on
@@ -235,7 +308,6 @@ public class MatchingUtils {
                     updatedScores[i] = updatedScore;
                     double updatedWeight = preferenceWeights.getDouble(i) * (updatedScore / averageScore);
                     updatedWeights[i] = updatedWeight;
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -258,4 +330,25 @@ public class MatchingUtils {
         adjustWeights(matchedUser, -1);
     }
 
+    public static List<Object> getMatchDetails(Context mContext, ParseUser matchedUser, List<Place> placeList) {
+        List<Object> matchDetails = new ArrayList<Object>();
+        int randomPlaceInd = (int) Math.floor(Math.random() * placeList.size());
+
+        Object matchPlace = placeList.get(randomPlaceInd);
+        matchDetails.add(matchPlace);
+
+        List<Boolean> currentUserAvailability = ParseUser.getCurrentUser().getList(KEY_AVAILABILITY_PREFERENCE);
+        List<Boolean> matchedUserAvailability = matchedUser.getList(KEY_AVAILABILITY_PREFERENCE);
+        Log.i(TAG, matchedUser.getUsername() + "sizes: " + currentUserAvailability.size() + " " + matchedUserAvailability.size());
+        ArrayList<int[]> availabilityRanges = findConsecutiveRanges(currentUserAvailability, matchedUserAvailability);
+        String[] matchTimes = getMatchTimes(mContext, availabilityRanges);
+
+
+        matchDetails.add(matchTimes[0]);
+        matchDetails.add(matchTimes[1]);
+        matchDetails.add(matchTimes[2]);
+
+        return matchDetails;
+    }
 }
+

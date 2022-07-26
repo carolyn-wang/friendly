@@ -41,7 +41,6 @@
         <item>1</item>
     </integer-array>
 
-
     <integer-array name="default_average_similarity">
         <item>10</item>
         <item>1</item>
@@ -79,5 +78,15 @@
         <item>10:30 PM - 11 PM</item>
         <item>11 PM - 11:30 PM</item>
         <item>11:30 PM - 12 AM</item>
+    </string-array>
+
+    <string-array name="days_of_week_array">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
     </string-array>
 </resources>

@@ -59,6 +59,16 @@
     <string name="question4">When are you generally avaliable?</string>
     <string name="join_quick_match_btn">Join Hangout</string>
     <string name="match_message_text">Message</string>
+    <string name="long_match_title">Your Selected Match</string>
+    <string name="long_match_matched_user_label">"Matched User: "</string>
+    <string name="long_match_matched_user">matched user here</string>
+    <string name="long_match_matched_place_label">"Place: "</string>
+    <string name="long_match_matched_place">place here</string>
+    <string name="long_match_matched_date_label">Recommended Times: </string>
+    <string name="long_match_date1">date 1</string>
+    <string name="long_match_date2">date 2</string>
+    <string name="long_match_date3">date 3</string>
+    <string name="long_match_coupon_default">Coupon Code</string>
 
     <string name="search_title">Search</string>
     <string name="map">Map</string>
@@ -72,8 +82,8 @@
     <string name="KEY_QUERY_QUICK">quick</string>
     <string name="sign_up_password_error">Passwords don\'t match</string>
     <string name="sign_up_success">Successful Sign Up!</string>
-    <string name="quick_match_error">Error creating hangout</string>
-    <string name="quick_match_success">Hangout Created!</string>
+    <string name="create_hangout_error">Error creating hangout</string>
+    <string name="create_hangout_success">Hangout Created!</string>
     <string name="login_error">Issue with login</string>
 
     <string name="label_monday">M</string>

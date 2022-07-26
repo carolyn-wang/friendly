@@ -40,4 +40,13 @@ public class PlaceQuery {
         return nearbyPlaces;
     }
 
+    public String[] getNearbyPlaceNames(){
+        List<Place> placeList = getNearbyPlaces();
+        String[] nearbyPlaceNames = new String[placeList.size()];
+        for (int i=0; i<placeList.size(); i++){
+            nearbyPlaceNames[i] = placeList.get(i).getName();
+        }
+        return nearbyPlaceNames;
+    }
+
 }

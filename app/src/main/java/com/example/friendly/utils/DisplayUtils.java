@@ -6,6 +6,7 @@ import android.graphics.Color;
 import com.example.friendly.R;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
+import com.parse.ParseObject;
 
 public class DisplayUtils {
     private static final String TYPE_BAR = "bar";
@@ -14,15 +15,13 @@ public class DisplayUtils {
     private static final String TYPE_MOVIE = "movie";
     private static final String TYPE_PARK = "park";
 
-
     /**
-     * Get card color based off hangout's createdAt value
-     *
-     * @param hangout - given Hangout item to retrieve card color for
+     * Get card color based off ParseObject's createdAt value
+     * @param parseObject - given parseObject item to retrieve card color for
      * @return Color int for hangout card
      */
-    public static int getCardColor(Context context, Hangout hangout) {
-        long i = hangout.getCreatedAt().getTime();
+    public static int getCardColor(Context context, ParseObject parseObject){
+        long i = parseObject.getCreatedAt().getTime();
         String[] colorArray = context.getResources().getStringArray(R.array.colors);
         String randomStr = String.valueOf(colorArray[Math.floorMod(i, colorArray.length)]);
         return Color.parseColor(randomStr);

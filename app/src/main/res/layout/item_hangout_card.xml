@@ -23,7 +23,7 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvHangoutUser2"
+            android:id="@+id/tvMatchedUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/card_padding"

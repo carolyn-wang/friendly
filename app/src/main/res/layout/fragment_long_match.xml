@@ -1,14 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/fragment_padding"
     tools:context=".fragments.match.QuickMatchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/longMatchTitle"
+        style="@style/TitleFont.Big"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="long term match" />
+        android:layout_height="wrap_content"
+        android:text="@string/long_match_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvMatchedUserLabel"
+        style="@style/TitleFont.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/long_match_matched_user_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longMatchTitle" />
+
+    <TextView
+        android:id="@+id/tvMatchedUser"
+        style="@style/TitleFont.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/long_match_matched_user"
+        app:layout_constraintLeft_toRightOf="@+id/tvMatchedUserLabel"
+        app:layout_constraintTop_toBottomOf="@+id/longMatchTitle" />
+
+    <TextView
+        android:id="@+id/tvPlaceLabel"
+        style="@style/TitleFont.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/long_match_matched_place_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchedUserLabel" />
+
+    <TextView
+        android:id="@+id/tvMatchedPlace"
+        style="@style/TitleFont.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/long_match_matched_place"
+        app:layout_constraintLeft_toRightOf="@+id/tvPlaceLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchedUserLabel" />
+
+    <TextView
+        android:id="@+id/tvDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/long_match_matched_date_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlaceLabel" />
+
+    <TextView
+        android:id="@+id/tvDate1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_large"
+        android:text="@string/long_match_date1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDateLabel" />
+
+    <TextView
+        android:id="@+id/tvDate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_large"
+        android:text="@string/long_match_date2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate1" />
+
+    <TextView
+        android:id="@+id/tvDate3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_large"
+        android:text="@string/long_match_date3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate2" />
+
+    <include layout="@layout/item_coupon_card" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateHangout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_create_quick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cdCoupon" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

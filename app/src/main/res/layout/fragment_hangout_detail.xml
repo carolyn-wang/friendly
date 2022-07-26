@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/template_user1"/>
         <TextView
-            android:id="@+id/tvHangoutUser2"
+            android:id="@+id/tvMatchedUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/template_user2"/>
