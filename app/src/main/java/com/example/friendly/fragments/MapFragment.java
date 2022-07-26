@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+
 import com.example.friendly.R;
 
 import android.Manifest;
@@ -20,9 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.utils.NavigationUtils;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import com.example.friendly.activities.MainActivity;
 import com.example.friendly.objects.Place;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,7 +37,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -49,7 +46,7 @@ import com.parse.ParseUser;
 import java.util.List;
 import java.util.Locale;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static String KEY_USER_FIRST_NAME;
     private GoogleMap mGoogleMap;
@@ -75,8 +72,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private static final int REQUEST_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
 
-    private Marker currentUserMarker;
-    private TextView tvPlaceName;
+    private TextView tvMarkerName;
+    private TextView tvMarkerDetail;
+    private ParseUser closestUser;
+    private static final String TAG_CLOSEST_USER = "closest user";
+    private static final String TAG_CURRENT_USER = "current user";
+    private static final String TAG_PLACE = "place";
 
     public static MapFragment newInstance(ParseUser hangoutUser, Place hangoutPlace) {
 
@@ -95,7 +96,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        tvPlaceName = view.findViewById(R.id.tvPlaceName);
+        tvMarkerName = view.findViewById(R.id.tvMarkerName);
+        tvMarkerDetail = view.findViewById(R.id.tvMarkerDetail);
         return view;
     }
 
@@ -147,13 +149,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull final Marker marker) {
-        if(marker.equals(currentUserMarker)){
-            tvPlaceName.setText(ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME));
+        if (marker.getTag().equals(TAG_CURRENT_USER)) {
+            tvMarkerName.setText(ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME));
+            tvMarkerDetail.setText(ParseUser.getCurrentUser().getUsername());
         }
 
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
+        if (marker.getTag().equals(TAG_CLOSEST_USER)) {
+            tvMarkerName.setText(closestUser.getString(KEY_USER_FIRST_NAME));
+            tvMarkerDetail.setText(closestUser.getUsername());
+        }
         return false;
     }
 
@@ -261,8 +265,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             @Override
             public void onSuccess(ParseGeoPoint location) {
                 LatLng currentUser = new LatLng(location.getLatitude(), location.getLongitude());
-                currentUserMarker = setMarker(currentUser, ParseUser.getCurrentUser().getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                currentUserMarker.setTag(0);
+                setMarker(currentUser, ParseUser.getCurrentUser().getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        .setTag("current user");
                 moveCamera(currentUser, INITIAL_ZOOM);
             }
 
@@ -288,7 +292,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             @Override
             public void done(List<ParseUser> nearUsers, ParseException e) {
                 if (e == null) {
-                    ParseUser closestUser = ParseUser.getCurrentUser();
+                    closestUser = ParseUser.getCurrentUser();
                     for (ParseUser nearbyUser : nearUsers) {
                         if (!nearbyUser.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                             closestUser = nearbyUser;
@@ -297,7 +301,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     double distance = getCurrentUserParseLocation().distanceInMilesTo(closestUser.getParseGeoPoint(KEY_USER_LOCATION));
                     Toast.makeText(mContext, String.format(Locale.US, getResources().getString(R.string.showClosestUser), closestUser.getUsername(), Math.round(distance * 100.0) / 100.0), Toast.LENGTH_LONG).show();
                     LatLng closestUserLocation = new LatLng(closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLatitude(), closestUser.getParseGeoPoint(KEY_USER_LOCATION).getLongitude());
-                    setMarker(closestUserLocation, closestUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    setMarker(closestUserLocation, closestUser.getUsername(), BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                            .setTag(TAG_CLOSEST_USER);
                     moveCamera(closestUserLocation, INITIAL_ZOOM);
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());

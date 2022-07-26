@@ -13,7 +13,7 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
-        android:id="@+id/tvPlaceName"
+        android:id="@+id/tvMarkerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/template_place"
@@ -21,34 +21,11 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
-        android:id="@+id/tv1"
+        android:id="@+id/tvMarkerDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvPlaceName"
+        app:layout_constraintTop_toBottomOf="@+id/tvMarkerName"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/btn_create_quick"/>
-
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/btn_create_quick"/>
-
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/btn_create_quick"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/btn_create_quick"/>
+        android:text="@string/template_place"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
