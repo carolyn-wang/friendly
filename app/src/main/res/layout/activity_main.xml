@@ -25,9 +25,7 @@
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingVertical="@dimen/action_bar_height"
-        android:paddingBottom="?attr/actionBarSize"
-        android:layout_above="@+id/bottomNavigation"
+        android:layout_marginVertical="?attr/actionBarSize"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

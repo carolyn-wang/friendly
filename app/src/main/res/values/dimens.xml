@@ -20,7 +20,6 @@
     <dimen name="quick_edittext_width">150dp</dimen>
     <dimen name="quick_edittext_height">60dp</dimen>
     <dimen name="edittext_padding">16dp</dimen>
-    <dimen name="action_bar_height">35dp</dimen>
     <dimen name="nav_icon_size">20dp</dimen>
     <dimen name="bottom_navigation_padding">75dp</dimen>
     <dimen name="availability_card_padding">4dp</dimen>
