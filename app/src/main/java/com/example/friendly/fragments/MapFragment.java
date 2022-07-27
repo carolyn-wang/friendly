@@ -17,8 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.friendly.activities.MainActivity;
 import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.objects.Place;
@@ -72,6 +74,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private static final int REQUEST_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
 
+    private Button btnCreateHangout;
     private TextView tvMarkerName;
     private TextView tvMarkerDetail;
     private ParseUser closestUser;
@@ -99,6 +102,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         tvMarkerName = view.findViewById(R.id.tvMarkerName);
         tvMarkerDetail = view.findViewById(R.id.tvMarkerDetail);
+        btnCreateHangout = view.findViewById(R.id.btnCreateHangout);
         return view;
     }
 
@@ -148,31 +152,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public boolean onMarkerClick(@NonNull final Marker marker) {
         String tag = String.valueOf(marker.getTag());
-        String tvMarkerNameText;
-        String tvMarkerDetailText;
-        switch (tag) {
-            case TAG_CURRENT_USER:
-                tvMarkerNameText = ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME);
-                tvMarkerDetailText = ParseUser.getCurrentUser().getUsername();
-                break;
-            case TAG_CLOSEST_USER:
-                tvMarkerNameText = closestUser.getString(KEY_USER_FIRST_NAME);
-                tvMarkerDetailText = closestUser.getUsername();
-                break;
-            case "-1": // place is not stored in
-                tvMarkerNameText = "";
-                tvMarkerDetailText = "";
-                break;
-            default:
-                Place place = nearbyPlaces.get((Integer) marker.getTag());
-                tvMarkerNameText = place.getName();
-                tvMarkerDetailText = place.getCategory();
-                break;
+        String tvMarkerNameText = "";
+        String tvMarkerDetailText = "";
+        if (!tag.equals("-1")) {
+            switch (tag) {
+                case TAG_CURRENT_USER:
+                    tvMarkerNameText = ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME);
+                    tvMarkerDetailText = ParseUser.getCurrentUser().getUsername();
+                    break;
+                case TAG_CLOSEST_USER:
+                    tvMarkerNameText = closestUser.getString(KEY_USER_FIRST_NAME);
+                    tvMarkerDetailText = closestUser.getUsername();
+                    break;
+                default:
+                    Place place = nearbyPlaces.get((Integer) marker.getTag());
+                    tvMarkerNameText = place.getName();
+                    tvMarkerDetailText = place.getCategory();
+                    break;
+            }
+            btnCreateHangout.setVisibility(View.VISIBLE);
+        } else {
+            btnCreateHangout.setVisibility(View.INVISIBLE);
         }
+
         tvMarkerName.setText(tvMarkerNameText);
         tvMarkerDetail.setText(tvMarkerDetailText);
         return false;
-    }
+}
 
     /**
      * Function that saves user's current location to database then returns it.
@@ -412,10 +418,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapView.onLowMemory();
     }
 
-    public interface LocationListener {
-        void onSuccess(ParseGeoPoint location);
+public interface LocationListener {
+    void onSuccess(ParseGeoPoint location);
 
-        void onFailure();
-    }
+    void onFailure();
+}
 
 }
