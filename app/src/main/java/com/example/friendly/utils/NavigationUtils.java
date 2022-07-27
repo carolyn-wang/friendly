@@ -70,9 +70,13 @@ public class NavigationUtils {
                 .commit();
     }
 
-    public static void displayFragmentCreateQuickMatch(FragmentManager fragmentManager) {
+    public static void displayFragmentCreateQuickMatch(FragmentManager fragmentManager, String placeName) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.flContainer, new CreateQuickMatchFragment()).addToBackStack(null).commit();
+        ft.replace(R.id.flContainer, CreateQuickMatchFragment.newInstance(placeName)).addToBackStack(null).commit();
+    }
+
+    public static void displayFragmentCreateQuickMatch(FragmentManager fragmentManager) {
+        displayFragmentCreateQuickMatch(fragmentManager, "");
     }
 
     public static void displayFragmentLongMatch(FragmentManager fragmentManager) {

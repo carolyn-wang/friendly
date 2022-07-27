@@ -66,9 +66,29 @@ public class CreateQuickMatchFragment extends Fragment {
     private String[] placeNameArray;
     private List<Place> placeList = new ArrayList<>();
 
+    private static final String KEY_PLACE_NAME = "placeName";
+    private String placeName = "";
+
     public CreateQuickMatchFragment() {
 
     }
+
+    public static CreateQuickMatchFragment newInstance(String placeName) {
+        Bundle args = new Bundle();
+        args.putString(KEY_PLACE_NAME, placeName);
+        CreateQuickMatchFragment fragment = new CreateQuickMatchFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            placeName = getArguments().getString(KEY_PLACE_NAME);
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +104,7 @@ public class CreateQuickMatchFragment extends Fragment {
         placeList = ((MainActivity) mContext).getPlaceList();
         placeNameArray = ((MainActivity) mContext).getPlaceNames();
 
+        Log.i(TAG, placeName);
         autoCompletePlaces = view.findViewById(R.id.autoCompletePlaces);
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextTime = view.findViewById(R.id.editTextTime);
@@ -96,6 +117,9 @@ public class CreateQuickMatchFragment extends Fragment {
                 android.R.layout.select_dialog_item, placeNameArray);
         autoCompletePlaces.setAdapter(adapter);
         autoCompletePlaces.setThreshold(1); //Autocomplete will start working from first character
+        if (!placeName.isEmpty()){
+            autoCompletePlaces.setText(placeName);
+        }
 
 //        Date Floating Dialog
         calendar = Calendar.getInstance();

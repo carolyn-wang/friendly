@@ -71,6 +71,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private Context mContext;
     private Activity mActivity;
 
+    private String tvMarkerNameText;
+    private String tvMarkerDetailText;
+
     private static final int REQUEST_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -114,7 +117,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         btnCreateHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.displayFragmentCreateQuickMatch(getParentFragmentManager());
+                NavigationUtils.displayFragmentCreateQuickMatch(getParentFragmentManager(), tvMarkerNameText);
             }
         });
     }
@@ -159,8 +162,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public boolean onMarkerClick(@NonNull final Marker marker) {
         String tag = String.valueOf(marker.getTag());
-        String tvMarkerNameText = "";
-        String tvMarkerDetailText = "";
+        tvMarkerNameText = "";
+        tvMarkerDetailText = "";
         if (!tag.equals("-1")) {
             btnCreateHangout.setVisibility(View.INVISIBLE);
             switch (tag) {
