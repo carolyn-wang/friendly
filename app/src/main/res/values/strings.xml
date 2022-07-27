@@ -50,6 +50,7 @@
     <string name="match_description">Hangouts within the next 48 hours</string>
     <string name="showClosestUser">We found the closest user from you! It\'s %s. \n You are .%2f miles from this user.</string>
     <string name="showClosestPlace">We found the closest place from you! It\'s %s. \n You are .%2f miles from this place.</string>
+    <string name="create_quick_hangout_at_place">Create Quick Hangout @ %s</string>
     <string name="hangout_history_title">Hangout History</string>
 
     <string name="question0">What year are you in?</string>
@@ -120,5 +121,6 @@
     <string name="dateTimeFormatDetail">"EEEE M/dd/yyyy, hh:mm a"</string>
     <string name="dateFormat">"EEE M/dd/yy"</string>
     <string name="timeFormat">"hh:mm a"</string>
+    <string name="btn_create_quick_hangout">Create Quick Hangout</string>
 
 </resources>

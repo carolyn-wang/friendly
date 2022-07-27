@@ -87,7 +87,7 @@ public class CreateQuickMatchFragment extends Fragment {
         autoCompletePlaces = view.findViewById(R.id.autoCompletePlaces);
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextTime = view.findViewById(R.id.editTextTime);
-        btnCreateHangout = view.findViewById(R.id.btnCreateHangout);
+        btnCreateHangout = view.findViewById(R.id.btnCreateHangoutAtPlace);
         dateFormat = new SimpleDateFormat(mContext.getString(R.string.dateFormat), Locale.US);
         timeFormat = new SimpleDateFormat(mContext.getString(R.string.timeFormat), Locale.US);
 

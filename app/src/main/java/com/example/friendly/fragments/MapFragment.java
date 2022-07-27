@@ -100,9 +100,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        tvMarkerName = view.findViewById(R.id.tvMarkerName);
-        tvMarkerDetail = view.findViewById(R.id.tvMarkerDetail);
-        btnCreateHangout = view.findViewById(R.id.btnCreateHangout);
         return view;
     }
 
@@ -110,6 +107,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tvMarkerName = view.findViewById(R.id.tvMarkerName);
+        tvMarkerDetail = view.findViewById(R.id.tvMarkerDetail);
+        btnCreateHangout = view.findViewById(R.id.btnCreateHangoutAtPlace);
+
+        btnCreateHangout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.displayFragmentCreateQuickMatch(getParentFragmentManager());
+            }
+        });
     }
 
     @Override
@@ -155,6 +162,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         String tvMarkerNameText = "";
         String tvMarkerDetailText = "";
         if (!tag.equals("-1")) {
+            btnCreateHangout.setVisibility(View.INVISIBLE);
             switch (tag) {
                 case TAG_CURRENT_USER:
                     tvMarkerNameText = ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME);
@@ -168,17 +176,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     Place place = nearbyPlaces.get((Integer) marker.getTag());
                     tvMarkerNameText = place.getName();
                     tvMarkerDetailText = place.getCategory();
+                    btnCreateHangout.setVisibility(View.VISIBLE);
+                    btnCreateHangout.setText(String.format(Locale.US, getResources().getString(R.string.create_quick_hangout_at_place), place.getName()));
                     break;
             }
-            btnCreateHangout.setVisibility(View.VISIBLE);
-        } else {
-            btnCreateHangout.setVisibility(View.INVISIBLE);
         }
-
         tvMarkerName.setText(tvMarkerNameText);
         tvMarkerDetail.setText(tvMarkerDetailText);
         return false;
-}
+    }
 
     /**
      * Function that saves user's current location to database then returns it.
@@ -418,10 +424,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapView.onLowMemory();
     }
 
-public interface LocationListener {
-    void onSuccess(ParseGeoPoint location);
+    public interface LocationListener {
+        void onSuccess(ParseGeoPoint location);
 
-    void onFailure();
-}
+        void onFailure();
+    }
 
 }

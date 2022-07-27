@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.friendly.R;
 import com.example.friendly.fragments.HangoutsFragment;
+import com.example.friendly.utils.NavigationUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -49,8 +50,7 @@ public class QuickMatchFragment extends Fragment {
         btnCreateQuickHangout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-                ft.replace(R.id.flContainer, new CreateQuickMatchFragment()).addToBackStack(null).commit();
+                NavigationUtils.displayFragmentCreateQuickMatch(getParentFragmentManager());
             }
         });
     }

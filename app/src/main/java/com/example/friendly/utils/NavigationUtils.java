@@ -21,6 +21,7 @@ import com.example.friendly.fragments.AvailabilityFragment;
 import com.example.friendly.fragments.HangoutDetailFragment;
 import com.example.friendly.fragments.HangoutHistoryFragment;
 import com.example.friendly.fragments.ProfileFragment;
+import com.example.friendly.fragments.match.CreateQuickMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchDetailFragment;
 import com.example.friendly.fragments.match.LongMatchFragment;
 import com.example.friendly.fragments.match.QuickMatchFragment;
@@ -67,6 +68,11 @@ public class NavigationUtils {
         ft.replace(R.id.flContainer, new QuickMatchFragment())
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static void displayFragmentCreateQuickMatch(FragmentManager fragmentManager) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.flContainer, new CreateQuickMatchFragment()).addToBackStack(null).commit();
     }
 
     public static void displayFragmentLongMatch(FragmentManager fragmentManager) {

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:maxHeight="@dimen/bottom_sheet_max_height"
-    android:padding="@dimen/padding_medium"
+    android:padding="@dimen/padding_large"
     app:behavior_hideable="false"
     app:behavior_peekHeight="@dimen/bottom_sheet_peek_height"
     app:behavior_skipCollapsed="false"
@@ -30,11 +30,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tvMarkerName" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCreateHangout"
+        android:id="@+id/btnCreateHangoutAtPlace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/floating_button_margin_bottom"
-        android:text="@string/create_hangout"
+        android:text="@string/btn_create_quick_hangout"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />

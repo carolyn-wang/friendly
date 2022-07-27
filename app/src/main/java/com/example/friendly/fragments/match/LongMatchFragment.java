@@ -75,7 +75,7 @@ public class LongMatchFragment extends Fragment {
         tvDate2 = view.findViewById(R.id.tvDate2);
         tvDate3 = view.findViewById(R.id.tvDate3);
         cdCoupon = view.findViewById(R.id.cdCoupon);
-        btnCreateHangout = view.findViewById(R.id.btnCreateHangout);
+        btnCreateHangout = view.findViewById(R.id.btnCreateHangoutAtPlace);
 
         while (matchedUser == null) {
             matchedUser = topMatchesIter.next();
