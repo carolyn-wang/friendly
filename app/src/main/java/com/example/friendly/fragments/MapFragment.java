@@ -75,6 +75,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private TextView tvMarkerName;
     private TextView tvMarkerDetail;
     private ParseUser closestUser;
+    private List<Place> nearbyPlaces;
     private static final String TAG_CLOSEST_USER = "closest user";
     private static final String TAG_CURRENT_USER = "current user";
     private static final String TAG_PLACE = "place";
@@ -125,6 +126,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapReady(GoogleMap googleMap) {
         this.mGoogleMap = googleMap;
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        nearbyPlaces = ((MainActivity) mContext).getPlaceList();
 
         if (getArguments() != null) {
             showCurrentUserInMap();
@@ -136,10 +138,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             showPlacesInMap();
             showClosestPlace();
         }
-        showCurrentUserInMap();
-        showClosestUser();
-        showPlacesInMap();
-        showClosestPlace();
 
         //in old Api Needs to call MapsInitializer before doing any CameraUpdateFactory call
         MapsInitializer.initialize(mActivity);
@@ -149,15 +147,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull final Marker marker) {
-        if (marker.getTag().equals(TAG_CURRENT_USER)) {
-            tvMarkerName.setText(ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME));
-            tvMarkerDetail.setText(ParseUser.getCurrentUser().getUsername());
+        String tag = String.valueOf(marker.getTag());
+        String tvMarkerNameText;
+        String tvMarkerDetailText;
+        switch (tag) {
+            case TAG_CURRENT_USER:
+                tvMarkerNameText = ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME);
+                tvMarkerDetailText = ParseUser.getCurrentUser().getUsername();
+                break;
+            case TAG_CLOSEST_USER:
+                tvMarkerNameText = closestUser.getString(KEY_USER_FIRST_NAME);
+                tvMarkerDetailText = closestUser.getUsername();
+                break;
+            case "-1": // place is not stored in
+                tvMarkerNameText = "";
+                tvMarkerDetailText = "";
+                break;
+            default:
+                Place place = nearbyPlaces.get((Integer) marker.getTag());
+                tvMarkerNameText = place.getName();
+                tvMarkerDetailText = place.getCategory();
+                break;
         }
-
-        if (marker.getTag().equals(TAG_CLOSEST_USER)) {
-            tvMarkerName.setText(closestUser.getString(KEY_USER_FIRST_NAME));
-            tvMarkerDetail.setText(closestUser.getUsername());
-        }
+        tvMarkerName.setText(tvMarkerNameText);
+        tvMarkerDetail.setText(tvMarkerDetailText);
         return false;
     }
 
@@ -313,7 +326,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     public void showPlacesInMap() {
-        List<Place> nearbyPlaces = ((MainActivity) mContext).getPlaceList();
+        nearbyPlaces = ((MainActivity) mContext).getPlaceList();
         for (Place place : nearbyPlaces) {
             showPlaceInMap(place);
         }
@@ -345,13 +358,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     /**
      * Retrieves Place location from database and places marker.
+     * Tags marker with index of hangoutPlace in nearbyPlaces.
      *
      * @param hangoutPlace Place to create marker for.
      */
     private void showPlaceInMap(Place hangoutPlace) {
         ParseGeoPoint hangoutGeopoint = hangoutPlace.getLocation();
         LatLng hangoutPlaceLocation = new LatLng(hangoutGeopoint.getLatitude(), hangoutGeopoint.getLongitude());
-        setMarker(hangoutPlaceLocation, hangoutPlace.getName(), BitmapDescriptorFactory.defaultMarker(placeMarkerHue));
+        setMarker(hangoutPlaceLocation, hangoutPlace.getName(), BitmapDescriptorFactory.defaultMarker(placeMarkerHue)).setTag(nearbyPlaces.indexOf(hangoutPlace));
     }
 
 
