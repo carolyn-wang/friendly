@@ -50,7 +50,7 @@ public class AvailabilityFragment extends Fragment {
     private Button saveButton;
     private static final String KEY_AVAILABILITY_PREFERENCE = "availabilityPreference";
 
-    private final static int activeButtonColor = R.color.blue;
+    private final static int activeButtonColor = R.color.light_tan;
     private final static int inactiveButtonColor = Color.WHITE;
 
 

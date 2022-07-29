@@ -5,26 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/login_margin"
+    android:padding="@dimen/fragment_padding"
     tools:context=".activities.LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_logo_background_height"
+        android:layout_marginTop="@dimen/login_logo_background_top_margin"
+        android:src="@drawable/yellow_circle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivLoginLogo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/login_logo_height"
         android:layout_marginTop="@dimen/login_logo_top_margin"
-        android:src="@android:drawable/btn_star_big_on"
+        android:src="@drawable/friendly_logo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/LogInTitle"
+        style="@style/TitleFont.Big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_title"
+        android:paddingTop="@dimen/padding_large"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLoginLogo" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilUsername"
-        android:layout_marginTop="@dimen/login_logo_bottom_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/loginUsernameHint"
         app:endIconMode="clear_text"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLoginLogo">
+        app:layout_constraintTop_toBottomOf="@+id/LogInTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etUsername"
@@ -38,9 +56,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/loginPasswordHint"
+        app:endIconMode="password_toggle"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilUsername"
-        app:endIconMode="password_toggle">
+        app:layout_constraintTop_toBottomOf="@+id/tilUsername">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
@@ -55,17 +73,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/login_button_margin"
+        android:text="@string/loginLoginBtn"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilPassword"
-        android:text="@string/loginLoginBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/tilPassword" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/login_button_margin"
+        android:text="@string/loginSignupBtn"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        android:text="@string/loginSignupBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

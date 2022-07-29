@@ -32,6 +32,7 @@ import com.example.friendly.fragments.HangoutsFragment;
 import com.example.friendly.objects.Hangout;
 import com.example.friendly.objects.Place;
 import com.example.friendly.query.HangoutQuery;
+import com.example.friendly.utils.DisplayUtils;
 import com.example.friendly.utils.MatchingUtils;
 import com.example.friendly.utils.NavigationUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -39,9 +40,11 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class MatchFragment extends Fragment {
     private static final String TAG = "MatchFragment";
@@ -125,55 +128,59 @@ public class MatchFragment extends Fragment {
         ImageButton ibNegative = dialogLayout.findViewById(R.id.ibNegative);
 
         ParseUser matchedUser = getOtherUser(hangout);
-        tvDialogUser.setText(matchedUser.fetchIfNeeded().getString(KEY_USER_FIRST_NAME));
-        Place location = ((Place) hangout.fetchIfNeeded().getParseObject(KEY_HANGOUT_PLACE));
-        if (location != null) {
-            String locationName = location.fetchIfNeeded().getString(KEY_PLACE_NAME);
-            if (locationName != null) {
-                tvDialogPlace.setText(locationName);
-            }
-        }
-
-        alertDialog.show();
-        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
-
-        ibPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                try {
-                    MatchingUtils.adjustWeightsPositive(matchedUser);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        if (matchedUser != null) {
+            tvDialogUser.setText(matchedUser.fetchIfNeeded().getString(KEY_USER_FIRST_NAME));
+            Place location = ((Place) hangout.fetchIfNeeded().getParseObject(KEY_HANGOUT_PLACE));
+            if (location != null) {
+                String locationName = location.fetchIfNeeded().getString(KEY_PLACE_NAME);
+                if (locationName != null) {
+                    tvDialogPlace.setText(locationName);
                 }
             }
-        });
 
-        ibNegative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                try {
-                    MatchingUtils.adjustWeightsNegative(matchedUser);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+            alertDialog.show();
+            alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+            ibPositive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                    try {
+                        MatchingUtils.adjustWeightsPositive(matchedUser);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
 
-        ibClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+            ibNegative.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                    try {
+                        MatchingUtils.adjustWeightsNegative(matchedUser);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            ibClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
 
 //        Close dialog automatically after a few seconds
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                alertDialog.cancel();
-            }}, DIALOG_DISPLAY_DURATION);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    alertDialog.cancel();
+                }
+            }, DIALOG_DISPLAY_DURATION);
+        }
     }
 
     private static ParseUser getOtherUser(Hangout hangout) throws ParseException {

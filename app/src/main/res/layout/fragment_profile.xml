@@ -14,30 +14,38 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        android:id="@+id/itemUserBanner"
+        layout="@layout/item_user_banner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_title" />
+
     <TextView
         android:id="@+id/tvUsernameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/username_title"
+        android:layout_marginTop="@dimen/padding_medium"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_title" />
+        app:layout_constraintTop_toBottomOf="@+id/itemUserBanner" />
 
     <TextView
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_sans"
+        android:layout_marginTop="@dimen/padding_medium"
         android:text="@string/username_default"
         app:layout_constraintLeft_toRightOf="@id/tvUsernameLabel"
-        app:layout_constraintTop_toBottomOf="@+id/profile_title" />
+        app:layout_constraintTop_toBottomOf="@+id/itemUserBanner" />
 
     <TextView
         android:id="@+id/tvNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/name_title"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsernameLabel"
-        android:text="@string/name_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUsernameLabel" />
 
     <TextView
         android:id="@+id/tvName"
@@ -45,36 +53,38 @@
         android:layout_height="wrap_content"
         android:text="@string/name_default"
         app:layout_constraintLeft_toRightOf="@+id/tvNameLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsernameLabel"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvUsernameLabel" />
 
     <Button
         android:id="@+id/btnHangoutHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_medium"
+        android:text="@string/hangout_history_btn"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameLabel"
-        android:text="@string/hangout_history_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNameLabel" />
 
     <Button
         android:id="@+id/btnChangePreferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/change_preferences_btn"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnHangoutHistory"
-        android:text="@string/change_preferences_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/btnHangoutHistory" />
 
     <Button
         android:id="@+id/btnChangeAvailability"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/change_availability_btn"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChangePreferences"
-        android:text="@string/change_availability_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/btnChangePreferences" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/padding_medium"
         android:text="@string/log_out_btn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnChangeAvailability" />
@@ -91,8 +101,8 @@
         android:id="@+id/checkBox2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/receive_messages"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox"
-        android:text="@string/receive_messages" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

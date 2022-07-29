@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="@dimen/fragment_padding"
+    android:paddingHorizontal="@dimen/fragment_padding"
     tools:context=".fragments.match.MatchFragment">
 
     <TextView
@@ -13,6 +14,7 @@
         style="@style/TitleFont.Big"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_medium"
         android:text="@string/match_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,6 +40,7 @@
         style="@style/TitleFont.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_medium"
         android:text="@string/match_btn_upcoming"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLongHangout" />
@@ -46,8 +49,8 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/upcomingHangouts"
         android:layout_width="match_parent"
-        android:paddingBottom="@dimen/bottom_navigation_padding"
         android:layout_height="@dimen/hangout_history_height"
+        android:paddingBottom="@dimen/bottom_navigation_padding"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchUpcomingTitle" />
 

@@ -3,7 +3,7 @@
     <style name="Theme.Friendly" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/yellow</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/dark_purple</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/pink</item>
@@ -49,6 +49,7 @@
     </style>
 
     <style name="CircularButton" parent="@style/Widget.Material3.Button.ElevatedButton">
+        <item name="android:textColor">@color/black</item>
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_margin">0dp</item>
@@ -63,7 +64,7 @@
 
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="colorPrimary">@color/pink</item>
-        <item name="colorSecondary">@color/purple_200</item>
+        <item name="colorSecondary">@color/dark_purple</item>
         <item name="colorSurface">@color/light_tan</item>
         <item name="colorOnSurface">@color/pink</item>
         <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>

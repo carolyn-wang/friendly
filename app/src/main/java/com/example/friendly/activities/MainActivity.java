@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        // Set default fragment
+            // Set default fragment
         bottomNavigationView.setSelectedItemId(R.id.action_match);
     }
 

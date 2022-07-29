@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.friendly.activities.MainActivity;
+import com.example.friendly.utils.DisplayUtils;
 import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
 import com.parse.ParseUser;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +30,7 @@ public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
     private static final String KEY_USER_FIRST_NAME = "firstName";
+    private static String KEY_USER_LAST_NAME = "lastName";
     private Context mContext;
     private MainActivity mActivity;
 
@@ -36,6 +40,7 @@ public class ProfileFragment extends Fragment {
     private Button btnChangeAvailability;
     private TextView tvUsername;
     private TextView tvName;
+    private TextView tvUserFirstLastName;
 
     public ProfileFragment() {
     }
@@ -57,8 +62,11 @@ public class ProfileFragment extends Fragment {
         btnChangeAvailability = view.findViewById(R.id.btnChangeAvailability);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
+        tvUserFirstLastName = view.findViewById(R.id.tvUserFirstLastName);
 
         if (ParseUser.getCurrentUser() != null){
+            tvUserFirstLastName.setText(String.format(Locale.US, "%s %s %s", ParseUser.getCurrentUser().getString(KEY_USER_FIRST_NAME)
+                    , ParseUser.getCurrentUser().getString(KEY_USER_LAST_NAME), DisplayUtils.getEmojiByUnicode(0x1F44B)));
             tvUsername.setText(ParseUser.getCurrentUser().getUsername());
             tvName.setText((ParseUser.getCurrentUser()).getString(KEY_USER_FIRST_NAME));
         }

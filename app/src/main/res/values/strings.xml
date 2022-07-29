@@ -17,7 +17,8 @@
     <string name="signupConfirmPasswordHint">Confirm Password</string>
     <string name="template_user1">User 1</string>
     <string name="template_user2">User 2</string>
-    <string name="template_place">Place</string>
+    <string name="template_place">Map</string>
+    <string name="template_place_details">Click on markers for details</string>
     <string name="hangoutDate">Hangout date</string>
 
     <string name="match_btn_quick">Quick Match</string>
@@ -112,6 +113,7 @@
     <string name="close_dialog">Close dialog</string>
     <string name="template_user">User</string>
     <string name="KEY_USER_FIRST_NAME">firstName</string>
+    <string name="KEY_USER_LAST_NAME">lastName</string>
     <string name="KEY_HANGOUT_PLACE">\"place\"</string>
     <string name="KEY_HANGOUT_USER2">user2</string>
     <string name="KEY_PLACE_NAME">name</string>
@@ -122,5 +124,8 @@
     <string name="dateFormat">"EEE M/dd/yy"</string>
     <string name="timeFormat">"hh:mm a"</string>
     <string name="btn_create_quick_hangout">Create Quick Hangout</string>
+    <string name="match_hello_text">Hello,</string>
+    <string name="match_user_name">"hi hi"</string>
+    <string name="login_title">Log In</string>
 
 </resources>

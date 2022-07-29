@@ -4,12 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.R;
+import com.example.friendly.utils.NavigationUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.parse.LogInCallback;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText etPassword;
     private MaterialButton btnLogin;
     private MaterialButton btnSignup;
+    private ImageView ivLoginLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignup = findViewById(R.id.btnSignup);
+        ivLoginLogo = findViewById(R.id.ivLoginLogo);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        ivLoginLogo.animate().rotation(360f).setDuration(15000).start();
     }
 
     //TODO: Limit to only 1 login in case of glitch
