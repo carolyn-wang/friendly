@@ -1,19 +1,16 @@
 package com.example.friendly.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.friendly.objects.Hangout;
 import com.example.friendly.utils.NavigationUtils;
 import com.example.friendly.query.PlaceQuery;
 import com.example.friendly.R;
@@ -24,8 +21,6 @@ import com.example.friendly.fragments.match.MatchFragment;
 import com.example.friendly.objects.Place;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.parse.ParseException;
 
 import java.util.List;
 
@@ -81,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.action_search:
-                        fragment = new SearchFragment();
+                    case R.id.action_create:
+                        fragment = new CreateQuickMatchFragment();
                         break;
                     case R.id.action_match:
                         fragment = new MatchFragment();
